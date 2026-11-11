@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cómo construir un producto digital con IA · Todo Sigue Vivo</title>
+<meta name="description" content="Proyecto final del curso «Cómo construir un producto digital con IA», impartido por La Nave Nodriza de la mano de Cloud District. Caso práctico: Todo Sigue Vivo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --lavanda-50:#F6F6FE;--lavanda-100:#ECEDFF;--lavanda-200:#DADAFF;--lavanda-300:#C1C0FF;--lavanda-400:#A39DFF;--lavanda-600:#5646B0;--lavanda-700:#44368E;--lavanda-800:#32296A;--lavanda-950:#141030;
+  --white:#FFFFFF;--canvas:#F7F7FB;--muted:#EEEDF4;--line:#E2E2EA;--line-strong:#8E8C9C;--ink-muted:#6B6979;--ink:#1B1A24;
+  --savia:#1F4E45;--savia-soft:#DCEBE5;--azafran:#E0A21A;--azafran-soft:#FBEFCF;--success:#1D7A68;--success-soft:#DDF1EA;
+  --primary:var(--lavanda-600);--primary-hover:var(--lavanda-700);--on-primary:#FFFFFF;--primary-soft:var(--lavanda-100);--primary-text:var(--lavanda-700);--focus:var(--lavanda-600);
+  --font-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --font-sans:"Instrument Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --shadow-float:0 1px 2px rgba(27,26,36,.06),0 8px 24px rgba(27,26,36,.10);
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --side:264px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;--white:#1C1A2B;--canvas:#131120;--muted:#252336;--line:#2E2B40;--line-strong:#6F6C82;--ink-muted:#A9A6BC;--ink:#EEEDF5;
+  --savia:#7CC4B0;--savia-soft:#173029;--azafran:#F0B53A;--azafran-soft:#3A2E12;--success:#5FD0B6;--success-soft:#16302A;
+  --primary:#A39DFF;--primary-hover:var(--lavanda-300);--on-primary:var(--lavanda-950);--primary-soft:#2A2548;--primary-text:var(--lavanda-300);--focus:var(--lavanda-400);
+  --shadow-float:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;--white:#1C1A2B;--canvas:#131120;--muted:#252336;--line:#2E2B40;--line-strong:#6F6C82;--ink-muted:#A9A6BC;--ink:#EEEDF5;
+  --savia:#7CC4B0;--savia-soft:#173029;--azafran:#F0B53A;--azafran-soft:#3A2E12;--success:#5FD0B6;--success-soft:#16302A;
+  --primary:#A39DFF;--primary-hover:var(--lavanda-300);--on-primary:var(--lavanda-950);--primary-soft:#2A2548;--primary-text:var(--lavanda-300);--focus:var(--lavanda-400);
+  --shadow-float:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--canvas);color:var(--ink);font:400 16px/1.5 var(--font-sans);overflow-x:hidden;transition:background .4s,color .4s}
+h1,h2,h3{margin:0;font-family:var(--font-display);font-weight:700;text-wrap:balance;letter-spacing:-.03em}
+p{margin:0}
+img{max-width:100%;display:block}
+a{color:inherit}
+.m{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.skip{position:absolute;left:12px;top:-60px;z-index:60;background:var(--primary);color:var(--on-primary);padding:10px 14px;border-radius:12px;text-decoration:none;transition:top .2s}
+.skip:focus{top:12px}
+
+/* ===== menú lateral flotante ===== */
+.side{position:fixed;left:20px;top:20px;bottom:20px;width:var(--side);z-index:40;background:var(--white);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow-float);display:flex;flex-direction:column;padding:20px 14px 16px;transition:background .4s,border-color .4s}
+.side-brand{display:flex;align-items:center;gap:10px;padding:0 8px 16px;border-bottom:1px solid var(--line);text-decoration:none}
+.side-brand .dot{width:34px;height:34px;border-radius:9999px;background:var(--lavanda-800);display:grid;place-items:center;flex:none}
+.side-brand b{font:800 18px/1 var(--font-display);letter-spacing:-.04em;display:block}
+.side-brand small{font:500 11px/1.3 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
+.toc{list-style:none;margin:12px 0 0;padding:0;overflow-y:auto;flex:1;scrollbar-width:thin}
+.toc a{display:flex;align-items:center;gap:12px;min-height:40px;padding:6px 10px;border-radius:12px;text-decoration:none;color:var(--ink-muted);font-size:14.5px;position:relative;transition:background .2s,color .2s}
+.toc a:hover{background:var(--muted);color:var(--ink)}
+.toc .n{font:500 12px/1 var(--font-mono);width:22px;flex:none;color:var(--line-strong);transition:color .2s}
+.toc a[aria-current="true"]{background:var(--primary-soft);color:var(--primary-text);font-weight:600}
+.toc a[aria-current="true"] .n{color:var(--primary-text)}
+.side-foot{border-top:1px solid var(--line);padding:14px 8px 0;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.progress{flex:1;height:4px;border-radius:9999px;background:var(--muted);overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:var(--primary);border-radius:inherit;transition:width .15s linear}
+.theme{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);display:grid;place-items:center;cursor:pointer;flex:none}
+.theme:hover{background:var(--muted)}
+.theme svg{width:18px;height:18px}
+
+/* botón de índice en móvil */
+.toc-btn{display:none}
+
+/* ===== contenido ===== */
+main{margin-left:calc(var(--side) + 40px);padding:20px 20px 0 0}
+.sec{max-width:1040px;margin:0 auto;padding:96px 24px;scroll-margin-top:-32px;border-bottom:1px solid var(--line)}
+@media (max-height:900px){.sec{padding-block:72px;scroll-margin-top:-12px}}
+.sec.hero{scroll-margin-top:40px}
+.sec:last-of-type{border-bottom:0}
+.kicker{font:500 12px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--primary-text);display:flex;align-items:center;gap:10px}
+.kicker .num{color:var(--ink-muted)}
+.sec h2{font-size:clamp(32px,4.4vw,52px);line-height:1.04;margin-top:16px;max-width:18ch}
+.lead{font-size:clamp(17px,1.6vw,20px);line-height:1.5;color:var(--ink-muted);max-width:62ch;margin-top:18px}
+.lead b{color:var(--ink);font-weight:600}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:500 16px/1 var(--font-sans);height:52px;padding:0 24px;border-radius:12px;border:0;cursor:pointer;text-decoration:none;white-space:nowrap;transition:transform .2s var(--ease),background .2s ease,color .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:var(--primary);color:var(--on-primary)}
+.btn.primary:hover{background:var(--primary-hover)}
+.btn.light{background:#FFFFFF;color:var(--lavanda-800)}
+.btn.light:hover{background:var(--lavanda-100)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn.ghost:hover{background:var(--muted)}
+.btn .arr{transition:transform .25s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+.btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed;transform:none}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;align-items:center}
+
+.status{display:inline-flex;align-items:center;gap:6px;font:500 11.5px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:9999px;white-space:nowrap;width:fit-content}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.st-ok{background:var(--success-soft);color:var(--success)}
+.st-pilot{background:var(--primary-soft);color:var(--primary-text)}
+.st-pend{background:var(--azafran-soft);color:var(--ink)}
+.st-pend::before{background:var(--azafran)}
+
+.card{background:var(--white);border:1px solid var(--line);border-radius:20px;padding:24px;transition:background .4s,border-color .4s}
+.grid{display:grid;gap:16px;margin-top:40px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card h3{font-size:22px;line-height:1.2}
+.card p{color:var(--ink-muted);margin-top:8px;font-size:15px}
+.card .lbl{font:500 12px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:12px;display:block}
+.link{display:inline-flex;align-items:center;gap:8px;margin-top:16px;color:var(--primary-text);font-weight:600;text-decoration:none;font-size:15px}
+.link:hover{text-decoration:underline;text-underline-offset:3px}
+.link[aria-disabled="true"]{color:var(--ink-muted);cursor:not-allowed;text-decoration:none}
+
+/* ===== portada ===== */
+.hero{max-width:none;padding:0;border:0}
+.hero-in{position:relative;background:var(--lavanda-800);color:#fff;border-radius:28px;overflow:hidden;display:grid;grid-template-columns:1.1fr .9fr;min-height:calc(100vh - 40px)}
+.hero-copy{padding:clamp(28px,5vw,64px);display:flex;flex-direction:column;justify-content:space-between;gap:40px;position:relative;z-index:1}
+.hero .kicker{color:var(--lavanda-200)}
+.hero h1{font-weight:800;font-size:clamp(40px,5.6vw,84px);line-height:.98;letter-spacing:-.045em;margin-top:22px;font-variation-settings:"opsz" 96}
+.hero h1 em{font-style:normal;color:var(--lavanda-300)}
+.hero .by{margin-top:24px;font-size:18px;color:var(--lavanda-200)}
+.hero .by b{color:#fff;font-weight:600}
+.authors{margin-top:22px;display:grid;gap:10px}
+.authors .lbl{font:500 12px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--lavanda-300)}
+.authors ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.team{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.team a{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;background:rgba(255,255,255,.07);text-decoration:none;color:#fff;transition:background .2s}
+.team a:hover{background:rgba(255,255,255,.14)}
+.team .av{width:40px;height:40px;border-radius:50%;background:var(--lavanda-300);color:var(--lavanda-950);display:grid;place-items:center;font:700 17px/1 var(--font-display);flex:none}
+.team b{display:block;font-weight:600}
+.team small{display:block;font:500 12px/1.4 var(--font-mono);color:var(--lavanda-300)}
+@media (max-width:900px){.team{grid-template-columns:1fr}}
+.li{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:9999px;background:rgba(255,255,255,.12);color:#fff;text-decoration:none;font-size:14px;font-weight:500}
+.li:hover{background:rgba(255,255,255,.2)}
+.hero-case{border-top:1px solid rgba(255,255,255,.18);padding-top:24px;display:grid;gap:14px}
+.hero-case .lbl{font:500 12px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--lavanda-300)}
+.hero-case .wm{font:800 clamp(30px,3.4vw,46px)/1 var(--font-display);letter-spacing:-.05em}
+.hero-case p{color:var(--lavanda-200);max-width:46ch}
+.hero-photo{position:relative;min-height:340px}
+.hero-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ai-note{position:absolute;right:14px;bottom:14px;background:rgba(20,16,48,.72);color:#fff;font:500 11px/1 var(--font-mono);letter-spacing:.04em;padding:7px 10px;border-radius:9999px;backdrop-filter:blur(6px)}
+.live{position:absolute;left:16px;top:16px;background:#fff;color:var(--ink);border-radius:9999px;padding:8px 14px 8px 8px;display:flex;align-items:center;gap:10px;font-size:14px;box-shadow:0 8px 24px rgba(20,16,48,.25)}
+.live .av{width:28px;height:28px;border-radius:50%;background:var(--lavanda-100);color:var(--lavanda-700);display:grid;place-items:center;font:700 13px/1 var(--font-display)}
+.live .ex{font:500 10.5px/1 var(--font-mono);text-transform:uppercase;letter-spacing:.06em;background:var(--muted);color:var(--ink-muted);padding:4px 7px;border-radius:9999px}
+.facts{display:flex;flex-wrap:wrap;gap:8px}
+.facts span{font:500 12px/1 var(--font-mono);letter-spacing:.04em;padding:8px 12px;border-radius:9999px;background:rgba(255,255,255,.1);color:var(--lavanda-100)}
+.scroll-hint{display:inline-flex;align-items:center;gap:10px;color:var(--lavanda-200);text-decoration:none;font-size:14px}
+.scroll-hint i{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;font-style:normal;animation:bob 2.4s var(--ease) infinite}
+@keyframes bob{50%{transform:translateY(4px)}}
+
+/* ===== proceso ===== */
+.steps{list-style:none;padding:0;margin:48px 0 0;display:grid;gap:0;counter-reset:s;position:relative}
+.steps li{display:grid;grid-template-columns:56px 1fr auto;gap:20px;align-items:start;padding:20px 0;border-top:1px solid var(--line)}
+.steps li:last-child{border-bottom:1px solid var(--line)}
+.steps .n{font:500 14px/1 var(--font-mono);color:var(--primary-text);padding-top:6px}
+.steps h3{font-size:22px;line-height:1.2}
+.steps p{color:var(--ink-muted);margin-top:4px;font-size:15px;max-width:58ch}
+.steps a{align-self:center;font-size:14px;color:var(--primary-text);font-weight:600;text-decoration:none;white-space:nowrap}
+.steps a:hover{text-decoration:underline;text-underline-offset:3px}
+.tools{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tools span{font:500 11.5px/1 var(--font-mono);padding:6px 9px;border-radius:9999px;background:var(--muted);color:var(--ink-muted)}
+
+/* ===== cifras ===== */
+.stat b{display:block;font:700 clamp(34px,3.6vw,48px)/1 var(--font-display);letter-spacing:-.04em;color:var(--primary-text)}
+.stat span{display:block;color:var(--ink-muted);font-size:14.5px;margin-top:8px}
+.note{display:flex;gap:12px;align-items:flex-start;margin-top:20px;padding:14px 16px;border-radius:16px;background:var(--azafran-soft);font-size:14.5px;max-width:72ch}
+.note::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--azafran);margin-top:7px;flex:none}
+
+/* ===== comparativa ===== */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+.vs .card{padding:28px}
+.vs .who{font:700 28px/1 var(--font-display);letter-spacing:-.04em}
+.vs ul{margin:16px 0 0;padding-left:18px;color:var(--ink-muted);display:grid;gap:8px;font-size:15px}
+.verdict{margin-top:16px;background:var(--lavanda-800);color:#fff;border-radius:20px;padding:28px;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
+.verdict .lbl{font:500 12px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--lavanda-300);padding-top:6px}
+.verdict p{font-size:18px;line-height:1.5;color:var(--lavanda-100)}
+.verdict b{color:#fff}
+
+/* ===== marca ===== */
+.swatches{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px;margin-top:40px}
+.sw{border-radius:20px;padding:18px;min-height:150px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;font-size:14px}
+.sw b{font:600 16px/1.2 var(--font-sans)}
+.sw .m{font-size:12px;opacity:.8}
+.type-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.type-row .card .spec{font-size:44px;line-height:1;margin-bottom:14px;color:var(--ink)}
+.claim{margin-top:12px;border-radius:20px;padding:28px;background:var(--lavanda-100);color:var(--lavanda-800);font:700 clamp(24px,3vw,36px)/1.15 var(--font-display);letter-spacing:-.03em}
+:root[data-theme="dark"] .claim{background:#2A2548;color:var(--lavanda-200)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .claim{background:#2A2548;color:var(--lavanda-200)}}
+
+/* ===== bloques con imagen ===== */
+.feature{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+.shot{position:relative;border-radius:24px;overflow:hidden;min-height:340px;background:var(--muted)}
+.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{font:500 12px/1 var(--font-mono);padding:8px 11px;border-radius:9999px;background:var(--primary-soft);color:var(--primary-text)}
+.chip.p{background:var(--savia-soft);color:var(--savia)}
+.chip.h{background:var(--azafran-soft);color:var(--ink)}
+.checks{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:10px}
+.checks li{display:flex;gap:10px;align-items:flex-start;font-size:15px}
+.checks li::before{content:"";width:18px;height:18px;flex:none;margin-top:2px;border-radius:50%;background:var(--success-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231D7A68' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center/12px no-repeat}
+
+/* PRD módulos */
+.mods{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:20px}
+.mod{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--white)}
+.mod b{display:block;font:500 13px/1 var(--font-mono);color:var(--primary-text)}
+.mod span{display:block;font-size:13.5px;color:var(--ink-muted);margin-top:6px;line-height:1.3}
+
+/* figma */
+.proto{display:flex;flex-direction:column;justify-content:space-between;gap:20px;min-height:220px}
+.proto .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.proto .ic{width:44px;height:44px;border-radius:12px;background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center}
+.proto .ic svg{width:22px;height:22px}
+.proto.empty{border-style:dashed;background:transparent}
+
+/* POC */
+.phones{display:flex;gap:16px;justify-content:center;align-items:center;padding:32px 16px;background:var(--lavanda-100);border-radius:24px;min-height:340px}
+:root[data-theme="dark"] .phones{background:#2A2548}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .phones{background:#2A2548}}
+.phone{width:min(46%,200px);background:var(--white);border-radius:28px;padding:14px 12px;box-shadow:var(--shadow-float);display:grid;gap:8px;font-size:12.5px}
+.phone .ph-h{font:500 10.5px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);display:flex;justify-content:space-between;padding:2px 4px 6px;border-bottom:1px solid var(--line)}
+.bub{padding:8px 10px;border-radius:14px;background:var(--muted);max-width:90%;line-height:1.35}
+.bub.me{background:var(--primary);color:var(--on-primary);justify-self:end}
+.bub.sys{background:var(--lavanda-100);color:var(--lavanda-700);justify-self:stretch;max-width:none;font-size:11.5px}
+.bub.heat{background:var(--azafran-soft);color:var(--ink);max-width:none}
+.phone.b{transform:translateY(-24px)}
+
+/* cierre */
+.end{background:var(--lavanda-950);color:var(--lavanda-200);border-radius:28px;padding:clamp(28px,5vw,56px);margin:0 0 20px;display:grid;gap:24px}
+.end h2{color:#fff;margin:0;max-width:22ch}
+.end p{max-width:64ch}
+.end .meta{display:flex;flex-wrap:wrap;gap:8px 20px;font:500 12px/1.4 var(--font-mono);letter-spacing:.04em;color:var(--lavanda-300);border-top:1px solid rgba(255,255,255,.14);padding-top:20px}
+
+
+
+/* sala de test */
+.lab{margin-top:40px;background:var(--white);border:1px solid var(--line);border-radius:24px;overflow:hidden}
+.lab-bar{display:flex;align-items:center;gap:16px;padding:12px 18px;border-bottom:1px solid var(--line);font-size:13px}
+.lab-bar .m{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
+.lab-bar .t{margin-left:auto;color:var(--ink)}
+.rec{display:inline-flex;align-items:center;gap:8px;font-weight:600}
+.rec i{width:8px;height:8px;border-radius:50%;background:var(--success);animation:blink 1.6s ease infinite}
+@keyframes blink{50%{opacity:.3}}
+.lab-in{display:grid;grid-template-columns:1fr 1.25fr .8fr;gap:16px;padding:18px;background:var(--canvas)}
+.lab-col{display:grid;gap:12px;align-content:start}
+.lab-box{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:8px}
+.lab-l{font:500 11px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg span{font-size:12px;padding:6px 9px;border-radius:9999px;background:var(--muted);color:var(--ink-muted)}
+.seg span.on{background:var(--primary);color:var(--on-primary)}
+.task{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font-size:12.5px;padding:7px 8px;border-radius:10px;color:var(--ink-muted)}
+.task b{font-size:11px;color:var(--ink-muted)}
+.task .m{font-size:11px}
+.task.ok{background:var(--success-soft);color:var(--ink)}
+.task.ok b{color:var(--success)}
+.task.run{background:var(--primary-soft);color:var(--primary-text);font-weight:600}
+.task.run b{color:var(--primary-text)}
+.lab-phones{display:flex;gap:12px;justify-content:center;align-items:flex-start;padding:8px 0}
+.lab-phones .phone{width:min(48%,190px)}
+.lab-phones .phone.b{transform:translateY(20px)}
+.seq{background:var(--lavanda-800);color:#fff;border-radius:14px;padding:10px;font-size:11.5px;display:grid;gap:8px}
+.seq .dots{display:flex;gap:4px}
+.seq .dots i{flex:1;height:16px;border-radius:5px;background:rgba(255,255,255,.18)}
+.seq .dots i.on{background:var(--lavanda-300)}
+.log{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:12px;gap:8px}
+.log p{font-size:12px;display:flex;gap:8px;color:var(--ink);font-family:var(--font-mono)}
+.log p .m{color:var(--ink-muted)}
+@media (max-width:1100px){.lab-in{grid-template-columns:1fr 1fr}.lab-phones{grid-column:1/-1;order:-1}}
+@media (max-width:560px){#sala .g4{grid-template-columns:1fr}.lab-in{grid-template-columns:1fr}.lab-bar .rec{font-size:12px}}
+
+/* agradecimientos */
+#gracias{padding-bottom:40px}
+.thanks{display:grid;grid-template-columns:1fr 1fr .7fr;gap:16px;margin-top:40px}
+.person{display:flex;gap:16px;align-items:center}
+.person .av{width:56px;height:56px;border-radius:50%;background:var(--primary-soft);color:var(--primary-text);display:grid;place-items:center;font:700 22px/1 var(--font-display);flex:none}
+.person p{margin-top:4px}
+a.person{text-decoration:none;color:inherit;transition:border-color .2s,transform .2s var(--ease)}
+a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
+.person .in{display:inline-block;margin-top:10px;font:500 12px/1 var(--font-mono);letter-spacing:.04em;color:var(--primary-text)}
+.hours{background:var(--lavanda-800);border-color:var(--lavanda-800);color:var(--lavanda-200);display:flex;flex-direction:column;justify-content:center}
+.hours b{font:700 44px/1 var(--font-display);letter-spacing:-.04em;color:#fff}
+.hours span{margin-top:8px;font-size:15px}
+.quote{margin:16px 0 0;padding:28px;border-radius:20px;background:var(--primary-soft);color:var(--primary-text);font:700 clamp(22px,2.6vw,30px)/1.25 var(--font-display);letter-spacing:-.03em}
+.foot{margin-top:32px;font:500 12px/1.5 var(--font-mono);letter-spacing:.04em;color:var(--ink-muted)}
+@media (max-width:900px){.thanks{grid-template-columns:1fr}#gracias{padding-bottom:96px}.end{margin-bottom:0}}
+
+/* animación de entrada */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+/* ===== responsive ===== */
+@media (max-width:1100px){
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mods{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .swatches{grid-template-columns:1fr 1fr}
+}
+@media (max-width:900px){
+  .side{left:16px;right:16px;top:auto;bottom:84px;width:auto;max-height:min(72vh,560px);transform:translateY(16px) scale(.98);opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease)}
+  .side.open{transform:none;opacity:1;pointer-events:auto}
+  .toc-btn{display:inline-flex;position:fixed;left:16px;bottom:16px;z-index:41;height:52px;padding:0 18px 0 14px;border-radius:9999px;border:0;background:var(--lavanda-800);color:#fff;font:500 15px/1 var(--font-sans);align-items:center;gap:10px;box-shadow:var(--shadow-float);cursor:pointer}
+  .toc-btn .cur{font:500 12px/1 var(--font-mono);color:var(--lavanda-300)}
+  main{margin-left:0;padding:16px 16px 0}
+  .sec{padding:72px 0}
+  .hero-in{grid-template-columns:1fr;min-height:0}
+  .hero-photo{min-height:280px;order:-1}
+  .g2,.g3,.vs,.feature,.type-row{grid-template-columns:1fr}
+  .steps li{grid-template-columns:40px 1fr}
+  .steps a{grid-column:2}
+  .verdict{grid-template-columns:1fr}
+  .end{margin-bottom:84px}
+}
+@media (max-width:560px){
+  .g4,.mods,.swatches{grid-template-columns:1fr 1fr}
+  .phone .bub{font-size:11.5px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head><body>
+<a href="#main" class="skip">Saltar al contenido</a>
+
+<!-- MENÚ LATERAL FLOTANTE -->
+<aside class="side" id="side" aria-label="Índice del proyecto">
+  <a class="side-brand" href="#inicio">
+    <span class="dot" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C1C0FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6 0-9 5-13M12 21c0-5-2-8-7-9 0 5 3 8 7 9z"/><path d="M17 8c-3 0-5 2-5 5 3 0 5-2 5-5z"/></svg></span>
+    <b>Todo Sigue Vivo</b>
+  </a>
+  <nav>
+    <ol class="toc" id="toc">
+      <li><a href="#inicio"><span class="n">00</span>Inicio</a></li>
+      <li><a href="#proceso"><span class="n">01</span>El proceso</a></li>
+      <li><a href="#investigacion"><span class="n">02</span>Investigación</a></li>
+      <li><a href="#estrategia"><span class="n">03</span>Estrategia</a></li>
+      <li><a href="#gpt-claude"><span class="n">04</span>GPT frente a Claude</a></li>
+      <li><a href="#marca"><span class="n">05</span>Marca y guía de estilo</a></li>
+      <li><a href="#web"><span class="n">06</span>Web pública</a></li>
+      <li><a href="#prd"><span class="n">07</span>PRD y arquitectura</a></li>
+      <li><a href="#figma"><span class="n">08</span>Prototipos en Figma</a></li>
+      <li><a href="#poc"><span class="n">09</span>POC funcional</a></li>
+      <li><a href="#sala"><span class="n">10</span>Sala de test de usuario</a></li>
+      <li><a href="#cierre"><span class="n">11</span>Hecho con IA</a></li>
+      <li><a href="#gracias"><span class="n">12</span>Agradecimientos</a></li>
+    </ol>
+  </nav>
+  <div class="side-foot">
+    <div class="progress" aria-hidden="true"><i id="prog"></i></div>
+    <button type="button" class="theme" id="theme" aria-label="Cambiar tema claro u oscuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg></button>
+  </div>
+</aside>
+<button type="button" class="toc-btn" id="toc-btn" aria-controls="side" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>Índice <span class="cur" id="toc-cur">00</span></button>
+
+<main id="main">
+
+<!-- 00 INICIO -->
+<section class="sec hero" id="inicio" aria-labelledby="t-inicio">
+  <div class="hero-in">
+    <div class="hero-copy">
+      <div>
+        <p class="kicker">Proyecto final del curso</p>
+        <h1 id="t-inicio">Cómo construir un producto digital <em>con IA</em></h1>
+        <p class="by">Impartido por <b>La Nave Nodriza</b> de la mano de <b>Cloud District</b></p>
+        <div class="authors"><span class="lbl">Un proyecto de</span><ul><li><a class="li" href="https://www.linkedin.com/in/pilarbermejo/" target="_blank" rel="noopener" aria-label="Pilar Bermejo en LinkedIn (se abre en una pestaña nueva)"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.46h-4v-4.84c0-1.16-.02-2.64-1.61-2.64-1.61 0-1.86 1.26-1.86 2.56v4.92h-4z"/></svg><span>Pilar Bermejo</span></a></li><li><a class="li" href="https://www.linkedin.com/in/gema-d%C3%ADez-gonz%C3%A1lez-74157943/" target="_blank" rel="noopener" aria-label="Gema Díez González en LinkedIn (se abre en una pestaña nueva)"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.46h-4v-4.84c0-1.16-.02-2.64-1.61-2.64-1.61 0-1.86 1.26-1.86 2.56v4.92h-4z"/></svg><span>Gema Díez González</span></a></li><li><a class="li" href="https://www.linkedin.com/in/maria-diez-galeron/" target="_blank" rel="noopener" aria-label="María Díez Galerón en LinkedIn (se abre en una pestaña nueva)"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.46h-4v-4.84c0-1.16-.02-2.64-1.61-2.64-1.61 0-1.86 1.26-1.86 2.56v4.92h-4z"/></svg><span>María Díez Galerón</span></a></li></ul></div>
+      </div>
+      <div class="hero-case">
+        <span class="lbl">Caso práctico</span>
+        <span class="wm">Todo Sigue Vivo</span>
+        <p>Cuidadores de barrio que saben de plantas y de animales, también de los exóticos. De la investigación a una POC que funciona, construido de principio a fin con IA.</p>
+        <div class="facts"><span>Research</span><span>Estrategia</span><span>Marca</span><span>Web</span><span>PRD</span><span>Figma</span><span>POC</span></div>
+        <a class="scroll-hint" href="#proceso"><i aria-hidden="true">↓</i>Recorre el proyecto</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="img/hero.jpg" alt="Cuidadora regando una planta en un piso de Madrid, con una gata en el balcón" fetchpriority="high">
+      <div class="live"><span class="av">I</span><span><b>Irene ha llegado</b> · <span class="m">18:04</span></span><span class="ex">Ejemplo</span></div>
+      <span class="ai-note">Imagen creada con IA</span>
+    </div>
+  </div>
+</section>
+
+<!-- 01 PROCESO -->
+<section class="sec" id="proceso" aria-labelledby="t-proceso">
+  <p class="kicker rv"><span class="num">01</span>El proceso</p>
+  <h2 id="t-proceso" class="rv">De una idea a algo que se puede probar</h2>
+  <p class="lead rv">Cada fase la hicieron dos IAs en paralelo, <b>ChatGPT y Claude</b>. Luego se compararon los resultados y se unificaron en una sola versión. Este índice sigue el mismo orden.</p>
+  <ol class="steps">
+    <li class="rv"><span class="n">01</span><div><h3>Investigación</h3><p>Mercado sintético, arquetipos, personas y focus group simulado.</p><div class="tools"><span>ChatGPT</span><span>Claude</span></div></div><a href="#investigacion">Ver fase →</a></li>
+    <li class="rv"><span class="n">02</span><div><h3>Estrategia</h3><p>Nicho, ciudad, modelo de negocio, fases y métricas para decidir si se sigue.</p><div class="tools"><span>Claude</span></div></div><a href="#estrategia">Ver fase →</a></li>
+    <li class="rv"><span class="n">03</span><div><h3>Comparar y decidir</h3><p>Revisión crítica de los entregables de las dos IAs y de lo que ninguna demuestra.</p><div class="tools"><span>Claude</span></div></div><a href="#gpt-claude">Ver fase →</a></li>
+    <li class="rv"><span class="n">04</span><div><h3>Marca y guía de estilo</h3><p>Fusión de las dos guías en un sistema visual único.</p><div class="tools"><span>ChatGPT</span><span>Claude</span></div></div><a href="#marca">Ver fase →</a></li>
+    <li class="rv"><span class="n">05</span><div><h3>Web pública</h3><p>Web de captación del piloto, honesta con lo que aún no existe.</p><div class="tools"><span>Claude</span></div></div><a href="#web">Ver fase →</a></li>
+    <li class="rv"><span class="n">06</span><div><h3>PRD y arquitectura</h3><p>Requisitos de la v1, reglas de negocio, modelo de datos y analítica.</p><div class="tools"><span>Claude</span></div></div><a href="#prd">Ver fase →</a></li>
+    <li class="rv"><span class="n">07</span><div><h3>Prototipos en Figma</h3><p>Pantallas y comunicaciones del producto.</p><div class="tools"><span>Figma</span><span>Claude</span></div></div><a href="#figma">Ver fase →</a></li>
+    <li class="rv"><span class="n">08</span><div><h3>POC funcional</h3><p>Área privada de dueños y cuidadores que funciona de verdad, de principio a fin.</p><div class="tools"><span>Claude Code</span></div></div><a href="#poc">Ver fase →</a></li>
+    <li class="rv"><span class="n">09</span><div><h3>Sala de test de usuario</h3><p>Herramienta para moderar pruebas con personas reales y medir cada tarea.</p><div class="tools"><span>Claude Code</span></div></div><a href="#sala">Ver fase →</a></li>
+  </ol>
+</section>
+
+<!-- 02 INVESTIGACIÓN -->
+<section class="sec" id="investigacion" aria-labelledby="t-inv">
+  <p class="kicker rv"><span class="num">02</span>Investigación</p>
+  <h2 id="t-inv" class="rv">Un mercado simulado para hacer las preguntas correctas</h2>
+  <p class="lead rv">Se generó un marketplace sintético de cuidado de mascotas y plantas en España. A partir de él salieron los <b>arquetipos de dueño y de cuidador</b> y un <b>focus group simulado</b>. El objetivo no era validar nada, sino saber qué habría que preguntar a personas reales.</p>
+  <div class="grid g4">
+    <div class="card stat rv"><b class="m">780</b><span>dueños simulados</span></div>
+    <div class="card stat rv"><b class="m">220</b><span>cuidadores simulados</span></div>
+    <div class="card stat rv"><b class="m">1.953</b><span>solicitudes</span></div>
+    <div class="card stat rv"><b class="m">6 + 3</b><span>arquetipos de dueño y de cuidador</span></div>
+  </div>
+  <p class="note rv">Los datos son sintéticos: reflejan los supuestos con los que se generaron, no el mercado real. Por eso todo lo que concluyen está marcado «por validar».</p>
+  <div class="grid g3">
+    <article class="card rv"><span class="lbl">Personas</span><h3>Arquetipos y buyer personas</h3><p>Marta, Pablo, Álex, Laura… cada uno con su peso en el mercado, su gasto y lo que le preocupa.</p><a class="link" href="docs/research/personas.html" data-pending>Ver personas →</a></article>
+    <article class="card rv"><span class="lbl">Focus group</span><h3>Insights del focus group</h3><p>Guion de moderación reutilizable y lo que dijeron los participantes simulados.</p><a class="link" href="docs/research/focus-group.html" data-pending>Ver insights →</a></article>
+    <article class="card rv"><span class="lbl">Datos</span><h3>Radar y mesa de datos</h3><p>Paneles interactivos sobre mascotas, plantas, temporada y cobertura por barrio.</p><a class="link" href="docs/research/radar.html" data-pending>Ver radar →</a></article>
+  </div>
+</section>
+
+<!-- 03 ESTRATEGIA -->
+<section class="sec" id="estrategia" aria-labelledby="t-est">
+  <p class="kicker rv"><span class="num">03</span>Estrategia</p>
+  <h2 id="t-est" class="rv">Primero los mejores en plantas y exóticos, en pocos barrios</h2>
+  <p class="lead rv">La investigación se convirtió en decisiones: <b>a quién</b> servir primero, <b>dónde</b> empezar, <b>cuánto</b> cobrar y <b>qué cifras</b> deciden si el proyecto sigue adelante.</p>
+  <div class="grid g4">
+    <div class="card stat rv"><b class="m">5</b><span>barrios de Madrid para el piloto</span></div>
+    <div class="card stat rv"><b class="m">15 %</b><span>de comisión por reserva</span></div>
+    <div class="card stat rv"><b class="m">40</b><span>cuidadores para arrancar</span></div>
+    <div class="card stat rv"><b class="m">18</b><span>meses en 5 fases</span></div>
+  </div>
+  <div class="ctas rv">
+    <a class="btn primary" href="docs/estrategia.pdf" data-pending>Leer la estrategia <span class="arr" aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<!-- 04 GPT VS CLAUDE -->
+<section class="sec" id="gpt-claude" aria-labelledby="t-vs">
+  <p class="kicker rv"><span class="num">04</span>GPT frente a Claude</p>
+  <h2 id="t-vs" class="rv">Dos IAs, dos formas de trabajar</h2>
+  <p class="lead rv">Las mismas tareas, dos resultados muy distintos. Compararlos ayudó a decidir qué quedarse de cada uno y, sobre todo, <b>qué no está demostrado</b> aunque lo parezca.</p>
+  <div class="vs">
+    <article class="card rv"><span class="who">ChatGPT</span><p style="color:var(--ink-muted);margin-top:8px">Un investigador prudente</p><ul><li>El mejor guion de focus group, reutilizable con personas reales.</li><li>Una landing sobria que no promete nada que no exista.</li><li>No llega a elegir segmento, ciudad ni modelo de negocio.</li></ul></article>
+    <article class="card rv"><span class="who">Claude</span><p style="color:var(--ink-muted);margin-top:8px">Un estratega que toma decisiones</p><ul><li>Convierte la investigación en un plan con nicho, precios y fases.</li><li>Una web más potente: parte del día, ola de calor, calculadora.</li><li>Asume más riesgos y promete cosas que aún no existen.</li></ul></article>
+  </div>
+  <div class="verdict rv"><span class="lbl">Decisión</span><p><b>La estrategia de Claude como columna vertebral</b>, con el guion de moderación de GPT y su criterio de no prometer lo que aún no existe.</p></div>
+  <div class="ctas rv"><a class="btn ghost" href="docs/conclusiones-gpt-claude.html" data-pending>Leer la comparativa completa <span class="arr" aria-hidden="true">→</span></a></div>
+</section>
+
+<!-- 05 MARCA -->
+<section class="sec" id="marca" aria-labelledby="t-marca">
+  <p class="kicker rv"><span class="num">05</span>Marca y guía de estilo</p>
+  <h2 id="t-marca" class="rv">Calma antes que urgencia</h2>
+  <p class="lead rv">Un solo color de marca, la lavanda, y dos de apoyo con significado: <b>savia</b> para lo botánico y <b>azafrán</b> solo para el calor. Nada de huellas ni corazones: plantas y animales pesan lo mismo.</p>
+  <div class="swatches">
+    <div class="sw rv" style="background:#5646B0;color:#fff"><b>Lavanda</b><span class="m">#5646B0 · acción principal</span></div>
+    <div class="sw rv" style="background:#32296A;color:#DADAFF"><b>Lavanda 800</b><span class="m">#32296A</span></div>
+    <div class="sw rv" style="background:#1F4E45;color:#DCEBE5"><b>Savia</b><span class="m">#1F4E45 · plantas</span></div>
+    <div class="sw rv" style="background:#E0A21A;color:#1B1A12"><b>Azafrán</b><span class="m">#E0A21A · calor</span></div>
+  </div>
+  <div class="type-row">
+    <div class="card rv"><p class="spec" style="font:700 44px/1 var(--font-display);letter-spacing:-.04em">Aa</p><span class="lbl" style="margin:0">Bricolage Grotesque</span><p>Titulares</p></div>
+    <div class="card rv"><p class="spec" style="font:500 44px/1 var(--font-sans)">Aa</p><span class="lbl" style="margin:0">Instrument Sans</span><p>Lectura</p></div>
+    <div class="card rv"><p class="spec m" style="font-size:36px;line-height:1.2">18:04</p><span class="lbl" style="margin:0">IBM Plex Mono</span><p>Datos: horas, °C, precios</p></div>
+  </div>
+  <p class="claim rv">«Vete tranquilo, en casa todo sigue vivo.»</p>
+  <div class="ctas rv"><a class="btn primary" href="docs/guia-de-estilo.html" data-pending>Ver la guía de estilo <span class="arr" aria-hidden="true">→</span></a><a class="btn ghost" href="docs/guia-de-marca.html" data-pending>Guía de marca</a></div>
+</section>
+
+<!-- 06 WEB -->
+<section class="sec" id="web" aria-labelledby="t-web">
+  <p class="kicker rv"><span class="num">06</span>Web pública</p>
+  <h2 id="t-web" class="rv">Una web que enseña el servicio sin prometer de más</h2>
+  <p class="lead rv">La web de captación del piloto en Madrid. Cuenta qué es Todo Sigue Vivo con un parte del día animado, un configurador de tu casa y el aviso de ola de calor. Lo que aún no existe lleva su <b>estado visible</b>.</p>
+  <div class="feature">
+    <div class="shot rv"><img src="img/visita-riego.jpg" alt="Cuidadora regando plantas en un salón" loading="lazy"><span class="ai-note">Imagen creada con IA</span></div>
+    <div class="card rv" style="display:flex;flex-direction:column;justify-content:space-between;gap:20px">
+      <div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="status st-ok">Listo</span><span class="status st-pilot">En piloto</span><span class="status st-pend">En contratación</span></div>
+        <ul class="checks"><li>Parte del día animado con avisos reales</li><li>Configurador de la casa: plantas y animales</li><li>Ola de calor con visita extra</li><li>Lista de espera en dos pasos, con resumen</li><li>Tema claro y oscuro, accesible</li></ul>
+      </div>
+      <div class="ctas" style="margin:0"><a class="btn primary" href="web/index.html" data-pending>Ver la web <span class="arr" aria-hidden="true">→</span></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 PRD -->
+<section class="sec" id="prd" aria-labelledby="t-prd">
+  <p class="kicker rv"><span class="num">07</span>PRD y arquitectura</p>
+  <h2 id="t-prd" class="rv">Qué hace la v1 y qué deja fuera</h2>
+  <p class="lead rv">El documento de producto define los públicos, los <b>requisitos con código</b> para cada parte del servicio, las reglas de negocio, el modelo de datos y los eventos de analítica. La arquitectura propone cómo construir el MVP.</p>
+  <div class="mods">
+    <div class="mod rv"><b>CTA</b><span>Cuenta y alta</span></div>
+    <div class="mod rv"><b>CASA</b><span>Ficha de la casa</span></div>
+    <div class="mod rv"><b>SOL</b><span>Solicitud con precisión</span></div>
+    <div class="mod rv"><b>EMP</b><span>Emparejamiento</span></div>
+    <div class="mod rv"><b>CAN</b><span>Candidaturas y chat</span></div>
+    <div class="mod rv"><b>ENC</b><span>Encuentro previo</span></div>
+    <div class="mod rv"><b>VIS</b><span>Visitas y parte del día</span></div>
+    <div class="mod rv"><b>CAL</b><span>Ola de calor</span></div>
+    <div class="mod rv"><b>INC</b><span>Incidencias</span></div>
+    <div class="mod rv"><b>RES</b><span>Reseñas</span></div>
+  </div>
+  <div class="ctas rv"><a class="btn primary" href="docs/prd.pdf" data-pending>Leer el PRD <span class="arr" aria-hidden="true">→</span></a><a class="btn ghost" href="docs/arquitectura.html" data-pending>Diagramas de arquitectura</a></div>
+</section>
+
+<!-- 08 FIGMA -->
+<section class="sec" id="figma" aria-labelledby="t-figma">
+  <p class="kicker rv"><span class="num">08</span>Prototipos en Figma</p>
+  <h2 id="t-figma" class="rv">El producto, pantalla a pantalla</h2>
+  <p class="lead rv">Prototipos navegables en Figma. Se abren en una pestaña nueva y se recorren pulsando, como el producto real.</p>
+  <div class="grid g2" id="protos">
+    <article class="card proto rv">
+      <div class="top"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3.5 7l8.5 6 8.5-6"/></svg></span><span class="status st-ok">Prototipo</span></div>
+      <div><h3>Emails</h3><p>Las comunicaciones por correo del servicio.</p></div>
+      <a class="btn primary" href="https://www.figma.com/proto/nXjJOvoHLiT22pBPexameC/DesignSystem?node-id=40-436&amp;p=f&amp;viewport=25%2C51%2C0.33&amp;t=uck3mfljISec4OUT-1&amp;scaling=scale-down&amp;content-scaling=responsive&amp;starting-point-node-id=40%3A436&amp;page-id=34%3A2&amp;show-proto-sidebar=1" target="_blank" rel="noopener">Abrir el prototipo <span class="arr" aria-hidden="true">↗</span></a>
+    </article>
+    <article class="card proto rv">
+      <div class="top"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="4"/><rect x="3" y="13" width="8" height="8" rx="4"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg></span><span class="status st-ok">Sistema de diseño</span></div>
+      <div><h3>Design System</h3><p>Colores, tipografía y componentes de Todo Sigue Vivo, listos para diseñar.</p></div>
+      <a class="btn primary" href="https://www.figma.com/proto/nXjJOvoHLiT22pBPexameC/DesignSystem?node-id=26-3&amp;p=f&amp;viewport=25%2C299%2C0.06&amp;t=hDk2SWOZmjS6Ls7w-8&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;starting-point-node-id=26%3A3&amp;page-id=26%3A2&amp;hide-ui=1" target="_blank" rel="noopener">Abrir el sistema de diseño <span class="arr" aria-hidden="true">↗</span></a>
+    </article>
+  </div>
+</section>
+
+<!-- 09 POC -->
+<section class="sec" id="poc" aria-labelledby="t-poc">
+  <p class="kicker rv"><span class="num">09</span>POC funcional</p>
+  <h2 id="t-poc" class="rv">El journey completo, funcionando</h2>
+  <p class="lead rv">Una prueba de concepto que se puede usar de verdad desde los dos lados: <b>Marta publica</b> el cuidado de su casa y <b>Irene, cuidadora</b>, recibe el aviso, se presenta y chatea con ella. Llega hasta la visita con su parte del día y la reseña.</p>
+  <div class="feature">
+    <div class="phones rv" aria-hidden="true">
+      <div class="phone"><div class="ph-h"><span>Marta</span><span>Dueña</span></div><div class="bub sys">Irene se ha presentado a tu anuncio</div><div class="bub">Hola Marta, tengo experiencia con calatheas y gatos.</div><div class="bub me">¿Te viene bien vernos el jueves?</div></div>
+      <div class="phone b"><div class="ph-h"><span>Irene</span><span>Cuidadora</span></div><div class="bub sys">Nueva solicitud · Malasaña</div><div class="bub heat">Ola de calor el jueves: visita extra</div><div class="bub me">He llegado · <span class="m">18:04</span></div></div>
+    </div>
+    <div class="card rv">
+      <span class="status st-pilot">Demo de portfolio</span>
+      <ul class="checks"><li>Emparejamiento con avisos solo a cuidadores idóneos</li><li>Chat en tiempo real que oculta teléfonos hasta reservar</li><li>Encuentro previo, reserva y visitas con fotos</li><li>Ola de calor, cancelación con sustituto y reseñas ciegas</li><li>Avisos en la web y notificaciones del navegador</li></ul>
+      <p style="margin-top:16px;font-size:14px;color:var(--ink-muted)">Los datos son de ejemplo y se guardan solo en tu navegador.</p>
+      <div class="ctas" style="margin-top:20px"><a class="btn primary" href="demo/area-privada.html" data-pending>Probar el área privada <span class="arr" aria-hidden="true">→</span></a><a class="btn ghost" href="#sala">Ver la sala de test</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 SALA DE TEST -->
+<section class="sec" id="sala" aria-labelledby="t-sala">
+  <p class="kicker rv"><span class="num">10</span>Sala de test de usuario</p>
+  <h2 id="t-sala" class="rv">Probar con personas reales desde un solo ordenador</h2>
+  <p class="lead rv">Una sala para <b>moderar pruebas de usabilidad</b> sin montar nada más. La persona participante usa un móvil y quien modera lleva el otro, con los dos lados del servicio a la vez. Cada clic, cada tiempo y cada respuesta quedan registrados para analizarlos después.</p>
+
+  <div class="lab rv" aria-hidden="true">
+    <div class="lab-bar"><span class="m">Sala de test</span><span class="rec"><i></i>Sesión P03 · Dueña</span><span class="m t">04:12</span></div>
+    <div class="lab-in">
+      <div class="lab-col">
+        <div class="lab-box"><span class="lab-l">1 · Escenario</span><div class="seg"><span>Desde cero</span><span class="on">Anuncio publicado</span><span>Reserva</span><span>Ola de calor</span></div></div>
+        <div class="lab-box"><span class="lab-l">2 · Tareas</span>
+          <div class="task ok"><b class="m">D1</b>Publica el cuidado de tu casa<span class="m">01:48</span></div>
+          <div class="task run"><b class="m">D2</b>Elige a una cuidadora y proponle veros<span class="m">02:24</span></div>
+          <div class="task"><b class="m">D3</b>Revisa el parte del día</div>
+        </div>
+        <div class="lab-box"><span class="lab-l">3 · Simular</span><div class="seg"><span>Que se presente</span><span>Ola de calor</span><span>Visita</span></div></div>
+      </div>
+      <div class="lab-phones">
+        <div class="phone"><div class="ph-h"><span>A · Marta</span><span>Participante</span></div><div class="bub sys">Javier se ha presentado</div><div class="bub">Hola Marta, cuido gatos desde hace 6 años.</div><div class="seq"><b>¿Te ha resultado fácil?</b><div class="dots"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i></div></div></div>
+        <div class="phone b"><div class="ph-h"><span>B · Javier</span><span>Modera</span></div><div class="bub sys">Nueva solicitud · Fuencarral</div><div class="bub me">Me interesa</div></div>
+      </div>
+      <div class="lab-col log">
+        <span class="lab-l">Registro</span>
+        <p><span class="m">04:01</span>anuncio_publicado</p>
+        <p><span class="m">04:03</span>aviso_enviado ×3</p>
+        <p><span class="m">04:05</span>candidatura_recibida</p>
+        <p><span class="m">04:09</span>chat_abierto</p>
+        <p><span class="m">04:12</span>seq · 6/7</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid g4">
+    <article class="card rv"><span class="lbl">01</span><h3>Sesión y escenario</h3><p>Código de participante, rol y punto de partida listo en un clic: desde cero hasta la reserva terminada.</p></article>
+    <article class="card rv"><span class="lbl">02</span><h3>Tareas cronometradas</h3><p>Seis tareas por rol. Se marca si la persona lo logra sola, con ayuda o no lo consigue.</p></article>
+    <article class="card rv"><span class="lbl">03</span><h3>Pregunta de facilidad</h3><p>Al acabar cada tarea, la persona recibe en su móvil una escala del 1 al 7 y «¿qué esperabas que pasara?».</p></article>
+    <article class="card rv"><span class="lbl">04</span><h3>Datos para analizar</h3><p>Notas, registro de eventos y descarga en CSV para abrir en Excel o Google Sheets.</p></article>
+  </div>
+  <p class="note rv">Quien modera puede provocar situaciones difíciles de reproducir: que un cuidador se presente, que nadie responda en 12 horas, una ola de calor o una visita completa con su parte.</p>
+  <div class="ctas rv"><a class="btn primary" href="demo/sala.html" data-pending>Abrir la sala de test <span class="arr" aria-hidden="true">→</span></a></div>
+</section>
+
+<!-- 11 CIERRE -->
+<section class="sec" id="cierre" aria-labelledby="t-fin">
+  <div class="end rv">
+    <p class="kicker" style="color:var(--lavanda-300)"><span class="num" style="color:var(--lavanda-400)">11</span>Hecho con IA</p>
+    <h2 id="t-fin">Todo este proyecto se ha construido con inteligencia artificial</h2>
+    <p>La investigación, la estrategia, la marca, la web, el PRD, los prototipos, la POC y la sala de test se hicieron con ChatGPT, Claude, Claude Code y Figma, con criterio humano en cada decisión. Las imágenes son ilustrativas, están creadas con IA y no son perfiles reales.</p>
+    <ul class="team"><li><a href="https://www.linkedin.com/in/pilarbermejo/" target="_blank" rel="noopener"><span class="av">P</span><span><b>Pilar Bermejo</b><small>LinkedIn ↗</small></span></a></li><li><a href="https://www.linkedin.com/in/gema-d%C3%ADez-gonz%C3%A1lez-74157943/" target="_blank" rel="noopener"><span class="av">G</span><span><b>Gema Díez González</b><small>LinkedIn ↗</small></span></a></li><li><a href="https://www.linkedin.com/in/maria-diez-galeron/" target="_blank" rel="noopener"><span class="av">M</span><span><b>María Díez Galerón</b><small>LinkedIn ↗</small></span></a></li></ul>
+    <div class="meta"><span>Pilar Bermejo · Gema Díez González · María Díez Galerón</span><span>Proyecto final · «Cómo construir un producto digital con IA»</span><span>Impartido por La Nave Nodriza de la mano de Cloud District</span><span>2026</span></div>
+  </div>
+</section>
+
+<!-- 12 AGRADECIMIENTOS -->
+<section class="sec" id="gracias" aria-labelledby="t-gracias">
+  <p class="kicker rv"><span class="num">12</span>Agradecimientos</p>
+  <h2 id="t-gracias" class="rv">Gracias a quienes nos lo enseñaron</h2>
+  <p class="lead rv">Este proyecto nace de <b>16 horas de formación y práctica</b> en las que aprendimos haciendo. Gracias a Clara y a Carlos por compartir con tanta generosidad lo que saben de IA y por traernos cada novedad casi en tiempo real, según iba apareciendo.</p>
+  <div class="thanks">
+    <a class="card person rv" href="https://www.linkedin.com/in/clara-g-quince/" target="_blank" rel="noopener"><span class="av" aria-hidden="true">C</span><div><h3>Clara G. Quince</h3><p>Artificial Intelligence Researcher</p><span class="in">LinkedIn ↗</span></div></a>
+    <a class="card person rv" href="https://www.linkedin.com/in/carlos-f-henestrosa-08b561105/" target="_blank" rel="noopener"><span class="av" aria-hidden="true">C</span><div><h3>Carlos F. Henestrosa</h3><p>Lead of Product Design Team · Cloud District</p><span class="in">LinkedIn ↗</span></div></a>
+    <div class="card hours rv"><b class="m">16 h</b><span>de formación de calidad y práctica</span></div>
+  </div>
+  <blockquote class="quote rv">Salimos con más conocimiento, más confianza y la sensación de que ahora sí podemos construir un producto digital de principio a fin.</blockquote>
+  <p class="foot rv">Proyecto final · «Cómo construir un producto digital con IA» · La Nave Nodriza de la mano de Cloud District · 2026</p>
+</section>
+</main>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const root = document.documentElement;
+
+  // tema
+  try { const t = localStorage.getItem("tsv-portfolio-theme"); if (t) root.dataset.theme = t; } catch (e) {}
+  $("#theme").onclick = () => {
+    const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("tsv-portfolio-theme", root.dataset.theme); } catch (e) {}
+  };
+
+  // enlaces aún no disponibles
+  document.querySelectorAll("[data-pending]").forEach(a => {
+    a.setAttribute("aria-disabled", "true");
+    a.title = "En preparación";
+    a.addEventListener("click", e => e.preventDefault());
+  });
+
+  // menú: sección activa
+  const links = [...document.querySelectorAll("#toc a")];
+  const secs = links.map(a => document.getElementById(a.hash.slice(1)));
+  const cur = $("#toc-cur");
+  function setActive(i) {
+    links.forEach((a, j) => a.setAttribute("aria-current", j === i ? "true" : "false"));
+    cur.textContent = links[i].querySelector(".n").textContent;
+  }
+  function onScroll() {
+    const y = innerHeight * 0.35;
+    let i = 0;
+    secs.forEach((s, j) => { if (s.getBoundingClientRect().top <= y) i = j; });
+    if (innerHeight + scrollY >= document.body.scrollHeight - 4) i = secs.length - 1;
+    setActive(i);
+    const max = document.body.scrollHeight - innerHeight;
+    $("#prog").style.width = (max > 0 ? scrollY / max * 100 : 0) + "%";
+  }
+  addEventListener("scroll", onScroll, { passive: true });
+  addEventListener("resize", onScroll);
+  onScroll();
+
+  // índice en móvil
+  const side = $("#side"), btn = $("#toc-btn");
+  const toggle = open => { side.classList.toggle("open", open); btn.setAttribute("aria-expanded", open); };
+  btn.onclick = () => toggle(!side.classList.contains("open"));
+  links.forEach(a => a.addEventListener("click", () => toggle(false)));
+  addEventListener("keydown", e => { if (e.key === "Escape") toggle(false); });
+
+  // entrada suave
+  const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" }) : null;
+  document.querySelectorAll(".rv").forEach(el => io ? io.observe(el) : el.classList.add("in"));
+})();
+</script>
+</body></html>
