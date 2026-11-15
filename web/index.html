@@ -93,7 +93,7 @@ svg{display:block}
 .theme{width:40px;height:40px;border-radius:9999px;border:1.5px solid var(--line-strong);background:transparent;color:var(--ink);cursor:pointer;display:grid;place-items:center;margin-left:6px}
 .theme:hover{background:var(--muted)}
 .theme svg{width:18px;height:18px}
-.wordmark{font-weight:800;font-size:clamp(52px,12.4vw,190px);line-height:.86;letter-spacing:-.055em;margin-top:18px;white-space:nowrap;overflow:hidden;padding-bottom:.08em;font-variation-settings:"opsz" 96}
+.wordmark{font-weight:800;font-size:clamp(52px,12.4vw,190px);line-height:.86;letter-spacing:-.055em;margin-top:calc(18px - .1em);white-space:nowrap;overflow:hidden;padding-top:.1em;padding-bottom:.08em;font-variation-settings:"opsz" 96}
 .ch{display:inline-block;animation:rise .9s var(--ease) both;animation-delay:calc(var(--i) * 45ms);transition:transform .25s ease,color .25s ease}
 .wm:hover .ch:hover{transform:translateY(-10%) rotate(-4deg);color:var(--primary)}
 @keyframes rise{from{transform:translateY(60%);opacity:0}to{transform:none;opacity:1}}
@@ -431,6 +431,7 @@ input[type=range]{width:100%;accent-color:var(--primary);height:32px;cursor:poin
 }
 </style>
 </head><body>
+<div class="tsv-pf" style="background:#32296A;color:#fff;font:500 13.5px/1.2 'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;position:relative;z-index:60"><style>@media print{.tsv-pf{display:none!important}}.tsv-pf a:hover{color:#C1C0FF!important}</style><div style="max-width:1200px;margin:0 auto;padding:0 16px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:8px;font-weight:600;letter-spacing:-.01em"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C1C0FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M12 21c0-6 0-9 5-13M12 21c0-5-2-8-7-9 0 5 3 8 7 9z"/><path d="M17 8c-3 0-5 2-5 5 3 0 5-2 5-5z"/></svg>Todo Sigue Vivo</span><a href="../index.html" style="color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px;padding:10px 0">Ver el portfolio completo</a></div></div>
 <a href="#main" class="skip">Saltar al contenido</a>
 
 <div class="topbar m"><div class="wrap"><i aria-hidden="true"></i><span>Prototipo · Aún no se aceptan reservas · Piloto en 5 barrios de Madrid, verano de 2027</span> <a href="../demo/area-privada.html" style="color:#fff;margin-left:6px">Prueba el área privada →</a></div></div>

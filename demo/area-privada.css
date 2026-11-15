@@ -448,3 +448,12 @@ select.input{appearance:auto}
 .in-frame .topbar{display:none}
 .in-frame .main{padding-top:16px}
 .in-frame .head h1{font-size:28px}
+
+/* añadir ser vivo: Animal | Planta */
+.seg.seg2{grid-template-columns:1fr 1fr}
+.seg .seg-ic{display:inline-flex;width:18px;height:18px;margin-right:8px}
+.seg .seg-ic svg{width:18px;height:18px}
+.ser-form[data-tipo="an"] [data-solo="pl"],.ser-form[data-tipo="pl"] [data-solo="an"]{display:none!important}
+.chipsel .chip-x{font:500 11px/1 var(--font-mono);letter-spacing:.04em;text-transform:uppercase;margin-left:8px;opacity:.75}
+.ser-info{font-size:14px;color:var(--primary-text);background:var(--primary-soft);border-radius:12px;padding:10px 14px;margin:0}
+.ser-form[data-tipo="pl"] .ser-info{color:var(--savia);background:var(--savia-soft)}

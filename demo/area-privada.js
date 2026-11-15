@@ -419,17 +419,20 @@ function candCard(k,a){
 async function vCasa(){
   const {casa,seres}=await api("/casa");
   const esp=CAT.especies;
-  const grupos=[["an","Animales"],["ex","Exóticos"],["pl","Plantas"]];
   return head("Lo que vive en tu casa","Estas instrucciones se convierten en tareas en cada visita. Solo se escriben una vez.","Ficha de la casa")+`
   <div class="grid2"><div class="stack">
     <section class="card">${seres.length?seres.map(s=>`${serRow(s,`<button type="button" class="link" data-act="ser-del" data-id="${s.id}" aria-label="Quitar ${esc(s.nombre)}">Quitar</button>`)}${s.instr?`<p class="muted" style="font-size:14px;margin:-4px 0 10px 56px">${esc(s.instr)}</p>`:""}`).join(""):`<p class="muted">Aún no hay nada. Añade al menos un animal o planta.</p>`}</section>
-    <section class="card"><h2 style="font-size:22px;margin-bottom:14px">Añadir un animal o planta</h2>
-      <form id="f-ser" class="form" novalidate style="gap:14px"><div id="ser-err"></div>
-        <div class="field"><label for="s-esp">Especie <small>· del catálogo</small></label><select class="input" id="s-esp" required><option value="">Elige…</option>${grupos.map(([g,t])=>`<optgroup label="${t}">${esp.filter(e=>e.cat===g).map(e=>`<option value="${e.id}">${esc(e.nombre)}${e.activa?"":" (aún no)"}</option>`).join("")}</optgroup>`).join("")}</select></div>
-        <div class="row2"><div class="field"><label for="s-nom">Nombre <small>· opcional</small></label><input class="input" id="s-nom" placeholder="Lola, Calatheas del salón…"></div><div class="field"><label for="s-cant">Cantidad</label><input class="input" id="s-cant" type="number" min="1" max="99" value="1"></div></div>
-        <div class="field"><label for="s-instr">Qué hacer <small>· opcional</small></label><textarea class="input" id="s-instr" placeholder="Cantidad de agua o comida, dónde está, cada cuánto…"></textarea></div>
-        <div class="field"><label for="s-alarma">Señales de alarma <small>· opcional</small></label><input class="input" id="s-alarma" placeholder="Si pasa esto, avísame"></div>
-        <label class="checkline"><input type="checkbox" id="s-med"><span><b>Necesita medicación</b><small>Solo te avisaremos a cuidadores con experiencia en medicación.</small></span></label>
+    <section class="card"><h2 style="font-size:22px;margin-bottom:14px">Añadir a tu casa</h2>
+      <form id="f-ser" class="form ser-form" data-tipo="an" novalidate style="gap:16px"><div id="ser-err"></div>
+        <fieldset class="field" style="border:0;padding:0;margin:0"><legend class="sr">Qué quieres añadir</legend>
+          <div class="seg seg2"><label><input type="radio" name="s-tipo" value="an" checked><span><i class="seg-ic" aria-hidden="true">${I.cat}</i>Animal</span></label><label><input type="radio" name="s-tipo" value="pl"><span><i class="seg-ic" aria-hidden="true">${I.plant}</i>Planta</span></label></div></fieldset>
+        <fieldset class="field" data-solo="an" style="border:0;padding:0;margin:0"><legend class="flabel" style="margin-bottom:8px">Especie</legend><div class="chipsel">${esp.filter(e=>e.cat!=="pl").sort((a,b)=>(a.cat>b.cat)-(a.cat<b.cat)||b.activa-a.activa).map(e=>`<label><input type="radio" name="s-esp-an" value="${e.id}"><span>${esc(e.nombre)}${e.cat==="ex"?`<small class="chip-x">exótico</small>`:""}${e.activa?"":`<small class="chip-x">aún no</small>`}</span></label>`).join("")}</div></fieldset>
+        <fieldset class="field" data-solo="pl" style="border:0;padding:0;margin:0"><legend class="flabel" style="margin-bottom:8px">Especie</legend><div class="chipsel">${esp.filter(e=>e.cat==="pl").map(e=>`<label><input type="radio" class="pl" name="s-esp-pl" value="${e.id}"><span>${esc(e.nombre)}</span></label>`).join("")}</div></fieldset>
+        <p class="ser-info" id="s-info" aria-live="polite" hidden></p>
+        <div class="row2"><div class="field"><label for="s-nom">Nombre <small>· opcional</small></label><input class="input" id="s-nom" placeholder="Lola, Kiwi…"></div><div class="field"><label for="s-cant">Cantidad</label><input class="input" id="s-cant" type="number" min="1" max="99" value="1"></div></div>
+        <div class="field"><label for="s-instr"><span data-solo="an">Comida y rutina</span><span data-solo="pl">Riego y luz</span> <small>· opcional</small></label><textarea class="input" id="s-instr" placeholder="Cuánta comida, dónde está, el arenero, cada cuánto…"></textarea></div>
+        <div class="field"><label for="s-alarma">Señales de alarma <small>· opcional</small></label><input class="input" id="s-alarma" placeholder="Si no come o se esconde, avísame"></div>
+        <label class="checkline" data-solo="an"><input type="checkbox" id="s-med"><span><b>Necesita medicación</b><small>Solo te avisaremos a cuidadores con experiencia en medicación.</small></span></label>
         <button class="btn primary" type="submit" style="justify-self:start">Añadir a la ficha</button></form></section>
   </div>
   <section class="card"><h2 style="font-size:22px;margin-bottom:6px">Datos de la casa</h2><p class="muted" style="font-size:14px;margin-bottom:14px">La dirección y el acceso solo los ve tu cuidador con la reserva confirmada.</p>
@@ -775,7 +778,22 @@ document.addEventListener("change",async e=>{
   if(t.dataset.motivo){const x=JSON.parse(t.dataset.motivo);try{await api(`/visita/${x.v}/tareas`,{tareas:[{ser_id:x.s,estado:x.e,motivo:t.value}]})}catch(err){flash(err.message)}return}
   if(t.dataset.foto){const f=t.files&&t.files[0];if(!f)return;try{const data=await comprimir(f);await api(`/visita/${t.dataset.foto}/foto`,{data});route(true)}catch(err){flash(err.message||"No se ha podido subir la foto")}return}
   if(t.name==="asp"){DR.asp=t.value}
+  if(t.name==="s-tipo"){const f=t.form,pl=t.value==="pl";f.dataset.tipo=t.value;f.querySelectorAll('input[name^="s-esp-"]').forEach(i=>i.checked=false);if(pl)$("#s-med").checked=false;
+    $("#s-nom").placeholder=pl?"Calatheas del salón, Potus de la entrada…":"Lola, Kiwi…";
+    $("#s-instr").placeholder=pl?"Cuánta agua, si pulverizar, dónde tiene luz, sin sol directo…":"Cuánta comida, dónde está, el arenero, cada cuánto…";
+    $("#s-alarma").placeholder=pl?"Hojas amarillas o caídas, tierra encharcada…":"Si no come o se esconde, avísame";serInfo(f);return}
+  if(t.name&&t.name.indexOf("s-esp-")===0){serInfo(t.form);return}
 });
+function serInfo(f){
+  const el=$("#s-info");if(!el)return;const i=f.querySelector('input[name="s-esp-'+f.dataset.tipo+'"]:checked');
+  const e=i&&CAT.especies.find(x=>x.id===+i.value);if(!e){el.hidden=true;return}
+  let t;
+  if(!e.activa)t="De momento no cuidamos "+e.nombre.toLowerCase()+"s. Te avisaremos cuando empecemos.";
+  else if(e.cat==="pl")t="Riego cada "+plural(e.cada,"día","días")+" · dificultad "+e.dif+" de 5"+(e.formacion?" · solo te avisaremos a cuidadores con la insignia «Plantas delicadas».":".");
+  else if(e.cat==="ex")t="Exótico · solo te avisaremos a cuidadores certificados en "+(e.grupo==="ave"?"aves":"reptiles")+".";
+  else t=e.cada>1?"Visita cada "+plural(e.cada,"día","días")+".":"Visita diaria.";
+  el.textContent=t;el.hidden=false;
+}
 document.addEventListener("submit",async e=>{
   const f=e.target;e.preventDefault();
   try{
@@ -798,7 +816,7 @@ document.addEventListener("submit",async e=>{
     if(f.id==="f-chat"){enviarChat(f.dataset.cid,$("#chat-in").value);return}
     if(f.id==="f-cand"){try{const j=await api("/candidaturas",{anuncio:+f.dataset.id,mensaje:$("#cand-msg").value});delete DR["cand-"+f.dataset.id];flash("Te has presentado");location.hash="#/mensajes/"+j.id}catch(err){$("#cand-err").innerHTML=errBox(err.message)}return}
     if(f.id==="f-relax"){const opt={};f.querySelectorAll("[data-ropt]").forEach(i=>opt[i.dataset.ropt]=i.checked);const j=await api(`/anuncio/${location.hash.split("/")[2]}/precision`,{opt});flash(j.nuevos?`Hemos avisado a ${plural(j.nuevos,"cuidador más","cuidadores más")}`:"Guardado. No hay cuidadores nuevos con estos requisitos");route(true);return}
-    if(f.id==="f-ser"){try{await api("/seres",{especie_id:$("#s-esp").value,nombre:$("#s-nom").value,cantidad:$("#s-cant").value,instr:$("#s-instr").value,alarma:$("#s-alarma").value,medicacion:$("#s-med").checked});W=null;flash("Añadido a tu ficha");route()}catch(err){$("#ser-err").innerHTML=errBox(err.message)}return}
+    if(f.id==="f-ser"){const sel=f.querySelector('input[name="s-esp-'+f.dataset.tipo+'"]:checked');if(!sel){$("#ser-err").innerHTML=errBox(f.dataset.tipo==="pl"?"Elige qué planta es.":"Elige qué animal es.");return}try{await api("/seres",{especie_id:sel.value,nombre:$("#s-nom").value,cantidad:$("#s-cant").value,instr:$("#s-instr").value,alarma:$("#s-alarma").value,medicacion:f.dataset.tipo==="an"&&$("#s-med").checked});W=null;flash("Añadido a tu ficha");route()}catch(err){$("#ser-err").innerHTML=errBox(err.message)}return}
     if(f.id==="f-casa"){await api("/casa",{direccion:$("#c-dir").value,acceso:$("#c-acc").value,instr_acceso:$("#c-instr").value,veterinario:$("#c-vet").value,emergencia:$("#c-em").value});flash("Datos de la casa guardados");return}
     if(f.id==="f-dispo"){const j=await api("/disponibilidad",{inicio:$("#d-i").value,fin:$("#d-f").value});flash(j.nuevos_avisos?`Hay ${plural(j.nuevos_avisos,"solicitud nueva","solicitudes nuevas")} para ti`:"Disponibilidad guardada");route();return}
     if(f.id==="f-perfil"){

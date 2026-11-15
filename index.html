@@ -89,6 +89,7 @@ main{margin-left:calc(var(--side) + 40px);padding:20px 20px 0 0}
 .btn.ghost:hover{background:var(--muted)}
 .btn .arr{transition:transform .25s var(--ease)}
 .btn:hover .arr{transform:translateX(4px)}
+.btn[target="_blank"]:hover .arr{transform:translate(3px,-3px)}
 .btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed;transform:none}
 .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;align-items:center}
 
@@ -410,9 +411,9 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
   </div>
   <p class="note rv">Los datos son sintéticos: reflejan los supuestos con los que se generaron, no el mercado real. Por eso todo lo que concluyen está marcado «por validar».</p>
   <div class="grid g3">
-    <article class="card rv"><span class="lbl">Personas</span><h3>Arquetipos y buyer personas</h3><p>Marta, Pablo, Álex, Laura… cada uno con su peso en el mercado, su gasto y lo que le preocupa.</p><a class="link" href="docs/research/personas.html" target="_blank" rel="noopener">Ver personas →</a></article>
-    <article class="card rv"><span class="lbl">Focus group</span><h3>Insights del focus group</h3><p>Guion de moderación reutilizable y lo que dijeron los participantes simulados.</p><a class="link" href="docs/research/focus-group.html" target="_blank" rel="noopener">Ver insights →</a></article>
-    <article class="card rv"><span class="lbl">Datos</span><h3>Radar y mesa de datos</h3><p>Paneles interactivos sobre mascotas, plantas, temporada y cobertura por barrio.</p><a class="link" href="docs/research/radar.html" target="_blank" rel="noopener">Ver radar →</a> <a class="link" href="docs/research/mesa.html" target="_blank" rel="noopener" style="margin-left:16px">Ver mesa →</a></article>
+    <article class="card rv"><span class="lbl">Personas</span><h3>Arquetipos y buyer personas</h3><p>Marta, Pablo, Álex, Laura… cada uno con su peso en el mercado, su gasto y lo que le preocupa.</p><a class="link" href="docs/research/personas.html" target="_blank" rel="noopener">Ver personas ↗</a></article>
+    <article class="card rv"><span class="lbl">Focus group</span><h3>Insights del focus group</h3><p>Guion de moderación reutilizable y lo que dijeron los participantes simulados.</p><a class="link" href="docs/research/focus-group.html" target="_blank" rel="noopener">Ver insights ↗</a></article>
+    <article class="card rv"><span class="lbl">Datos</span><h3>Radar y mesa de datos</h3><p>Paneles interactivos sobre mascotas, plantas, temporada y cobertura por barrio.</p><a class="link" href="docs/research/radar.html" target="_blank" rel="noopener">Ver radar ↗</a> <a class="link" href="docs/research/mesa.html" target="_blank" rel="noopener" style="margin-left:16px">Ver mesa ↗</a></article>
   </div>
 </section>
 
@@ -428,7 +429,7 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
     <div class="card stat rv"><b class="m">18</b><span>meses en 5 fases</span></div>
   </div>
   <div class="ctas rv">
-    <a class="btn primary" href="docs/estrategia.pdf" target="_blank" rel="noopener">Leer la estrategia <span class="arr" aria-hidden="true">→</span></a>
+    <a class="btn primary" href="docs/estrategia.pdf" target="_blank" rel="noopener">Leer la estrategia <span class="arr" aria-hidden="true">↗</span></a>
   </div>
 </section>
 
@@ -442,7 +443,7 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
     <article class="card rv"><span class="who">Claude</span><p style="color:var(--ink-muted);margin-top:8px">Un estratega que toma decisiones</p><ul><li>Convierte la investigación en un plan con nicho, precios y fases.</li><li>Una web más potente: parte del día, ola de calor, calculadora.</li><li>Asume más riesgos y promete cosas que aún no existen.</li></ul></article>
   </div>
   <div class="verdict rv"><span class="lbl">Decisión</span><p><b>La estrategia de Claude como columna vertebral</b>, con el guion de moderación de GPT y su criterio de no prometer lo que aún no existe.</p></div>
-  <div class="ctas rv"><a class="btn ghost" href="docs/conclusiones-gpt-claude.html" target="_blank" rel="noopener">Leer la comparativa completa <span class="arr" aria-hidden="true">→</span></a></div>
+  <div class="ctas rv"><a class="btn ghost" href="docs/conclusiones-gpt-claude.html" target="_blank" rel="noopener">Leer la comparativa completa <span class="arr" aria-hidden="true">↗</span></a></div>
 </section>
 
 <!-- 05 MARCA -->
@@ -462,7 +463,7 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
     <div class="card rv"><p class="spec m" style="font-size:36px;line-height:1.2">18:04</p><span class="lbl" style="margin:0">IBM Plex Mono</span><p>Datos: horas, °C, precios</p></div>
   </div>
   <p class="claim rv">«Vete tranquilo, en casa todo sigue vivo.»</p>
-  <div class="ctas rv"><a class="btn primary" href="docs/guia-de-marca.html" target="_blank" rel="noopener">Ver la guía de marca <span class="arr" aria-hidden="true">→</span></a></div>
+  <div class="ctas rv"><a class="btn primary" href="docs/guia-de-marca.html" target="_blank" rel="noopener">Ver la guía de marca <span class="arr" aria-hidden="true">↗</span></a></div>
 </section>
 
 <!-- 06 PRD -->
@@ -482,7 +483,7 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
     <div class="mod rv"><b>INC</b><span>Incidencias</span></div>
     <div class="mod rv"><b>RES</b><span>Reseñas</span></div>
   </div>
-  <div class="ctas rv"><a class="btn primary" href="docs/prd.pdf" target="_blank" rel="noopener">Leer el PRD <span class="arr" aria-hidden="true">→</span></a><a class="btn ghost" href="docs/arquitectura.html" target="_blank" rel="noopener">Diagramas de arquitectura</a></div>
+  <div class="ctas rv"><a class="btn primary" href="docs/prd.pdf" target="_blank" rel="noopener">Leer el PRD <span class="arr" aria-hidden="true">↗</span></a><a class="btn ghost" href="docs/arquitectura.html" target="_blank" rel="noopener">Diagramas de arquitectura <span class="arr" aria-hidden="true">↗</span></a></div>
 </section>
 
 <!-- 07 FIGMA -->
@@ -516,7 +517,7 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
         <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="status st-ok">Listo</span><span class="status st-pilot">En piloto</span><span class="status st-pend">En contratación</span></div>
         <ul class="checks"><li>Parte del día animado con avisos reales</li><li>Configurador de la casa: plantas y animales</li><li>Ola de calor con visita extra</li><li>Lista de espera en dos pasos, con resumen</li><li>Tema claro y oscuro, accesible</li></ul>
       </div>
-      <div class="ctas" style="margin:0"><a class="btn primary" href="web/index.html" target="_blank" rel="noopener">Ver la web <span class="arr" aria-hidden="true">→</span></a></div>
+      <div class="ctas" style="margin:0"><a class="btn primary" href="web/index.html" target="_blank" rel="noopener">Ver la web <span class="arr" aria-hidden="true">↗</span></a><a class="btn ghost" href="landing/index.html" target="_blank" rel="noopener">Landing de captación <span class="arr" aria-hidden="true">↗</span></a></div>
     </div>
   </div>
 </section>
@@ -535,7 +536,7 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
       <span class="status st-pilot">Demo de portfolio</span>
       <ul class="checks"><li>Emparejamiento con avisos solo a cuidadores idóneos</li><li>Chat en tiempo real que oculta teléfonos hasta reservar</li><li>Encuentro previo, reserva y visitas con fotos</li><li>Ola de calor, cancelación con sustituto y reseñas ciegas</li><li>Avisos en la web y notificaciones del navegador</li></ul>
       <p style="margin-top:16px;font-size:14px;color:var(--ink-muted)">Los datos son de ejemplo y se guardan solo en tu navegador. La primera vez tarda unos segundos en prepararse.</p>
-      <div class="ctas" style="margin-top:20px"><a class="btn primary" href="demo/area-privada.html" target="_blank" rel="noopener">Probar el área privada <span class="arr" aria-hidden="true">→</span></a><a class="btn ghost" href="#sala">Ver la sala de test</a></div>
+      <div class="ctas" style="margin-top:20px"><a class="btn primary" href="demo/area-privada.html" target="_blank" rel="noopener">Probar el área privada <span class="arr" aria-hidden="true">↗</span></a><a class="btn ghost" href="#sala">Ver la sala de test</a></div>
     </div>
   </div>
 </section>
@@ -580,7 +581,7 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
     <article class="card rv"><span class="lbl">04</span><h3>Datos para analizar</h3><p>Notas, registro de eventos y descarga en CSV para abrir en Excel o Google Sheets.</p></article>
   </div>
   <p class="note rv">Quien modera puede provocar situaciones difíciles de reproducir: que un cuidador se presente, que nadie responda en 12 horas, una ola de calor o una visita completa con su parte.</p>
-  <div class="ctas rv"><a class="btn primary" href="demo/sala.html" target="_blank" rel="noopener">Abrir la sala de test <span class="arr" aria-hidden="true">→</span></a></div>
+  <div class="ctas rv"><a class="btn primary" href="demo/sala.html" target="_blank" rel="noopener">Abrir la sala de test <span class="arr" aria-hidden="true">↗</span></a></div>
 </section>
 
 <!-- 11 CIERRE -->

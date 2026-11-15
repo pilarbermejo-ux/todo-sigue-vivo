@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Landing de captación · Todo Sigue Vivo</title>
+<meta name="description" content="Primera landing de captación del proyecto, rediseñada con la guía de marca definitiva de Todo Sigue Vivo. Prototipo: el formulario no envía datos.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --lavanda-50:#F6F6FE;--lavanda-100:#ECEDFF;--lavanda-200:#DADAFF;--lavanda-300:#C1C0FF;--lavanda-400:#A39DFF;--lavanda-600:#5646B0;--lavanda-700:#44368E;--lavanda-800:#32296A;--lavanda-950:#141030;
+  --white:#FFFFFF;--canvas:#F7F7FB;--muted:#EEEDF4;--line:#E2E2EA;--line-strong:#8E8C9C;--ink-muted:#6B6979;--ink:#1B1A24;
+  --savia:#1F4E45;--savia-soft:#DCEBE5;--azafran:#E0A21A;--azafran-soft:#FBEFCF;--danger:#B42D3A;
+  --primary:var(--lavanda-600);--primary-hover:var(--lavanda-700);--on-primary:#fff;--primary-soft:var(--lavanda-100);--primary-text:var(--lavanda-700);--hero:var(--lavanda-100);--focus:var(--lavanda-600);
+  --font-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --font-sans:"Instrument Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;--white:#1C1A2B;--canvas:#131120;--muted:#252336;--line:#2E2B40;--line-strong:#6F6C82;--ink-muted:#A9A6BC;--ink:#EEEDF5;
+  --savia:#7CC4B0;--savia-soft:#173029;--azafran-soft:#3A2E12;--danger:#F08A93;
+  --primary:#A39DFF;--primary-hover:var(--lavanda-300);--on-primary:var(--lavanda-950);--primary-soft:#2A2548;--primary-text:var(--lavanda-300);--hero:#211C48;--focus:var(--lavanda-400);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;--white:#1C1A2B;--canvas:#131120;--muted:#252336;--line:#2E2B40;--line-strong:#6F6C82;--ink-muted:#A9A6BC;--ink:#EEEDF5;
+  --savia:#7CC4B0;--savia-soft:#173029;--azafran-soft:#3A2E12;--danger:#F08A93;
+  --primary:#A39DFF;--primary-hover:var(--lavanda-300);--on-primary:var(--lavanda-950);--primary-soft:#2A2548;--primary-text:var(--lavanda-300);--hero:#211C48;--focus:var(--lavanda-400);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--canvas);color:var(--ink);font:400 16px/1.55 var(--font-sans);overflow-x:hidden;transition:background .3s,color .3s}
+h1,h2,h3,p,figure{margin:0}
+h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:-.03em;line-height:1.08;text-wrap:balance}
+a{color:inherit;text-underline-offset:4px}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+[hidden]{display:none!important}
+.m{font-family:var(--font-mono)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1240px;margin:0 auto;width:calc(100% - 96px)}
+.skip{position:absolute;left:16px;top:-100px;background:var(--primary);color:var(--on-primary);padding:10px 14px;border-radius:12px;z-index:80;text-decoration:none}
+.skip:focus{top:52px}
+
+/* estado del prototipo */
+.topbar{background:var(--lavanda-950);color:var(--lavanda-200);font:500 12.5px/1.4 var(--font-mono);letter-spacing:.02em}
+.topbar .wrap{display:flex;align-items:center;justify-content:center;gap:10px;padding:9px 0;text-align:center}
+.topbar i{width:7px;height:7px;border-radius:50%;background:var(--azafran);flex:none}
+
+/* cabecera */
+.header{height:84px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font:800 24px/1 var(--font-display);letter-spacing:-.045em}
+.brand .dot{width:34px;height:34px;border-radius:50%;background:var(--lavanda-800);display:grid;place-items:center;flex:none}
+.header nav{display:flex;gap:28px;align-items:center;font-size:14.5px}
+.header nav a{padding:12px 0;text-decoration:none;color:var(--ink-muted)}
+.header nav a:hover{color:var(--ink);text-decoration:underline}
+.theme{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:transparent;display:grid;place-items:center}
+.theme:hover{background:var(--muted)}
+.theme svg{width:18px;height:18px}
+
+.eyebrow{font:500 12px/1.4 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--primary-text);margin-bottom:16px}
+
+/* portada */
+.hero{background:var(--hero);border-radius:28px;padding:44px;display:grid;grid-template-columns:1.1fr 1fr;gap:40px;transition:background .3s}
+.hero-copy{display:flex;flex-direction:column;justify-content:space-between;gap:32px}
+h1{font-weight:800;font-size:clamp(42px,5vw,72px);line-height:.98;letter-spacing:-.045em;max-width:660px;font-variation-settings:"opsz" 96}
+h1 .color{color:var(--primary)}
+.intro{margin-top:20px;max-width:500px;font-size:18px;color:var(--ink-muted)}
+.photo-strip{display:flex;align-items:center;gap:18px}
+.photo-strip img{width:112px;height:112px;object-fit:cover;object-position:28% 52%;border-radius:9999px;flex:none}
+.photo-strip p{font-size:15px;max-width:240px}
+.photo-strip strong{display:block;font-weight:600}
+.photo-strip span{display:block;color:var(--ink-muted);font-size:13px;margin-top:4px}
+.photo-strip small{display:block;font:500 11px/1.3 var(--font-mono);color:var(--ink-muted);margin-top:8px;letter-spacing:.02em}
+
+.form-card{background:var(--white);border-radius:24px;padding:28px;align-self:center;min-width:0;box-shadow:0 1px 2px rgba(27,26,36,.06),0 8px 24px rgba(27,26,36,.08)}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--muted);padding:4px;border-radius:14px;margin-bottom:24px}
+.roles button{border:0;background:transparent;border-radius:10px;min-height:46px;padding:8px;font-size:14.5px;font-weight:500;color:var(--ink-muted);transition:background .2s,color .2s}
+.roles button[aria-pressed=true]{background:var(--primary);color:var(--on-primary)}
+.roles button:not([aria-pressed=true]):hover{color:var(--ink)}
+.form-card h2{font-size:28px;line-height:1.12;margin-bottom:8px}
+.form-intro{font-size:15px;color:var(--ink-muted);margin-bottom:20px}
+.form-card label{display:block;font-size:14px;font-weight:600;margin-bottom:8px}
+.form-card label small{font-weight:400;color:var(--ink-muted)}
+input[type=email]{display:block;width:100%;height:52px;padding:0 14px;border:1px solid var(--line-strong);border-radius:8px;background:var(--white)}
+input[aria-invalid=true]{border:2px solid var(--danger)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;height:52px;padding:0 24px;border:0;border-radius:12px;font:500 16px/1 var(--font-sans);text-decoration:none;white-space:nowrap;transition:background .2s,transform .2s var(--ease)}
+.btn.primary{background:var(--primary);color:var(--on-primary)}
+.btn.primary:hover{background:var(--primary-hover);transform:translateY(-2px)}
+.btn .arr{transition:transform .25s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+form .btn{width:100%;margin-top:14px}
+.small{font-size:13px;line-height:1.5;color:var(--ink-muted)}
+.form-note{margin-top:12px}
+.error{color:var(--danger);font-size:14px;margin-top:8px;display:flex;gap:6px;align-items:center}
+.error::before{content:"!";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--danger);color:#fff;font:700 12px/1 var(--font-sans);flex:none}
+.demo-note{border-top:1px solid var(--line);padding-top:14px;margin-top:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.demo-note a{color:var(--primary-text)}
+.status{display:inline-flex;align-items:center;gap:6px;font:500 11.5px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:9999px;white-space:nowrap;background:var(--azafran-soft);color:var(--ink)}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--azafran)}
+.success{background:var(--primary-soft);padding:24px;border-radius:16px;margin:4px 0 0}
+.success h3{font-size:24px;margin-bottom:10px}
+.success p{font-size:15px}
+.text-btn{background:none;border:0;color:var(--primary-text);padding:12px 0;text-decoration:underline;text-underline-offset:3px;min-height:44px;font-size:15px;font-weight:600}
+
+.under-hero{display:flex;align-items:center;justify-content:space-between;padding:22px 4px;border-bottom:1px solid var(--line);gap:20px;font-size:15px}
+.under-hero p{display:flex;align-items:center;gap:10px;font-weight:500}
+.under-hero span{color:var(--ink-muted);font:500 13px/1.4 var(--font-mono)}
+.leaf{width:22px;height:22px;border-radius:50%;background:var(--savia-soft);color:var(--savia);display:grid;place-items:center;flex:none}
+.leaf svg{width:14px;height:14px}
+
+.section{padding:96px 0}
+.section-head{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:end;margin-bottom:44px}
+h2{font-size:clamp(32px,3.8vw,52px)}
+.section-head p{color:var(--ink-muted);max-width:480px;font-size:17px}
+
+.care-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.care-photo{position:relative}
+.care-photo img{width:100%;height:520px;object-fit:cover;object-position:50% 60%;border-radius:220px 220px 24px 24px;display:block}
+.care-photo figcaption{position:absolute;right:14px;bottom:14px;background:rgba(20,16,48,.72);color:#fff;font:500 11px/1 var(--font-mono);letter-spacing:.04em;padding:7px 10px;border-radius:9999px;backdrop-filter:blur(6px)}
+.care-options{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.chip{border:1px solid var(--line-strong);border-radius:9999px;padding:0 16px;min-height:44px;background:transparent;font-size:14.5px;font-weight:500;transition:background .2s,color .2s,border-color .2s}
+.chip[aria-pressed=true]{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.chip[data-care="plantas"][aria-pressed=true]{background:var(--savia);border-color:var(--savia);color:#fff}
+:root[data-theme="dark"] .chip[data-care="plantas"][aria-pressed=true]{color:var(--lavanda-950)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chip[data-care="plantas"][aria-pressed=true]{color:var(--lavanda-950)}}
+.care-content h3{font-size:34px;margin-bottom:14px}
+.care-content p{color:var(--ink-muted);font-size:17px}
+.care-detail{margin-top:24px;border-top:1px solid var(--line);padding-top:22px}
+.care-detail strong{display:block;font:500 12px/1.4 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;color:var(--savia)}
+.care-content .text-btn{margin-top:12px}
+
+.steps-section{background:var(--lavanda-800);color:#fff;padding:88px 0}
+.steps-section .eyebrow{color:var(--lavanda-300)}
+.steps-section h2{max-width:680px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:48px}
+.step-number{display:flex;width:44px;height:44px;border-radius:50%;border:1px solid var(--lavanda-400);align-items:center;justify-content:center;font:500 14px var(--font-mono);margin-bottom:22px;color:var(--lavanda-200)}
+.steps h3{font-size:24px;margin-bottom:12px}
+.steps p{color:var(--lavanda-200)}
+.steps-note{font:500 12.5px/1.6 var(--font-mono);color:var(--lavanda-300);margin-top:40px;max-width:780px}
+
+.faq{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px}
+.faq details{border-bottom:1px solid var(--line);padding:20px 0}
+.faq details:first-child{border-top:1px solid var(--line)}
+summary{font-weight:600;font-size:17px;cursor:pointer;min-height:28px;padding-right:16px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:400 22px/1 var(--font-sans);color:var(--primary-text);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+.faq details p{font-size:15.5px;color:var(--ink-muted);margin-top:14px;max-width:620px}
+
+.closing{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:48px 0;display:flex;justify-content:space-between;gap:32px;align-items:center}
+.closing h2{font-size:clamp(30px,3.4vw,44px);max-width:700px}
+.closing .btn{flex-shrink:0}
+
+.footer{padding:36px 0 48px;display:flex;justify-content:space-between;align-items:start;gap:32px}
+.footer p{font-size:13px;color:var(--ink-muted);max-width:620px}
+.footer p + p{margin-top:8px}
+
+@media(max-width:1050px){.wrap{width:calc(100% - 48px)}.hero{padding:28px;gap:24px}.form-card{padding:24px}.care-layout{gap:32px}.faq{gap:40px}}
+@media(max-width:779px){
+  .wrap{width:calc(100% - 32px)}
+  .header{height:64px}.brand{font-size:20px}.brand .dot{width:30px;height:30px}.header nav{gap:12px}.header nav a{display:none}
+  .hero{padding:22px;grid-template-columns:1fr;gap:22px;border-radius:22px}
+  .hero-copy{display:contents}.headline-block{order:0}.form-card{order:1;padding:20px}.photo-strip{order:2}
+  h1{font-size:40px}.intro{font-size:16px;margin-top:12px}
+  .photo-strip img{width:84px;height:84px}
+  .form-card h2{font-size:24px}
+  .under-hero{flex-wrap:wrap;gap:8px;padding:20px 0}
+  .section{padding:64px 0}.section-head{grid-template-columns:1fr;gap:16px;margin-bottom:28px}
+  .care-layout{grid-template-columns:1fr;gap:32px}.care-photo{order:1}.care-photo img{height:380px}.care-content{order:0}.care-content h3{font-size:28px}
+  .steps-section{padding:56px 0}.steps{grid-template-columns:1fr;gap:28px}.step-number{margin-bottom:12px}
+  .faq{grid-template-columns:1fr;gap:28px}
+  .closing{display:block}.closing .btn{margin-top:24px}
+  .footer{display:block}
+}
+@media(max-width:400px){h1{font-size:34px}.roles button{font-size:13px}.form-card{padding:16px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+</style></head><body>
+<div class="tsv-pf" style="background:#32296A;color:#fff;font:500 13.5px/1.2 'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;position:relative;z-index:60"><style>@media print{.tsv-pf{display:none!important}}.tsv-pf a:hover{color:#C1C0FF!important}</style><div style="max-width:1200px;margin:0 auto;padding:0 16px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:8px;font-weight:600;letter-spacing:-.01em"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C1C0FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M12 21c0-6 0-9 5-13M12 21c0-5-2-8-7-9 0 5 3 8 7 9z"/><path d="M17 8c-3 0-5 2-5 5 3 0 5-2 5-5z"/></svg>Todo Sigue Vivo</span><a href="../index.html" style="color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px;padding:10px 0">Ver el portfolio completo</a></div></div>
+<a class="skip" href="#captacion">Saltar al formulario</a>
+<div class="topbar"><div class="wrap"><i aria-hidden="true"></i><span>Prototipo de captación · El formulario no envía ni guarda datos</span></div></div>
+
+<header class="wrap header">
+  <a class="brand" href="#" aria-label="Todo Sigue Vivo, inicio"><span class="dot" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C1C0FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6 0-9 5-13M12 21c0-5-2-8-7-9 0 5 3 8 7 9z"/><path d="M17 8c-3 0-5 2-5 5 3 0 5-2 5-5z"/></svg></span>Todo Sigue Vivo</a>
+  <nav aria-label="Principal"><a href="#cuidados">Qué cuidamos</a><a href="#como">Cómo lo planteamos</a><a href="#dudas">Tus dudas</a>
+    <button type="button" class="theme" id="theme" aria-label="Cambiar tema claro u oscuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg></button></nav>
+</header>
+
+<main>
+<section class="hero wrap" aria-labelledby="headline">
+  <div class="hero-copy">
+    <div class="headline-block">
+      <p class="eyebrow">Animales, plantas y su rutina</p>
+      <h1 id="headline">Vete tranquilo. En casa, <span class="color">todo sigue vivo.</span></h1>
+      <p class="intro" id="intro">Tu gato, tus plantas y sus pequeñas manías. Cuidado en casa, atento a lo que hace única su rutina.</p>
+    </div>
+    <div class="photo-strip">
+      <img src="img/casa.jpg" alt="Una cuidadora riega una calathea en un piso con plantas, un terrario y una gata en el balcón" width="112" height="112">
+      <p><strong id="photo-line">Tu casa tiene su ritmo.</strong><span id="photo-sub">La idea es cuidarlo contigo.</span><small>Imagen creada con IA</small></p>
+    </div>
+  </div>
+
+  <div class="form-card" id="captacion">
+    <div class="roles" role="group" aria-label="Qué te interesa"><button type="button" data-role="hogar" aria-pressed="true">Me voy de viaje</button><button type="button" data-role="cuidador" aria-pressed="false">Quiero cuidar</button></div>
+    <h2 id="form-title">Tu próxima escapada empieza aquí.</h2>
+    <p class="form-intro" id="form-intro">Déjanos tu correo y te contamos cuándo abrimos el piloto en tu barrio.</p>
+    <form id="lead-form" novalidate>
+      <label for="email">Tu correo <small>· obligatorio</small></label>
+      <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="tu@correo.com" maxlength="254" required aria-describedby="email-error form-note">
+      <p id="email-error" class="error" role="alert" hidden></p>
+      <button class="btn primary" type="submit"><span id="cta">Quiero saber más</span><span class="arr" aria-hidden="true">→</span></button>
+      <p id="form-note" class="small form-note">Solo el correo para empezar. Las rutinas, después.</p>
+    </form>
+    <div id="success" class="success" tabindex="-1" hidden>
+      <h3>Has probado el primer paso.</h3>
+      <p id="success-copy">En la versión publicada, aquí confirmaríamos tu interés. En esta demo no se ha enviado ni guardado tu correo.</p>
+      <button class="text-btn" id="reset" type="button">Volver al formulario</button>
+    </div>
+    <p class="small demo-note"><span class="status">Prototipo</span><span>El formulario no envía datos. <a href="#sobre-demo">Ver alcance</a></span></p>
+    <noscript><p class="small">Activa JavaScript para probar el formulario y cambiar de recorrido.</p></noscript>
+  </div>
+</section>
+
+<div class="wrap under-hero"><p><span class="leaf" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6 0-9 5-13M12 21c0-5-2-8-7-9 0 5 3 8 7 9z"/><path d="M17 8c-3 0-5 2-5 5 3 0 5-2 5-5z"/></svg></span>El cuidado empieza por escuchar.</p><span id="benefit-line">Una casa · distintas necesidades · un cuidado acordado</span></div>
+
+<section class="wrap section" id="cuidados">
+  <div class="section-head"><div><p class="eyebrow">Las cosas pequeñas importan</p><h2 id="care-heading">No es solo regar.<br>No es solo dar de comer.</h2></div><p id="care-intro">Es saber qué necesita cada uno. Queremos conectar tu casa con personas de tu barrio cuya experiencia encaje con el cuidado que buscas.</p></div>
+  <div class="care-layout">
+    <figure class="care-photo"><img src="img/casa.jpg" alt="Un hogar con plantas, una gata y un terrario, con una cuidadora regando" loading="lazy" width="560" height="520"><figcaption>Imagen ilustrativa creada con IA</figcaption></figure>
+    <div class="care-content">
+      <div class="care-options" role="group" aria-label="Explora un tipo de cuidado"><button class="chip" aria-pressed="true" data-care="mixto">Animales y plantas</button><button class="chip" aria-pressed="false" data-care="plantas">Plantas</button><button class="chip" aria-pressed="false" data-care="especial">Exóticos y cuidados específicos</button></div>
+      <div aria-live="polite" aria-atomic="true">
+        <h3 id="care-title">Un hogar. Más de una rutina.</h3>
+        <p id="care-text">La comida de la gata, la planta del salón y esa puerta que debe quedar cerrada. Deja explicado lo importante, en un mismo lugar.</p>
+        <div class="care-detail"><strong id="care-label">Antes de acordar el cuidado</strong><p id="care-proof">Revisa la experiencia con animales y plantas, y repasa las tareas con la persona que vaya a cuidar.</p></div>
+      </div>
+      <button class="text-btn" data-return type="button">Me interesa Todo Sigue Vivo</button>
+    </div>
+  </div>
+</section>
+
+<section class="steps-section" id="como"><div class="wrap">
+  <p class="eyebrow">Nuestra manera de entender el cuidado</p>
+  <h2 id="steps-title">Menos suposiciones.<br>Más cosas claras.</h2>
+  <div class="steps">
+    <article><span class="step-number">01</span><h3 id="step1-title">Cuéntalo a tu manera.</h3><p id="step1-text">Qué vive en casa, qué necesita y qué detalles no se pueden pasar por alto.</p></article>
+    <article><span class="step-number">02</span><h3 id="step2-title">Acordad los detalles.</h3><p id="step2-text">Experiencia, tareas, horarios y precio. Lo importante se habla antes de aceptar.</p></article>
+    <article><span class="step-number">03</span><h3 id="step3-title">Sigue lo que importa.</h3><p id="step3-text">Saber qué se ha hecho y qué necesita atención, sin tener que preguntar por cada detalle.</p></article>
+  </div>
+  <p class="steps-note">Así planteamos Todo Sigue Vivo. Esta página presenta el proyecto: no permite contratar visitas ni confirma disponibilidad.</p>
+</div></section>
+
+<section class="wrap section faq" id="dudas">
+  <div><p class="eyebrow">Antes de dar el paso</p><h2>Preguntas muy de casa.</h2></div>
+  <div>
+    <details><summary>¿Es para animales o también para plantas?</summary><p>Para las dos cosas, con el mismo peso. Los hogares con animales y plantas, las colecciones de plantas y los exóticos forman parte de la propuesta. Cada encargo requiere experiencia y tareas acordes a lo que necesita.</p></details>
+    <details><summary>¿Puedo buscar ayuda y también ofrecer cuidados?</summary><p>Sí, puedes tener los dos intereses. El selector cambia el recorrido de esta página; no te obliga a quedarte en un único papel.</p></details>
+    <details><summary>¿Qué necesitaré para ofrecer cuidados?</summary><p>Explicar qué sabes cuidar, tu experiencia y tu disponibilidad. Antes de aceptar un encargo conviene conocer las tareas, el tiempo y lo que cobrarías. Los requisitos del servicio se comunicarán cuando estén definidos.</p></details>
+    <details><summary>¿Enviar el formulario confirma una visita?</summary><p>No. Dejar tu correo expresa interés, no reserva una visita. Además, esta página es una demostración: al probar el formulario no se envía ni se guarda ningún dato.</p></details>
+  </div>
+</section>
+
+<section class="wrap closing"><h2 id="closing-title">Tu monstera no se va de vacaciones. Tú sí.</h2><button class="btn primary" data-return type="button">Empieza con tu correo <span class="arr" aria-hidden="true">→</span></button></section>
+</main>
+
+<footer class="wrap footer">
+  <a class="brand" href="#" style="font-size:20px"><span class="dot" aria-hidden="true" style="width:30px;height:30px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C1C0FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6 0-9 5-13M12 21c0-5-2-8-7-9 0 5 3 8 7 9z"/><path d="M17 8c-3 0-5 2-5 5 3 0 5-2 5-5z"/></svg></span>Todo Sigue Vivo</a>
+  <div id="sobre-demo">
+    <p>Primera landing de captación del proyecto, creada con ChatGPT en septiembre de 2026 bajo el nombre provisional «Nodriza», y rediseñada después con la guía de marca definitiva de Todo Sigue Vivo. Web hecha con IA.</p>
+    <p>Prototipo sin envíos, reservas ni almacenamiento de datos. Para captar contactos reales habría que conectar el formulario y añadir la información de privacidad. La imagen es ilustrativa, está creada con IA y no representa un servicio real.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);let role='hogar',care='mixto';const drafts={hogar:'',cuidador:''};
+const root=document.documentElement;
+$('theme').onclick=()=>{const dark=root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;root.dataset.theme=dark?'light':'dark'};
+const content={
+ hogar:{headline:'Vete tranquilo. En casa, <span class="color">todo sigue vivo.</span>',intro:'Tu gato, tus plantas y sus pequeñas manías. Cuidado en casa, atento a lo que hace única su rutina.',title:'Tu próxima escapada empieza aquí.',form:'Déjanos tu correo y te contamos cuándo abrimos el piloto en tu barrio.',cta:'Quiero saber más',note:'Solo el correo para empezar. Las rutinas, después.',photo:'Tu casa tiene su ritmo.',photosub:'La idea es cuidarlo contigo.',benefit:'Una casa · distintas necesidades · un cuidado acordado',careheading:'No es solo regar.<br>No es solo dar de comer.',careintro:'Es saber qué necesita cada uno. Queremos conectar tu casa con personas de tu barrio cuya experiencia encaje con el cuidado que buscas.',steps:'Menos suposiciones.<br>Más cosas claras.',step1:['Cuéntalo a tu manera.','Qué vive en casa, qué necesita y qué detalles no se pueden pasar por alto.'],step2:['Acordad los detalles.','Experiencia, tareas, horarios y precio. Lo importante se habla antes de aceptar.'],step3:['Sigue lo que importa.','Saber qué se ha hecho y qué necesita atención, sin tener que preguntar por cada detalle.'],closing:'Tu monstera no se va de vacaciones. Tú sí.'},
+ cuidador:{headline:'Sabes cuidar. <span class="color">Eso tiene valor.</span>',intro:'De plantas, de gatos, de rutinas. Queremos acercarte a hogares de tu barrio que necesiten lo que tú sabes hacer.',title:'Tu experiencia tiene sitio aquí.',form:'Déjanos tu correo y te contamos cómo participar como cuidador.',cta:'Me interesa cuidar',note:'Solo el correo para empezar. Tu experiencia, después.',photo:'Cuidar también es un trabajo.',photosub:'Tu tiempo y tus límites importan.',benefit:'Tu experiencia · tu disponibilidad · acuerdos claros',careheading:'Lo que sabes hacer<br>marca la diferencia.',careintro:'No hace falta saber cuidar de todo. Importa explicar tu experiencia, conocer tus límites y elegir tareas que encajen contigo.',steps:'Cuidar bien empieza<br>por un buen acuerdo.',step1:['Cuenta qué sabes cuidar.','Explica tu experiencia con animales, plantas o necesidades concretas. El detalle ayuda a elegir con criterio.'],step2:['Revisa antes de aceptar.','Las tareas, el trayecto, el tiempo y lo que cobrarías. Decide con toda la información sobre la mesa.'],step3:['Haz visible tu trabajo.','Comparte las tareas hechas y lo que hayas observado. Si algo necesita atención, dilo con claridad.'],closing:'Hay casas que necesitan lo que tú sabes cuidar.'}};
+const careCopy={
+ hogar:{mixto:['Un hogar. Más de una rutina.','La comida de la gata, la planta del salón y esa puerta que debe quedar cerrada. Deja explicado lo importante, en un mismo lugar.','Revisa la experiencia con animales y plantas, y repasa las tareas con la persona que vaya a cuidar.'],plantas:['Tu calathea no es tu cactus.','Cada planta tiene su ritmo. Sus instrucciones merecen algo más preciso que «échales un poco de agua».','Explica las pautas de cada planta y busca experiencia que encaje con tu colección.'],especial:['Ese detalle sí importa.','Un ave, un reptil o una rutina particular necesitan conocimientos concretos. No des por hecho que cualquier experiencia sirve.','Revisa la experiencia con la especie y acuerda las instrucciones y los límites antes de la visita.']},
+ cuidador:{mixto:['Cuida lo que conoces.','Si tienes experiencia con animales y plantas, explica cómo organizas los cuidados de una casa con necesidades distintas.','Comprueba el alcance completo de las tareas y el tiempo necesario antes de aceptar.'],plantas:['Saber de plantas se nota.','Cuenta qué plantas has cuidado y cómo sigues sus instrucciones. Observar, preguntar y apuntar también forman parte del trabajo.','Aclara qué conocimientos puedes aportar y consulta cualquier pauta que no esté clara.'],especial:['Tu experiencia, con detalle.','Las especies y las rutinas importan. Explica en qué tienes experiencia y qué cuidados quedan fuera de tu alcance.','Revisa las indicaciones de la casa y acuerda qué hacer si observas algo inesperado.']}};
+function updateCare(){const c=careCopy[role][care];$('care-title').textContent=c[0];$('care-text').textContent=c[1];$('care-proof').textContent=c[2];document.querySelectorAll('[data-care]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.care===care)))}
+function clearError(){$('email-error').hidden=true;$('email-error').textContent='';$('email').removeAttribute('aria-invalid')}
+function changeRole(next){drafts[role]=$('email').value;role=next;const c=content[role];$('headline').innerHTML=c.headline;$('intro').textContent=c.intro;$('form-title').textContent=c.title;$('form-intro').textContent=c.form;$('cta').textContent=c.cta;$('form-note').textContent=c.note;$('photo-line').textContent=c.photo;$('photo-sub').textContent=c.photosub;$('benefit-line').textContent=c.benefit;$('care-heading').innerHTML=c.careheading;$('care-intro').textContent=c.careintro;$('steps-title').innerHTML=c.steps;$('closing-title').textContent=c.closing;for(let i=1;i<=3;i++){$('step'+i+'-title').textContent=c['step'+i][0];$('step'+i+'-text').textContent=c['step'+i][1]}$('email').value=drafts[role];$('lead-form').hidden=false;$('success').hidden=true;clearError();document.querySelectorAll('[data-role]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.role===role)));updateCare()}
+document.querySelectorAll('[data-role]').forEach(b=>b.addEventListener('click',()=>changeRole(b.dataset.role)));
+document.querySelectorAll('[data-care]').forEach(b=>b.addEventListener('click',()=>{care=b.dataset.care;updateCare()}));
+$('lead-form').addEventListener('submit',e=>{e.preventDefault();clearError();const field=$('email');field.value=field.value.trim();if(!field.value||!field.validity.valid||!(field.value.split('@')[1]||'').includes('.')){$('email-error').textContent=field.value?'Revisa el correo. Por ejemplo: tu@correo.com.':'Escribe tu correo para probar este paso.';$('email-error').hidden=false;field.setAttribute('aria-invalid','true');field.focus();return}drafts[role]=field.value;$('lead-form').hidden=true;$('success').hidden=false;$('success-copy').textContent='Has probado el recorrido «'+(role==='hogar'?'Me voy de viaje':'Quiero cuidar')+'». En la versión publicada, aquí confirmaríamos tu interés. En esta demo no se ha enviado ni guardado tu correo.';$('success').focus()});
+$('reset').addEventListener('click',()=>{$('success').hidden=true;$('lead-form').hidden=false;$('email').focus()});
+document.querySelectorAll('[data-return]').forEach(b=>b.addEventListener('click',()=>{$('success').hidden=true;$('lead-form').hidden=false;$('captacion').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});$('email').focus({preventScroll:true})}));
+})();
+</script>
+</body></html>
