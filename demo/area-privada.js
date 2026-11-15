@@ -17,6 +17,8 @@ let W=null;             // borrador del anuncio
 
 /* ---------- iconos ---------- */
 const I={
+  logo:'<svg class="iso" width="40" viewBox="200 140 1080 800" fill="none" stroke="currentColor" stroke-width="44" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M548 897C548 820 530 720 510 640C470 520 380 440 242 398C236 520 300 650 460 728C520 760 545 810 548 897"/><path d="M510 590C515 470 610 360 785 357C760 480 680 550 510 590"/><path d="M548 897H1130"/><path d="M615 880C610 760 680 610 790 530C860 485 950 470 965 420V380C965 330 985 305 1003 292L1010 240L1045 180L1090 240L1168 185C1172 205 1172 230 1168 255C1195 280 1205 310 1225 330C1250 345 1245 355 1232 372C1220 392 1185 398 1150 405C1125 412 1128 450 1140 480C1158 525 1150 575 1125 630C1105 680 1098 720 1098 790V850C1135 852 1138 875 1130 897"/><path d="M1005 650C1025 720 1030 780 1030 850C1032 870 1040 885 1052 897"/><path d="M940 897C985 860 975 760 905 735C880 727 860 732 845 738"/></svg>',
+  logoS:'<svg width="20" height="20" viewBox="460 130 840 840" fill="none" stroke="currentColor" stroke-width="72" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M548 897C545 760 528 660 510 590"/><path d="M510 590C515 470 610 360 785 357C760 480 680 550 510 590"/><path d="M548 897H1130"/><path d="M615 880C610 760 680 610 790 530C860 485 950 470 965 420V380C965 330 985 305 1003 292L1010 240L1045 180L1090 240L1168 185C1172 205 1172 230 1168 255C1195 280 1205 310 1225 330C1250 345 1245 355 1232 372C1220 392 1185 398 1150 405C1125 412 1128 450 1140 480C1158 525 1150 575 1125 630C1105 680 1098 720 1098 790V850C1135 852 1138 875 1130 897"/></svg>',
   leaf:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14z" fill="currentColor"/></svg>',
   home:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>',
   ad:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>',
@@ -67,7 +69,7 @@ function avatar(u,lg,cls){
   const tono=u&&u.rol==="dueno"?"":(u&&u.id%3===0?"sv":u&&u.id%3===1?"":"dk");
   return `<span class="av ${cls||tono}${lg?" lg":""}" aria-hidden="true">${esc(n[0])}</span>`;
 }
-const appAv=()=>`<span class="av dk" aria-hidden="true"><span style="width:20px;height:20px;color:#fff">${I.leaf}</span></span>`;
+const appAv=()=>`<span class="av dk" aria-hidden="true"><span style="width:22px;height:22px;color:#C1C0FF;display:grid;place-items:center">${I.logoS}</span></span>`;
 
 /* ---------- API ---------- */
 async function api(path,body){
@@ -140,7 +142,7 @@ async function route(soft){
   const [view,arg]=h.split("/");
   if(!token&&LOGIN){try{await autoLogin()}catch(e){}}
   if(!token){if(view!=="registro"&&view!=="entrar"){location.replace("#/entrar");return}draw(view==="registro"?vRegistro():vEntrar());return}
-  if(!ME){try{await cargarYo();conectarStream()}catch(e){draw(`<div class="login-form"><div class="err-box">${I.warn}<span>${esc(e.message)}</span></div></div>`);return}}
+  if(!ME){try{await cargarYo();conectarStream()}catch(e){if(ME){route();return}draw(`<div class="login-form"><div class="err-box">${I.warn}<span>${esc(e.message)}</span></div></div>`);return}}
   if(view==="entrar"||view==="registro"){location.replace("#/inicio");return}
   const R=ME.rol==="dueno"?RD:RC;
   const fn=R[view]||R.inicio;
@@ -164,7 +166,7 @@ function shell(view,content){
   const cur=view==="solicitud"?"inicio":view==="reserva"?(d?"anuncio":"servicios"):view==="publicar"?"anuncio":view;
   return `<div class="app">
   <aside class="side" aria-label="Menú">
-    <a class="wordmark" href="../web/index.html" target="_top">${I.leaf}Todo Sigue Vivo</a>
+    <a class="wordmark" href="../web/index.html" target="_top">${I.logo}Todo Sigue Vivo</a>
     ${d?`<a class="btn primary side-new" href="#/publicar">${I.plus} Publicar anuncio</a>`:""}
     <nav class="navlist">${nav.map(([k,t,ic,b])=>`<a href="#/${k}" ${cur===k?'aria-current="page"':""}>${ic}<span>${t}</span>${b?`<span class="badge" data-badge="${b}" ${bn[b]?"":"hidden"}>${bn[b]}</span>`:""}</a>`).join("")}</nav>
     <div class="me">${avatar(ME)}<div><b>${esc(ME.nombre)} ${esc(ME.apellido||"")}</b><small>${esc(ME.barrio||ME.cp)} · <span class="role ${d?"du":""}">${d?"Dueña/o":"Cuidador/a"}</span></small><button type="button" class="link" data-act="logout" style="font-size:13px;padding:2px 0">Salir</button></div>
@@ -186,7 +188,7 @@ function vEntrar(){
   <div class="login-art"><img src="img/hero.jpg" alt=""><span class="ai-note">Imagen creada con IA</span>
     <h1>Vete tranquilo. En casa, todo sigue vivo.</h1><p>Entra para publicar un anuncio, o para encontrar casas que cuidar en tu barrio.</p></div>
   <div class="login-form"><form id="f-login" novalidate>
-    <a class="wordmark" href="../web/index.html">${I.leaf}Todo Sigue Vivo</a>
+    <a class="wordmark" href="../web/index.html">${I.logo}Todo Sigue Vivo</a>
     <h2>Entrar</h2>
     <div id="login-err"></div>
     <div class="field"><label for="l-mail">Correo <small>· obligatorio</small></label><input class="input" id="l-mail" type="email" autocomplete="username"></div>
@@ -201,7 +203,7 @@ function vRegistro(){
   return `<div class="login">
   <div class="login-art"><img src="img/hero.jpg" alt=""><span class="ai-note">Imagen creada con IA</span><h1>Cuidadores de barrio que saben de plantas y animales.</h1></div>
   <div class="login-form"><form id="f-reg" novalidate>
-    <a class="wordmark" href="../web/index.html">${I.leaf}Todo Sigue Vivo</a>
+    <a class="wordmark" href="../web/index.html">${I.logo}Todo Sigue Vivo</a>
     <h2>Crear una cuenta</h2>
     <div id="reg-err"></div>
     <fieldset class="field" style="border:0;padding:0;margin:0"><legend class="flabel" style="margin-bottom:6px">¿Qué quieres hacer? <small>· obligatorio</small></legend>
@@ -571,7 +573,7 @@ async function vReserva(id){
       if(v&&v.salida)return parteHTML(v,`Día ${i+1} · ${fecha}`,otro,d);
       if(v&&!v.salida)return d?`<section class="visit"><div class="visit-head"><h3>Día ${i+1} · ${fecha}</h3><span class="status st-ok">${esc(otro.nombre)} está en casa · ${hhmm(v.llegada)}</span></div></section>`:visitaEditor(v,`Día ${i+1} · ${fecha}`);
       const next=!d&&!abierta&&r.estado!=="completado"&&pendientes[0]===dia;
-      return `<section class="visit" style="${next?"":"opacity:.75"}"><div class="visit-head"><h3>Día ${i+1} · ${fecha}</h3>${next?`<button class="btn primary small" type="button" data-llegada="${dia}" data-id="${r.id}">He llegado</button>`:`<span class="status st-off">Pendiente</span>`}</div>${next?`<p class="muted" style="font-size:14px">${tareasPrevias(r.seres,dia)}</p>`:""}</section>`;
+      return `<section class="visit${next?"":" off"}"><div class="visit-head"><h3>Día ${i+1} · ${fecha}</h3>${next?`<button class="btn primary small" type="button" data-llegada="${dia}" data-id="${r.id}">He llegado</button>`:`<span class="status st-off">Pendiente</span>`}</div>${next?`<p class="muted" style="font-size:14px">${tareasPrevias(r.seres,dia)}</p>`:""}</section>`;
     }).join("");
     const extraV=r.visitas.find(v=>v.extra);
     const extraBlock=extraV?(extraV.salida?parteHTML(extraV,"Visita extra por calor",otro,d):d?"":visitaEditor(extraV,"Visita extra por calor")):(!d&&extraAc&&!abierta?`<section class="visit"><div class="visit-head"><h3>Visita extra por calor</h3><button class="btn primary small" type="button" data-llegada="0" data-extra="1" data-id="${r.id}">He llegado</button></div></section>`:"");

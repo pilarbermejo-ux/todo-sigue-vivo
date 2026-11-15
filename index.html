@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Cómo construir un producto digital con IA · Todo Sigue Vivo</title>
-<meta name="description" content="Proyecto final del curso «Cómo construir un producto digital con IA», impartido por La Nave Nodriza de la mano de Cloud District. Caso práctico: Todo Sigue Vivo.">
+<meta name="description" content="Proyecto final del curso «Cómo construir un producto digital con IA», impartido por La Nave Nodriza de la mano de Cloud District. Portfolio de Pilar Bermejo. Caso práctico: Todo Sigue Vivo.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,25 +11,25 @@
 :root{
   --lavanda-50:#F6F6FE;--lavanda-100:#ECEDFF;--lavanda-200:#DADAFF;--lavanda-300:#C1C0FF;--lavanda-400:#A39DFF;--lavanda-600:#5646B0;--lavanda-700:#44368E;--lavanda-800:#32296A;--lavanda-950:#141030;
   --white:#FFFFFF;--canvas:#F7F7FB;--muted:#EEEDF4;--line:#E2E2EA;--line-strong:#8E8C9C;--ink-muted:#6B6979;--ink:#1B1A24;
-  --savia:#1F4E45;--savia-soft:#DCEBE5;--azafran:#E0A21A;--azafran-soft:#FBEFCF;--success:#1D7A68;--success-soft:#DDF1EA;
+  --savia:#1F4E45;--savia-soft:#DCEBE5;--azafran:#E0A21A;--azafran-soft:#FBEFCF;--success:#1D7A68;--success-text:#176657;--success-soft:#DDF1EA;
   --primary:var(--lavanda-600);--primary-hover:var(--lavanda-700);--on-primary:#FFFFFF;--primary-soft:var(--lavanda-100);--primary-text:var(--lavanda-700);--focus:var(--lavanda-600);
   --font-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
   --font-sans:"Instrument Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   --shadow-float:0 1px 2px rgba(27,26,36,.06),0 8px 24px rgba(27,26,36,.10);
   --ease:cubic-bezier(.2,.8,.2,1);
-  --side:264px;
+  --side:284px;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   color-scheme:dark;--white:#1C1A2B;--canvas:#131120;--muted:#252336;--line:#2E2B40;--line-strong:#6F6C82;--ink-muted:#A9A6BC;--ink:#EEEDF5;
-  --savia:#7CC4B0;--savia-soft:#173029;--azafran:#F0B53A;--azafran-soft:#3A2E12;--success:#5FD0B6;--success-soft:#16302A;
+  --savia:#7CC4B0;--savia-soft:#173029;--azafran:#F0B53A;--azafran-soft:#3A2E12;--success:#5FD0B6;--success-text:#5FD0B6;--success-soft:#16302A;
   --primary:#A39DFF;--primary-hover:var(--lavanda-300);--on-primary:var(--lavanda-950);--primary-soft:#2A2548;--primary-text:var(--lavanda-300);--focus:var(--lavanda-400);
   --shadow-float:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
 }}
 :root[data-theme="dark"]{
   color-scheme:dark;--white:#1C1A2B;--canvas:#131120;--muted:#252336;--line:#2E2B40;--line-strong:#6F6C82;--ink-muted:#A9A6BC;--ink:#EEEDF5;
-  --savia:#7CC4B0;--savia-soft:#173029;--azafran:#F0B53A;--azafran-soft:#3A2E12;--success:#5FD0B6;--success-soft:#16302A;
+  --savia:#7CC4B0;--savia-soft:#173029;--azafran:#F0B53A;--azafran-soft:#3A2E12;--success:#5FD0B6;--success-text:#5FD0B6;--success-soft:#16302A;
   --primary:#A39DFF;--primary-hover:var(--lavanda-300);--on-primary:var(--lavanda-950);--primary-soft:#2A2548;--primary-text:var(--lavanda-300);--focus:var(--lavanda-400);
   --shadow-float:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
 }
@@ -47,14 +47,17 @@ a{color:inherit}
 
 /* ===== menú lateral flotante ===== */
 .side{position:fixed;left:20px;top:20px;bottom:20px;width:var(--side);z-index:40;background:var(--white);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow-float);display:flex;flex-direction:column;padding:20px 14px 16px;transition:background .4s,border-color .4s}
-.side-brand{display:flex;align-items:center;gap:10px;padding:0 8px 16px;border-bottom:1px solid var(--line);text-decoration:none}
-.side-brand .dot{width:34px;height:34px;border-radius:9999px;background:var(--lavanda-800);display:grid;place-items:center;flex:none}
-.side-brand b{font:800 18px/1 var(--font-display);letter-spacing:-.04em;display:block}
+.side-brand{display:flex;align-items:center;gap:10px;padding:0 8px 14px;border-bottom:1px solid var(--line);text-decoration:none}
+.side-brand .logo{width:76px;height:34px;border-radius:9999px;background:var(--primary-soft);color:var(--primary);outline:1.5px dashed var(--primary);outline-offset:3px;display:grid;place-items:center;flex:none;margin:4px 6px 4px 4px}
+.side-brand .logo svg{height:80%;width:auto;display:block}
+.side-brand b{font:800 18px/1 var(--font-display);letter-spacing:-.04em;display:block;white-space:nowrap}
 .side-brand small{font:500 11px/1.3 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
-.toc{list-style:none;margin:12px 0 0;padding:0;overflow-y:auto;flex:1;scrollbar-width:thin}
-.toc a{display:flex;align-items:center;gap:12px;min-height:40px;padding:6px 10px;border-radius:12px;text-decoration:none;color:var(--ink-muted);font-size:14.5px;position:relative;transition:background .2s,color .2s}
+@media (min-width:901px) and (max-height:820px){.side{padding:16px 12px 12px}.toc a{min-height:34px;padding:3px 10px;font-size:14px}.toc{margin-top:8px}.side-foot{padding-top:10px}}
+.side nav{flex:1;min-height:0;display:flex;flex-direction:column}
+.toc{list-style:none;margin:12px 0 0;padding:0;overflow-y:auto;flex:1;min-height:0;overscroll-behavior:contain;scrollbar-width:thin}
+.toc a{display:flex;align-items:center;gap:12px;min-height:38px;padding:5px 10px;border-radius:12px;text-decoration:none;color:var(--ink-muted);font-size:14.5px;position:relative;transition:background .2s,color .2s}
 .toc a:hover{background:var(--muted);color:var(--ink)}
-.toc .n{font:500 12px/1 var(--font-mono);width:22px;flex:none;color:var(--line-strong);transition:color .2s}
+.toc .n{font:500 12px/1 var(--font-mono);width:22px;flex:none;color:var(--ink-muted);transition:color .2s}
 .toc a[aria-current="true"]{background:var(--primary-soft);color:var(--primary-text);font-weight:600}
 .toc a[aria-current="true"] .n{color:var(--primary-text)}
 .side-foot{border-top:1px solid var(--line);padding:14px 8px 0;display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -95,7 +98,7 @@ main{margin-left:calc(var(--side) + 40px);padding:20px 20px 0 0}
 
 .status{display:inline-flex;align-items:center;gap:6px;font:500 11.5px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:9999px;white-space:nowrap;width:fit-content}
 .status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
-.st-ok{background:var(--success-soft);color:var(--success)}
+.st-ok{background:var(--success-soft);color:var(--success-text,var(--success))}
 .st-pilot{background:var(--primary-soft);color:var(--primary-text)}
 .st-pend{background:var(--azafran-soft);color:var(--ink)}
 .st-pend::before{background:var(--azafran)}
@@ -124,6 +127,10 @@ main{margin-left:calc(var(--side) + 40px);padding:20px 20px 0 0}
 .authors{margin-top:22px;display:grid;gap:10px}
 .authors .lbl{font:500 12px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--lavanda-300)}
 .authors ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.credits{display:grid;gap:20px}
+.clbl{display:block;font:500 12px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--lavanda-300);margin-bottom:10px}
+.team.one{grid-template-columns:minmax(0,1fr)}
+@media (min-width:901px){.team.one{max-width:calc((100% - 24px)/3)}}
 .team{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .team a{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;background:rgba(255,255,255,.07);text-decoration:none;color:#fff;transition:background .2s}
 .team a:hover{background:rgba(255,255,255,.14)}
@@ -253,7 +260,7 @@ main{margin-left:calc(var(--side) + 40px);padding:20px 20px 0 0}
 .task b{font-size:11px;color:var(--ink-muted)}
 .task .m{font-size:11px}
 .task.ok{background:var(--success-soft);color:var(--ink)}
-.task.ok b{color:var(--success)}
+.task.ok b{color:var(--success-text)}
 .task.run{background:var(--primary-soft);color:var(--primary-text);font-weight:600}
 .task.run b{color:var(--primary-text)}
 .lab-phones{display:flex;gap:12px;justify-content:center;align-items:flex-start;padding:8px 0}
@@ -296,9 +303,13 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
   .swatches{grid-template-columns:1fr 1fr}
 }
 @media (max-width:900px){
-  .side{left:16px;right:16px;top:auto;bottom:84px;width:auto;max-height:min(72vh,560px);transform:translateY(16px) scale(.98);opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease)}
+  .side{left:auto;right:16px;top:auto;bottom:calc(84px + env(safe-area-inset-bottom));width:min(320px,calc(100vw - 32px));max-height:calc(100vh - 116px);max-height:calc(100dvh - 116px - env(safe-area-inset-bottom));padding:14px 10px 12px;transform:translateY(16px) scale(.98);transform-origin:bottom right;opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease)}
+  .side-brand{padding-bottom:12px}
+  .toc{margin-top:8px}
+  .toc a{min-height:38px;padding:4px 10px}
+  .side-foot{padding-top:10px}
   .side.open{transform:none;opacity:1;pointer-events:auto}
-  .toc-btn{display:inline-flex;position:fixed;left:16px;bottom:16px;z-index:41;height:52px;padding:0 18px 0 14px;border-radius:9999px;border:0;background:var(--lavanda-800);color:#fff;font:500 15px/1 var(--font-sans);align-items:center;gap:10px;box-shadow:var(--shadow-float);cursor:pointer}
+  .toc-btn{display:inline-flex;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:41;height:52px;padding:0 18px 0 14px;border-radius:9999px;border:0;background:var(--lavanda-800);color:#fff;font:500 15px/1 var(--font-sans);align-items:center;gap:10px;box-shadow:var(--shadow-float);cursor:pointer}
   .toc-btn .cur{font:500 12px/1 var(--font-mono);color:var(--lavanda-300)}
   main{margin-left:0;padding:16px 16px 0}
   .sec{padding:72px 0}
@@ -326,7 +337,7 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
 <!-- MENÚ LATERAL FLOTANTE -->
 <aside class="side" id="side" aria-label="Índice del proyecto">
   <a class="side-brand" href="#inicio">
-    <span class="dot" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C1C0FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6 0-9 5-13M12 21c0-5-2-8-7-9 0 5 3 8 7 9z"/><path d="M17 8c-3 0-5 2-5 5 3 0 5-2 5-5z"/></svg></span>
+    <span class="logo" aria-hidden="true"><svg viewBox="200 140 1080 800" fill="none" stroke="currentColor" stroke-width="56" stroke-linecap="round" stroke-linejoin="round"><path d="M548 897C548 820 530 720 510 640C470 520 380 440 242 398C236 520 300 650 460 728C520 760 545 810 548 897"/><path d="M510 590C515 470 610 360 785 357C760 480 680 550 510 590"/><path d="M548 897H1130"/><path d="M615 880C610 760 680 610 790 530C860 485 950 470 965 420V380C965 330 985 305 1003 292L1010 240L1045 180L1090 240L1168 185C1172 205 1172 230 1168 255C1195 280 1205 310 1225 330C1250 345 1245 355 1232 372C1220 392 1185 398 1150 405C1125 412 1128 450 1140 480C1158 525 1150 575 1125 630C1105 680 1098 720 1098 790V850C1135 852 1138 875 1130 897"/><path d="M1005 650C1025 720 1030 780 1030 850C1032 870 1040 885 1052 897"/><path d="M940 897C985 860 975 760 905 735C880 727 860 732 845 738"/></svg></span>
     <b>Todo Sigue Vivo</b>
   </a>
   <nav>
@@ -342,7 +353,7 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
       <li><a href="#web"><span class="n">08</span>Web pública</a></li>
       <li><a href="#poc"><span class="n">09</span>POC funcional</a></li>
       <li><a href="#sala"><span class="n">10</span>Sala de test de usuario</a></li>
-      <li><a href="#cierre"><span class="n">11</span>Hecho con IA</a></li>
+      <li><a href="#cierre"><span class="n">11</span>Créditos</a></li>
       <li><a href="#gracias"><span class="n">12</span>Agradecimientos</a></li>
     </ol>
   </nav>
@@ -363,7 +374,7 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
         <p class="kicker">Proyecto final del curso</p>
         <h1 id="t-inicio">Cómo construir un producto digital <em>con IA</em></h1>
         <p class="by">Impartido por <b>La Nave Nodriza</b> de la mano de <b>Cloud District</b></p>
-        <div class="authors"><span class="lbl">Un proyecto de</span><ul><li><a class="li" href="https://www.linkedin.com/in/pilarbermejo/" target="_blank" rel="noopener" aria-label="Pilar Bermejo en LinkedIn (se abre en una pestaña nueva)"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.46h-4v-4.84c0-1.16-.02-2.64-1.61-2.64-1.61 0-1.86 1.26-1.86 2.56v4.92h-4z"/></svg><span>Pilar Bermejo</span></a></li><li><a class="li" href="https://www.linkedin.com/in/gema-d%C3%ADez-gonz%C3%A1lez-74157943/" target="_blank" rel="noopener" aria-label="Gema Díez González en LinkedIn (se abre en una pestaña nueva)"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.46h-4v-4.84c0-1.16-.02-2.64-1.61-2.64-1.61 0-1.86 1.26-1.86 2.56v4.92h-4z"/></svg><span>Gema Díez González</span></a></li><li><a class="li" href="https://www.linkedin.com/in/maria-diez-galeron/" target="_blank" rel="noopener" aria-label="María Díez Galerón en LinkedIn (se abre en una pestaña nueva)"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.46h-4v-4.84c0-1.16-.02-2.64-1.61-2.64-1.61 0-1.86 1.26-1.86 2.56v4.92h-4z"/></svg><span>María Díez Galerón</span></a></li></ul></div>
+        <div class="authors"><span class="lbl">Portfolio de</span><ul><li><a class="li" href="https://www.linkedin.com/in/pilarbermejo/" target="_blank" rel="noopener" aria-label="Pilar Bermejo en LinkedIn (se abre en una pestaña nueva)"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.46h-4v-4.84c0-1.16-.02-2.64-1.61-2.64-1.61 0-1.86 1.26-1.86 2.56v4.92h-4z"/></svg><span>Pilar Bermejo</span></a></li></ul></div>
       </div>
       <div class="hero-case">
         <span class="lbl">Caso práctico</span>
@@ -588,11 +599,11 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
 <!-- 11 CIERRE -->
 <section class="sec" id="cierre" aria-labelledby="t-fin">
   <div class="end rv">
-    <p class="kicker" style="color:var(--lavanda-300)"><span class="num" style="color:var(--lavanda-400)">11</span>Hecho con IA</p>
+    <p class="kicker" style="color:var(--lavanda-300)"><span class="num" style="color:var(--lavanda-400)">11</span>Créditos</p>
     <h2 id="t-fin">Todo este proyecto se ha construido con inteligencia artificial</h2>
     <p>La investigación, la estrategia, la marca, el PRD, los prototipos, la web, la POC y la sala de test se hicieron con ChatGPT, Claude, Claude Code y Figma, con criterio humano en cada decisión. Las imágenes son ilustrativas, están creadas con IA y no son perfiles reales.</p>
-    <ul class="team"><li><a href="https://www.linkedin.com/in/pilarbermejo/" target="_blank" rel="noopener"><span class="av">P</span><span><b>Pilar Bermejo</b><small>LinkedIn ↗</small></span></a></li><li><a href="https://www.linkedin.com/in/gema-d%C3%ADez-gonz%C3%A1lez-74157943/" target="_blank" rel="noopener"><span class="av">G</span><span><b>Gema Díez González</b><small>LinkedIn ↗</small></span></a></li><li><a href="https://www.linkedin.com/in/maria-diez-galeron/" target="_blank" rel="noopener"><span class="av">M</span><span><b>María Díez Galerón</b><small>LinkedIn ↗</small></span></a></li></ul>
-    <div class="meta"><span>Pilar Bermejo · Gema Díez González · María Díez Galerón</span><span>Proyecto final · «Cómo construir un producto digital con IA»</span><span>Impartido por La Nave Nodriza de la mano de Cloud District</span><span>2026</span></div>
+    <div class="credits"><div><span class="clbl">Portfolio y propuesta final</span><ul class="team one"><li><a href="https://www.linkedin.com/in/pilarbermejo/" target="_blank" rel="noopener"><span class="av">P</span><span><b>Pilar Bermejo</b><small>LinkedIn ↗</small></span></a></li></ul></div><div><span class="clbl">Equipo del proyecto en el curso</span><ul class="team"><li><a href="https://www.linkedin.com/in/pilarbermejo/" target="_blank" rel="noopener"><span class="av">P</span><span><b>Pilar Bermejo</b><small>LinkedIn ↗</small></span></a></li><li><a href="https://www.linkedin.com/in/gema-d%C3%ADez-gonz%C3%A1lez-74157943/" target="_blank" rel="noopener"><span class="av">G</span><span><b>Gema Díez González</b><small>LinkedIn ↗</small></span></a></li><li><a href="https://www.linkedin.com/in/maria-diez-galeron/" target="_blank" rel="noopener"><span class="av">M</span><span><b>María Díez Galerón</b><small>LinkedIn ↗</small></span></a></li></ul></div></div>
+    <div class="meta"><span>Portfolio de Pilar Bermejo</span><span>Proyecto final · «Cómo construir un producto digital con IA»</span><span>Impartido por La Nave Nodriza de la mano de Cloud District</span><span>Accesible · WCAG 2.2 AA, revisado con axe</span><span>2026</span></div>
   </div>
 </section>
 

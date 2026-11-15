@@ -51,7 +51,8 @@ button{cursor:pointer}
 /* cabecera */
 .header{height:84px;display:flex;align-items:center;justify-content:space-between;gap:24px}
 .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font:800 24px/1 var(--font-display);letter-spacing:-.045em}
-.brand .dot{width:34px;height:34px;border-radius:50%;background:var(--lavanda-800);display:grid;place-items:center;flex:none}
+.brand .logo{display:flex;color:var(--primary);flex:none}
+.brand .logo svg{width:48px;height:auto;display:block}
 .header nav{display:flex;gap:28px;align-items:center;font-size:14.5px}
 .header nav a{padding:12px 0;text-decoration:none;color:var(--ink-muted)}
 .header nav a:hover{color:var(--ink);text-decoration:underline}
@@ -75,9 +76,9 @@ h1 .color{color:var(--primary)}
 .photo-strip small{display:block;font:500 11px/1.3 var(--font-mono);color:var(--ink-muted);margin-top:8px;letter-spacing:.02em}
 
 .form-card{background:var(--white);border-radius:24px;padding:28px;align-self:center;min-width:0;box-shadow:0 1px 2px rgba(27,26,36,.06),0 8px 24px rgba(27,26,36,.08)}
-.roles{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--muted);padding:4px;border-radius:14px;margin-bottom:24px}
-.roles button{border:0;background:transparent;border-radius:10px;min-height:46px;padding:8px;font-size:14.5px;font-weight:500;color:var(--ink-muted);transition:background .2s,color .2s}
-.roles button[aria-pressed=true]{background:var(--primary);color:var(--on-primary)}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--muted);padding:4px;border-radius:9999px;margin-bottom:24px}
+.roles button{border:0;background:transparent;border-radius:9999px;min-height:44px;padding:8px;font-size:14.5px;font-weight:500;color:var(--ink-muted);transition:background .2s,color .2s}
+.roles button[aria-pressed=true]{background:var(--white);color:var(--ink);box-shadow:0 1px 3px rgba(27,26,36,.12)}
 .roles button:not([aria-pressed=true]):hover{color:var(--ink)}
 .form-card h2{font-size:28px;line-height:1.12;margin-bottom:8px}
 .form-intro{font-size:15px;color:var(--ink-muted);margin-bottom:20px}
@@ -160,7 +161,7 @@ details[open] summary::after{transform:rotate(45deg)}
 @media(max-width:1050px){.wrap{width:calc(100% - 48px)}.hero{padding:28px;gap:24px}.form-card{padding:24px}.care-layout{gap:32px}.faq{gap:40px}}
 @media(max-width:779px){
   .wrap{width:calc(100% - 32px)}
-  .header{height:64px}.brand{font-size:20px}.brand .dot{width:30px;height:30px}.header nav{gap:12px}.header nav a{display:none}
+  .header{height:64px}.brand{font-size:20px}.brand .logo svg{width:42px}.header nav{gap:12px}.header nav a{display:none}
   .hero{padding:22px;grid-template-columns:1fr;gap:22px;border-radius:22px}
   .hero-copy{display:contents}.headline-block{order:0}.form-card{order:1;padding:20px}.photo-strip{order:2}
   h1{font-size:40px}.intro{font-size:16px;margin-top:12px}
@@ -177,12 +178,12 @@ details[open] summary::after{transform:rotate(45deg)}
 @media(max-width:400px){h1{font-size:34px}.roles button{font-size:13px}.form-card{padding:16px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
 </style></head><body>
-<div class="tsv-pf" style="background:#32296A;color:#fff;font:500 13.5px/1.2 'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;position:relative;z-index:60"><style>@media print{.tsv-pf{display:none!important}}.tsv-pf a:hover{color:#C1C0FF!important}</style><div style="max-width:1200px;margin:0 auto;padding:0 16px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:8px;font-weight:600;letter-spacing:-.01em"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C1C0FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M12 21c0-6 0-9 5-13M12 21c0-5-2-8-7-9 0 5 3 8 7 9z"/><path d="M17 8c-3 0-5 2-5 5 3 0 5-2 5-5z"/></svg>Todo Sigue Vivo</span><a href="../index.html" style="color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px;padding:10px 0">Ver el portfolio completo</a></div></div>
+<div class="tsv-pf" style="background:#32296A;color:#fff;font:500 13.5px/1.2 'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;position:relative;z-index:60"><style>@media print{.tsv-pf{display:none!important}}.tsv-pf a:hover{color:#C1C0FF!important}</style><div style="max-width:1200px;margin:0 auto;padding:0 16px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:8px;font-weight:600;letter-spacing:-.01em"><svg width="20" height="20" viewBox="460 130 840 840" fill="none" stroke="#C1C0FF" stroke-width="72" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M548 897C545 760 528 660 510 590"/><path d="M510 590C515 470 610 360 785 357C760 480 680 550 510 590"/><path d="M548 897H1130"/><path d="M615 880C610 760 680 610 790 530C860 485 950 470 965 420V380C965 330 985 305 1003 292L1010 240L1045 180L1090 240L1168 185C1172 205 1172 230 1168 255C1195 280 1205 310 1225 330C1250 345 1245 355 1232 372C1220 392 1185 398 1150 405C1125 412 1128 450 1140 480C1158 525 1150 575 1125 630C1105 680 1098 720 1098 790V850C1135 852 1138 875 1130 897"/></svg>Todo Sigue Vivo</span><a href="../index.html" style="color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px;padding:10px 0">Ver el portfolio completo</a></div></div>
 <a class="skip" href="#captacion">Saltar al formulario</a>
 <div class="topbar"><div class="wrap"><i aria-hidden="true"></i><span>Prototipo de captación · El formulario no envía ni guarda datos</span></div></div>
 
 <header class="wrap header">
-  <a class="brand" href="#" aria-label="Todo Sigue Vivo, inicio"><span class="dot" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C1C0FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6 0-9 5-13M12 21c0-5-2-8-7-9 0 5 3 8 7 9z"/><path d="M17 8c-3 0-5 2-5 5 3 0 5-2 5-5z"/></svg></span>Todo Sigue Vivo</a>
+  <a class="brand" href="#" aria-label="Todo Sigue Vivo, inicio"><span class="logo" aria-hidden="true"><svg class="iso" width="48" viewBox="200 140 1080 800" fill="none" stroke="currentColor" stroke-width="40" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M548 897C548 820 530 720 510 640C470 520 380 440 242 398C236 520 300 650 460 728C520 760 545 810 548 897"/><path d="M510 590C515 470 610 360 785 357C760 480 680 550 510 590"/><path d="M548 897H1130"/><path d="M615 880C610 760 680 610 790 530C860 485 950 470 965 420V380C965 330 985 305 1003 292L1010 240L1045 180L1090 240L1168 185C1172 205 1172 230 1168 255C1195 280 1205 310 1225 330C1250 345 1245 355 1232 372C1220 392 1185 398 1150 405C1125 412 1128 450 1140 480C1158 525 1150 575 1125 630C1105 680 1098 720 1098 790V850C1135 852 1138 875 1130 897"/><path d="M1005 650C1025 720 1030 780 1030 850C1032 870 1040 885 1052 897"/><path d="M940 897C985 860 975 760 905 735C880 727 860 732 845 738"/></svg></span>Todo Sigue Vivo</a>
   <nav aria-label="Principal"><a href="#cuidados">Qué cuidamos</a><a href="#como">Cómo lo planteamos</a><a href="#dudas">Tus dudas</a>
     <button type="button" class="theme" id="theme" aria-label="Cambiar tema claro u oscuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg></button></nav>
 </header>
@@ -265,9 +266,9 @@ details[open] summary::after{transform:rotate(45deg)}
 </main>
 
 <footer class="wrap footer">
-  <a class="brand" href="#" style="font-size:20px"><span class="dot" aria-hidden="true" style="width:30px;height:30px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C1C0FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6 0-9 5-13M12 21c0-5-2-8-7-9 0 5 3 8 7 9z"/><path d="M17 8c-3 0-5 2-5 5 3 0 5-2 5-5z"/></svg></span>Todo Sigue Vivo</a>
+  <a class="brand" href="#" style="font-size:20px"><span class="logo" aria-hidden="true"><svg class="iso" width="48" viewBox="200 140 1080 800" fill="none" stroke="currentColor" stroke-width="40" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M548 897C548 820 530 720 510 640C470 520 380 440 242 398C236 520 300 650 460 728C520 760 545 810 548 897"/><path d="M510 590C515 470 610 360 785 357C760 480 680 550 510 590"/><path d="M548 897H1130"/><path d="M615 880C610 760 680 610 790 530C860 485 950 470 965 420V380C965 330 985 305 1003 292L1010 240L1045 180L1090 240L1168 185C1172 205 1172 230 1168 255C1195 280 1205 310 1225 330C1250 345 1245 355 1232 372C1220 392 1185 398 1150 405C1125 412 1128 450 1140 480C1158 525 1150 575 1125 630C1105 680 1098 720 1098 790V850C1135 852 1138 875 1130 897"/><path d="M1005 650C1025 720 1030 780 1030 850C1032 870 1040 885 1052 897"/><path d="M940 897C985 860 975 760 905 735C880 727 860 732 845 738"/></svg></span>Todo Sigue Vivo</a>
   <div id="sobre-demo">
-    <p>Primera landing de captación del proyecto, creada con ChatGPT en septiembre de 2026 bajo el nombre provisional «Nodriza», y rediseñada después con la guía de marca definitiva de Todo Sigue Vivo. Web hecha con IA.</p>
+    <p>Primera landing de captación del proyecto, creada con ChatGPT en septiembre de 2026 bajo el nombre provisional «Nodriza», y rediseñada después con la guía de marca definitiva de Todo Sigue Vivo. Web hecha con IA. Accesible: cumple WCAG 2.2 AA en la revisión automática con axe.</p>
     <p>Prototipo sin envíos, reservas ni almacenamiento de datos. Para captar contactos reales habría que conectar el formulario y añadir la información de privacidad. La imagen es ilustrativa, está creada con IA y no representa un servicio real.</p>
   </div>
 </footer>
