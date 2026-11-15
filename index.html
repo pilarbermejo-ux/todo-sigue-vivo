@@ -140,9 +140,10 @@ main{margin-left:calc(var(--side) + 40px);padding:20px 20px 0 0}
 .hero-photo{position:relative;min-height:340px}
 .hero-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .ai-note{position:absolute;right:14px;bottom:14px;background:rgba(20,16,48,.72);color:#fff;font:500 11px/1 var(--font-mono);letter-spacing:.04em;padding:7px 10px;border-radius:9999px;backdrop-filter:blur(6px)}
-.live{position:absolute;left:16px;top:16px;background:#fff;color:var(--ink);border-radius:9999px;padding:8px 14px 8px 8px;display:flex;align-items:center;gap:10px;font-size:14px;box-shadow:0 8px 24px rgba(20,16,48,.25)}
-.live .av{width:28px;height:28px;border-radius:50%;background:var(--lavanda-100);color:var(--lavanda-700);display:grid;place-items:center;font:700 13px/1 var(--font-display)}
-.live .ex{font:500 10.5px/1 var(--font-mono);text-transform:uppercase;letter-spacing:.06em;background:var(--muted);color:var(--ink-muted);padding:4px 7px;border-radius:9999px}
+.live{position:absolute;left:16px;top:16px;background:rgba(255,255,255,.94);color:#1B1A24;border-radius:9999px;padding:8px 14px 8px 8px;display:flex;align-items:center;gap:10px;font-size:14px;box-shadow:0 8px 24px rgba(20,16,48,.25)}
+.live .av{width:28px;height:28px;border-radius:50%;background:var(--lavanda-600);color:#fff;display:grid;place-items:center;font:600 12px/1 var(--font-sans);position:relative;flex:none}
+.live .av::after{content:"";position:absolute;right:-1px;bottom:-1px;width:9px;height:9px;border-radius:50%;background:#1D7A68;border:2px solid #fff}
+.live .ex{font:500 10.5px/1 var(--font-mono);text-transform:uppercase;letter-spacing:.06em;background:#EEEDF4;color:#6B6979;padding:4px 7px;border-radius:9999px}
 .facts{display:flex;flex-wrap:wrap;gap:8px}
 .facts span{font:500 12px/1 var(--font-mono);letter-spacing:.04em;padding:8px 12px;border-radius:9999px;background:rgba(255,255,255,.1);color:var(--lavanda-100)}
 .scroll-hint{display:inline-flex;align-items:center;gap:10px;color:var(--lavanda-200);text-decoration:none;font-size:14px}
