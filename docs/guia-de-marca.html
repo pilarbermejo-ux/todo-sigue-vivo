@@ -100,7 +100,7 @@ code,.code{font-family:var(--font-mono);font-size:13px}
 .toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:grid;gap:2px;max-height:calc(100vh - 32px);overflow:auto;padding-bottom:16px}
 .toc p{margin-bottom:8px}
 .toc a{display:flex;gap:10px;align-items:baseline;text-decoration:none;padding:7px 12px;border-radius:var(--r-pill);font-size:14px;font-weight:500;color:var(--ink-muted);transition:background var(--t-fast),color var(--t-fast)}
-.toc a span{font:500 11px var(--font-mono);color:inherit;opacity:.8}
+.toc a span{font:500 11px var(--font-mono);color:inherit}
 .toc a:hover{background:var(--muted);color:var(--ink)}
 .toc a.on{background:var(--primary);color:var(--on-primary)}
 .toc-sub{padding-left:12px;display:grid}
@@ -167,6 +167,8 @@ main{min-width:0}
 .fact:nth-child(2):hover{transform:rotate(1deg) translateY(-3px)}
 .fact strong{font-size:22px;line-height:1.15;letter-spacing:-.02em;font-weight:600}
 .fact.pl{background:var(--savia-soft)}
+.fact.pl .lbl,.svc.pl .tag,.svc.pl .price{color:var(--savia)}
+.svc.an .tag{color:var(--primary-text)}
 .fact.an{background:var(--primary-soft)}
 .fact.mu{background:var(--white)}
 .principles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}
@@ -283,7 +285,7 @@ tbody tr:hover{background:var(--lavanda-50)}
 .hon .row{justify-content:space-between}
 .state{font:500 11px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;border-radius:9999px;padding:4px 10px}
 .state.wait{background:var(--azafran-soft);color:var(--ink)}
-.state.ok{background:var(--success-soft);color:var(--success)}
+.state.ok{background:var(--success-soft);color:var(--success-text)}
 .hon p{font-size:14px}
 .hon .before{color:var(--ink-muted)}
 
@@ -1065,7 +1067,7 @@ input[type=range]{width:100%;accent-color:var(--primary);height:32px;cursor:poin
 
   <div id="voz-momentos" class="sub">
     <div class="sub-h"><h3>Mensajes por momento</h3><span class="lbl">Microcopy de referencia</span></div>
-    <div class="tbl-wrap">
+    <div class="tbl-wrap" tabindex="0">
       <table>
         <thead><tr><th>Momento</th><th>Dilo así</th><th>Evita</th></tr></thead>
         <tbody>
@@ -1136,7 +1138,7 @@ input[type=range]{width:100%;accent-color:var(--primary);height:32px;cursor:poin
 
   <div class="sub">
     <div class="sub-h"><h3>Reglas de estilo</h3><span class="lbl">Formato de datos y gramática</span></div>
-    <div class="tbl-wrap">
+    <div class="tbl-wrap" tabindex="0">
       <table class="tok-table">
         <thead><tr><th>Elemento</th><th>Así</th><th>Así no</th><th>Nota</th></tr></thead>
         <tbody>
@@ -1243,7 +1245,7 @@ input[type=range]{width:100%;accent-color:var(--primary);height:32px;cursor:poin
 
   <div class="sub">
     <div class="sub-h"><h3>Roles del color</h3><span class="lbl">Usa roles, no valores</span></div>
-    <div class="tbl-wrap">
+    <div class="tbl-wrap" tabindex="0">
       <table class="tok-table">
         <thead><tr><th>Rol</th><th>Token</th><th>Claro</th><th>Oscuro</th><th>Uso</th></tr></thead>
         <tbody>
@@ -1373,7 +1375,7 @@ input[type=range]{width:100%;accent-color:var(--primary);height:32px;cursor:poin
         <li><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></g></svg><span>Con «reducir movimiento» activado se desactiva todo y la guía sigue funcionando.</span></li>
       </ul>
     </div>
-    <div class="tbl-wrap">
+    <div class="tbl-wrap" tabindex="0">
       <table class="tok-table" style="min-width:0">
         <thead><tr><th>Token</th><th>Valor</th><th>Uso</th></tr></thead>
         <tbody>
@@ -1727,7 +1729,7 @@ input[type=range]{width:100%;accent-color:var(--primary);height:32px;cursor:poin
           <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" fill="var(--primary-soft)"/><path d="M40 92h40l-5 18H45z" fill="#5646B0"/><path d="M60 92c-10-18-8-40 6-54 2 20-2 38-6 54z" fill="#1F4E45" class="leafdemo" style="transform-origin:60px 92px"/><path d="M60 92c4-18 18-30 32-32-8 12-18 22-32 32z" fill="#2F6B5E"/></svg>
           <h4>Aún no hay nadie en Lavapiés</h4><p>Estamos formando cuidadoras en tu barrio. Te avisamos en cuanto llegue la primera.</p><button class="btn secondary sm" type="button">Avisarme</button>
         </div>
-        <div class="skel" aria-label="Cargando cuidadoras"><div class="row"><i class="c"></i><div style="flex:1;display:grid;gap:8px"><i style="width:60%"></i><i style="width:40%"></i></div></div><i></i><i style="width:70%"></i></div>
+        <div class="skel" role="status" aria-label="Cargando cuidadoras"><div class="row"><i class="c"></i><div style="flex:1;display:grid;gap:8px"><i style="width:60%"></i><i style="width:40%"></i></div></div><i></i><i style="width:70%"></i></div>
       </div>
       <div class="spec"><h4>Vacío y carga</h4>
         <dl><dt>Vacío</dt><dd>Ilustración plana de la gama, título, frase útil y una acción</dd><dt>Carga</dt><dd>Esqueleto con brillo que recorre en 1,4 s</dd></dl>
@@ -1852,7 +1854,7 @@ input[type=range]{width:100%;accent-color:var(--primary);height:32px;cursor:poin
 <!-- ============ 13 TOKENS ============ -->
 <section id="tokens" class="sec">
   <div class="sec-head"><span class="num m">13</span><div><h2>Tokens</h2><p class="sec-sub">Para copiar al proyecto.</p></div></div>
-  <div class="codebox"><button class="copy" type="button" id="copy-tokens">Copiar CSS</button><pre id="tokens-pre"></pre></div>
+  <div class="codebox"><button class="copy" type="button" id="copy-tokens">Copiar CSS</button><pre id="tokens-pre" tabindex="0"></pre></div>
 </section>
 
 </main>

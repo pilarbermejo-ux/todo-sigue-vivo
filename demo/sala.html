@@ -4,7 +4,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="area-privada.css?v=9">
+<link rel="stylesheet" href="area-privada.css?v=13">
 <style>
 body{background:var(--canvas)}
 .sala{display:grid;grid-template-columns:380px minmax(0,1fr);min-height:100vh}
@@ -49,6 +49,7 @@ select.in{flex:1}
 .resp{font-size:12.5px;display:grid;gap:4px}
 .resp div{padding:6px 8px;border-radius:8px;background:var(--muted)}
 @media (max-width:1180px){.sala{grid-template-columns:1fr}.panel{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}}
+@media (max-width:620px){.sala{grid-template-columns:minmax(0,1fr)}.phone-top select{min-width:0}.phones{padding:16px 12px}.phone{width:100%;grid-template-columns:minmax(0,1fr)}.phone-top,.device{width:100%;max-width:390px;justify-self:center}.device{height:min(760px,calc(100svh - 90px))}}
 </style>
 </head><body>
 <div class="tsv-pf" style="background:#32296A;color:#fff;font:500 13.5px/1.2 'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;position:relative;z-index:60"><style>@media print{.tsv-pf{display:none!important}}.tsv-pf a:hover{color:#C1C0FF!important}</style><div style="max-width:1200px;margin:0 auto;padding:0 16px;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:8px;font-weight:600;letter-spacing:-.01em"><svg width="20" height="20" viewBox="460 130 840 840" fill="none" stroke="#C1C0FF" stroke-width="72" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M548 897C545 760 528 660 510 590"/><path d="M510 590C515 470 610 360 785 357C760 480 680 550 510 590"/><path d="M548 897H1130"/><path d="M615 880C610 760 680 610 790 530C860 485 950 470 965 420V380C965 330 985 305 1003 292L1010 240L1045 180L1090 240L1168 185C1172 205 1172 230 1168 255C1195 280 1205 310 1225 330C1250 345 1245 355 1232 372C1220 392 1185 398 1150 405C1125 412 1128 450 1140 480C1158 525 1150 575 1125 630C1105 680 1098 720 1098 790V850C1135 852 1138 875 1130 897"/></svg>Todo Sigue Vivo</span><a href="../index.html" style="color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px;padding:10px 0">Ver el portfolio completo</a></div></div>
@@ -58,13 +59,13 @@ select.in{flex:1}
   <p class="hint2">Demo de portfolio: todo funciona en tu navegador con datos de ejemplo. Dos móviles simulados en este ordenador. La persona participante usa uno y tú haces de la otra parte. Todas las cuentas son usuarios registrados.</p>
 
   <section class="box"><h2>1 · Sesión <small id="ses-st">sin sesión</small></h2>
-    <div class="row"><input class="in" id="part" placeholder="Código de participante (p. ej. P01)"></div>
-    <div class="row"><select class="in" id="part-rol"><option value="dueno">Prueba como dueña/o</option><option value="cuidador">Prueba como cuidador/a</option></select></div>
+    <div class="row"><input class="in" id="part" aria-label="Código de participante" placeholder="Código de participante (p. ej. P01)"></div>
+    <div class="row"><select class="in" id="part-rol" aria-label="Papel de la persona participante"><option value="dueno">Prueba como dueña/o</option><option value="cuidador">Prueba como cuidador/a</option></select></div>
     <div class="row"><button class="sbtn pri" id="ses-ini">Empezar sesión</button><button class="sbtn" id="ses-fin" disabled>Terminar</button></div>
   </section>
 
   <section class="box"><h2>2 · Escenario <small id="esc-act"></small></h2>
-    <select class="in" id="esc">
+    <select class="in" id="esc" aria-label="Escenario de la prueba">
       <option value="limpio">Desde cero · Marta aún no ha publicado</option>
       <option value="candidaturas">Anuncio publicado · Javier y Sofía se han presentado</option>
       <option value="elegida">Irene elegida · falta elegir hueco y confirmar</option>
@@ -94,7 +95,7 @@ select.in{flex:1}
   </section>
 
   <section class="box"><h2>6 · Registro <small><a href="/api/test/eventos.csv">eventos.csv</a> · <a href="/api/test/respuestas.csv">respuestas.csv</a></small></h2>
-    <div class="log" id="log" aria-live="off"></div>
+    <div class="log" id="log" tabindex="0" role="log" aria-label="Registro de la sesión" aria-live="off"></div>
     <div class="resp" id="resp"></div>
   </section>
   <p class="hint2"><a href="../web/index.html">Web</a> · <a href="area-privada.html" target="_blank">Abrir el área privada en otra pestaña</a></p>

@@ -88,7 +88,7 @@ function track(nombre,datos){fetch("/api/ev",{method:"POST",headers:Object.assig
 function setToken(t){token=t;try{t?localStorage.setItem(TK,t):localStorage.removeItem(TK)}catch(e){}}
 async function perderSesion(){setToken(null);ME=null;if(ES){ES.close();ES=null}if(LOGIN&&!perderSesion.busy){perderSesion.busy=true;try{await autoLogin()}finally{perderSesion.busy=false}}else location.hash="#/entrar"}
 async function autoLogin(){const j=await api("/test/entrar",{correo:LOGIN});setToken(j.token);await cargarYo();conectarStream()}
-async function cargarYo(){ME=await api("/yo");if(!CAT)CAT=await api("/catalogo");try{const k="tsv-wiz-"+FRAME+"-"+ME.id;W=JSON.parse(localStorage.getItem(k))||null}catch(e){}}
+async function cargarYo(){ME=await api("/yo");if(LOGIN&&ME&&ME.correo&&ME.correo.toLowerCase()!==LOGIN.toLowerCase()){const j=await api("/test/entrar",{correo:LOGIN});setToken(j.token);ME=await api("/yo")}if(!CAT)CAT=await api("/catalogo");try{const k="tsv-wiz-"+FRAME+"-"+ME.id;W=JSON.parse(localStorage.getItem(k))||null}catch(e){}}
 
 /* ---------- tiempo real ---------- */
 function conectarStream(){
@@ -668,7 +668,7 @@ async function vMensajes(kid){
     thread=`<div class="thread">
       <div class="th-head"><a class="iconbtn back" href="#/mensajes" aria-label="Volver a las conversaciones">${I.back}</a>${avatar(o)}<div class="who"><b>${esc(o.nombre)}</b><small>${esc(o.barrio||"")}${o.rating?" · ★ "+String(o.rating.toFixed(1)).replace(".",","):""}${o.del?" · Plantas delicadas":""}</small></div>${accion}</div>
       <p class="privacy">${I.lock}${ch.contacto_visible?"Reserva confirmada: ya podéis compartir datos de contacto.":"La dirección y el teléfono se comparten solo al confirmar la reserva."}</p>
-      <div class="msgs" id="msgs" aria-live="polite">${msgs}${typing?`<div class="typing" aria-label="${esc(o.nombre)} está escribiendo"><i></i><i></i><i></i></div>`:""}</div>
+      <div class="msgs" id="msgs" tabindex="0" role="log" aria-label="Conversación" aria-live="polite">${msgs}${typing?`<div class="typing" aria-label="${esc(o.nombre)} está escribiendo"><i></i><i></i><i></i></div>`:""}</div>
       ${cerrada?`<p class="privacy">Esta conversación está cerrada.</p><div></div>`:`<div class="quick" aria-label="Sugerencias">${quick.map(q=>`<button type="button" data-quick="${esc(q)}">${esc(q)}</button>`).join("")}</div>
       <form class="composer" id="f-chat" data-cid="${k.id}"><label class="sr" for="chat-in">Escribe a ${esc(o.nombre)}</label><input id="chat-in" autocomplete="off" data-draft="chat-${k.id}" placeholder="Escribe a ${esc(o.nombre)}…" value="${esc(DR["chat-"+k.id]||"")}"><button class="send" type="submit" aria-label="Enviar">${I.send}</button></form>`}
     </div>`;
