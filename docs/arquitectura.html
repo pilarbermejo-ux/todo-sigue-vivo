@@ -1,0 +1,138 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Arquitectura del MVP · Todo Sigue Vivo</title><style>@media screen{body{padding:24px 24px 80px;background:#fff}section{height:auto;min-height:80vh;margin-bottom:48px}}</style>
+<style>@page{size:A4 landscape;margin:12mm}body{font-family:-apple-system,Helvetica,sans-serif;color:#1B1A24;margin:0}
+section{page-break-after:always;height:170mm;display:flex;flex-direction:column}section:last-of-type{page-break-after:auto}
+h1{font-size:20px;margin:0 0 2px;color:#5646B0}p{margin:0 0 8px;font-size:11px;color:#666}
+pre.mermaid{flex:1;display:flex;justify-content:center;align-items:center;margin:0}pre.mermaid svg{max-width:100%;max-height:165mm;height:auto}</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script></head><body><section><h1>Arquitectura técnica · MVP</h1><p>Todo Sigue Vivo · 29 sep 2026</p><pre class="mermaid">flowchart LR
+  subgraph U[&quot;Usuarios&quot;]
+    D[&quot;Propietario&lt;br/&gt;móvil o web&quot;]
+    C[&quot;Cuidador&lt;br/&gt;móvil o web&quot;]
+  end
+
+  subgraph FE[&quot;Frontend · PWA Next.js en Vercel&quot;]
+    UI[&quot;Pantallas&lt;br/&gt;registro · perfil · anuncios&lt;br/&gt;buscador · candidaturas · chat&quot;]
+    SW[&quot;Service Worker&lt;br/&gt;recibe push&quot;]
+  end
+
+  subgraph SB[&quot;Backend gestionado · Supabase UE&quot;]
+    AUTH[&quot;Auth&lt;br/&gt;correo · Google · Apple&quot;]
+    DB[(&quot;PostgreSQL&lt;br/&gt;tablas + reglas RLS&lt;br/&gt;función cuidadores_idoneos&quot;)]
+    RT[&quot;Realtime&lt;br/&gt;chat y avisos en vivo&quot;]
+    ST[&quot;Storage&lt;br/&gt;fotos&quot;]
+    FN[&quot;Edge Function&lt;br/&gt;notificar&quot;]
+  end
+
+  MAIL[&quot;Resend&lt;br/&gt;correo&quot;]
+  PUSH[&quot;Web Push&lt;br/&gt;del navegador&quot;]
+
+  D --&gt; UI
+  C --&gt; UI
+  UI --&gt;|&quot;login&quot;| AUTH
+  UI --&gt;|&quot;leer y escribir datos&quot;| DB
+  UI --&gt;|&quot;subir fotos&quot;| ST
+  DB --&gt;|&quot;cambios&quot;| RT
+  RT --&gt;|&quot;mensajes y avisos al instante&quot;| UI
+  DB --&gt;|&quot;trigger: nuevo anuncio,&lt;br/&gt;candidatura, mensaje&lt;br/&gt;o disponibilidad&quot;| FN
+  FN --&gt;|&quot;¿quién encaja?&quot;| DB
+  FN --&gt; MAIL
+  FN --&gt; PUSH
+  PUSH --&gt; SW
+  SW --&gt; UI
+</pre></section><section><h1>Modelo de datos · diagrama entidad-relación</h1><p>Todo Sigue Vivo · 29 sep 2026</p><pre class="mermaid">erDiagram
+  USUARIOS ||--o| PERFILES_CUIDADOR : &quot;puede ser cuidador&quot;
+  USUARIOS ||--o{ ANUNCIOS : &quot;publica como dueño&quot;
+  USUARIOS ||--o{ NOTIFICACIONES : recibe
+  USUARIOS ||--o{ SUSCRIPCIONES_PUSH : tiene
+  PERFILES_CUIDADOR ||--o{ CUIDADOR_ZONAS : &quot;trabaja en&quot;
+  PERFILES_CUIDADOR ||--o{ CUIDADOR_ESPECIES : &quot;se especializa en&quot;
+  PERFILES_CUIDADOR ||--o{ DISPONIBILIDAD : marca
+  PERFILES_CUIDADOR ||--o{ CANDIDATURAS : presenta
+  ESPECIES ||--o{ CUIDADOR_ESPECIES : &quot;&quot;
+  ESPECIES ||--o{ ANUNCIO_SERES_VIVOS : &quot;&quot;
+  ANUNCIOS ||--|{ ANUNCIO_SERES_VIVOS : incluye
+  ANUNCIOS ||--o{ CANDIDATURAS : recibe
+  CANDIDATURAS ||--o{ MENSAJES : &quot;abre un chat con&quot;
+
+  USUARIOS {
+    uuid id PK
+    text nombre
+    text foto_url
+    text codigo_postal
+    bool es_dueno
+    bool es_cuidador
+  }
+  PERFILES_CUIDADOR {
+    uuid usuario_id PK
+    text presentacion
+    bool acepta_plantas
+    bool acepta_animales
+    bool acepta_exoticos
+    bool experiencia_medicacion
+    bool activo
+  }
+  CUIDADOR_ZONAS {
+    uuid cuidador_id FK
+    text codigo_postal
+  }
+  CUIDADOR_ESPECIES {
+    uuid cuidador_id FK
+    int especie_id FK
+  }
+  DISPONIBILIDAD {
+    uuid cuidador_id FK
+    date fecha_inicio
+    date fecha_fin
+  }
+  ESPECIES {
+    int id PK
+    text nombre
+    text categoria
+    int dificultad
+  }
+  ANUNCIOS {
+    uuid id PK
+    uuid dueno_id FK
+    text titulo
+    text descripcion
+    text codigo_postal
+    date fecha_inicio
+    date fecha_fin
+    text estado
+    uuid cuidador_elegido_id FK
+  }
+  ANUNCIO_SERES_VIVOS {
+    uuid anuncio_id FK
+    int especie_id FK
+    int cantidad
+    text notas
+  }
+  CANDIDATURAS {
+    uuid id PK
+    uuid anuncio_id FK
+    uuid cuidador_id FK
+    text mensaje
+    text estado
+  }
+  MENSAJES {
+    uuid id PK
+    uuid candidatura_id FK
+    uuid autor_id FK
+    text texto
+    timestamp enviado_en
+    bool leido
+  }
+  NOTIFICACIONES {
+    uuid id PK
+    uuid usuario_id FK
+    text tipo
+    text enlace
+    bool leida
+  }
+  SUSCRIPCIONES_PUSH {
+    uuid usuario_id FK
+    text endpoint
+    text claves
+  }
+</pre></section>
+<script>mermaid.initialize({startOnLoad:true,theme:'base',themeVariables:{primaryColor:'#EEEBFA',primaryBorderColor:'#5646B0',lineColor:'#5646B0',fontFamily:'Helvetica'}});</script><a href="../index.html#prd" style="position:fixed;left:16px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 16px;border-radius:9999px;background:#32296A;color:#fff;font:500 14px/1 'Instrument Sans',system-ui,sans-serif;text-decoration:none;box-shadow:0 1px 2px rgba(27,26,36,.06),0 8px 24px rgba(27,26,36,.18)">← Portfolio</a>
+</body></html>

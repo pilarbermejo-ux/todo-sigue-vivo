@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Área privada · Todo Sigue Vivo</title>
+<meta name="description" content="Área privada de Todo Sigue Vivo: anuncios, candidaturas, chat, reservas y partes del día.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="area-privada.css">
+<style>
+.demo-bar{background:var(--lavanda-100,#ECEDFF);color:var(--lavanda-700,#44368E);font:500 13px/1.4 var(--font-sans,"Instrument Sans",sans-serif);border-bottom:1px solid var(--line,#E2E2EA)}
+.demo-bar .in{max-width:1200px;margin:0 auto;padding:8px 16px;display:flex;gap:8px 16px;align-items:center;justify-content:center;flex-wrap:wrap;text-align:center}
+.demo-bar a,.demo-bar button{color:inherit;font:600 13px/1 var(--font-sans,sans-serif);background:none;border:0;padding:6px 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+</style>
+</head><body>
+<div class="topbar m"><div class="in"><i aria-hidden="true"></i><span>Demo de portfolio · Datos de ejemplo guardados en tu navegador · Pago simulado</span></div></div>
+<div class="demo-bar" id="demo-bar"><div class="in"><a href="../index.html#poc" target="_top">← Volver al portfolio</a><span aria-hidden="true">·</span><a href="sala.html" target="_top">Sala de test</a><span aria-hidden="true">·</span><button type="button" id="demo-reset">Reiniciar la demo</button></div></div>
+<div id="root"></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div id="layer"></div>
+<script src="motor/motor.js"></script>
+<script src="area-privada.js"></script>
+<script>
+(function(){
+  if(window.parent!==window){var b=document.getElementById("demo-bar");if(b)b.remove();return}
+  document.getElementById("demo-reset").onclick=async function(){
+    if(!confirm("¿Reiniciar la demo? Se borrará lo que hayas hecho y volverán los datos de ejemplo."))return;
+    await fetch("/api/test/escenario",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({nombre:"limpio"})});
+    try{Object.keys(localStorage).filter(function(k){return k.indexOf("tsv-")===0}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}
+    location.href="area-privada.html#/entrar";location.reload();
+  };
+})();
+</script>
+</body></html>

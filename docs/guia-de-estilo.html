@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de estilo · Todo Sigue Vivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--lavanda-100:#ECEDFF;--lavanda-600:#5646B0;--lavanda-700:#44368E;--lavanda-800:#32296A;--white:#FFFFFF;--canvas:#F7F7FB;--muted:#EEEDF4;--line:#E2E2EA;--ink-muted:#6B6979;--ink:#1B1A24;--primary-soft:var(--lavanda-100);--primary-text:var(--lavanda-700);color-scheme:light}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--white:#1C1A2B;--canvas:#131120;--muted:#252336;--line:#2E2B40;--ink-muted:#A9A6BC;--ink:#EEEDF5;--primary-soft:#2A2548;--primary-text:#C1C0FF}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);font:400 16px/1.6 "Instrument Sans",system-ui,sans-serif}
+.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--canvas) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top div{max-width:860px;margin:0 auto;padding:12px 20px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.top a{color:var(--primary-text);font-weight:600;text-decoration:none;font-size:14px}
+.top span{font:500 12px/1 "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
+main{max-width:860px;margin:0 auto;padding:48px 20px 96px}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.03em;line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(34px,5vw,52px);margin:0 0 16px}
+h2{font-size:28px;margin:56px 0 12px;padding-top:24px;border-top:1px solid var(--line)}
+h3{font-size:20px;margin:32px 0 8px}
+p,li{max-width:68ch}
+a{color:var(--primary-text)}
+blockquote{margin:24px 0;padding:20px 24px;border-radius:16px;background:var(--primary-soft);color:var(--primary-text);font:700 22px/1.3 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em}
+code{font:500 .88em "IBM Plex Mono",monospace;background:var(--muted);padding:2px 6px;border-radius:6px}
+.tbl{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:16px;background:var(--white)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 12px/1.3 "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-muted);background:var(--muted)}
+tr:last-child td{border-bottom:0}
+ul,ol{padding-left:22px}
+li{margin:6px 0}
+</style></head><body>
+<header class="top"><div><a href="../index.html#marca">← Volver al portfolio</a><span>Guía de estilo</span></div></header>
+<main>
+<h1>Todo Sigue Vivo — Guía de estilo definitiva</h1>
+<p><em>Versión 1.0 · 28 de septiembre de 2026 · Fusión de la guía de Claude (DESIGN.md) y la de GPT (GUIA-DE-ESTILO.md)</em></p>
+<blockquote><b>Vete tranquilo, en casa todo sigue vivo.</b></blockquote>
+<h2>Qué se queda de cada una</h2>
+<div class="tbl"><table><thead><tr><th>Tema</th><th>Decisión</th><th>Origen</th></tr></thead><tbody><tr><td>Marca</td><td><b>Todo Sigue Vivo</b>. El nombre sale del claim y habla de plantas y animales a la vez; «Nodriza» se queda como nombre interno del proyecto.</td><td>Claude</td></tr><tr><td>Sistema visual</td><td>Gama lavanda completa, neutros con punto violeta, savia (plantas) y azafrán (calor).</td><td>Claude</td></tr><tr><td>Magenta #BD4192</td><td><b>Se elimina.</b> Compite con la lavanda y rompe la regla de «un solo color con peso».</td><td>—</td></tr><tr><td>Tipografía</td><td>Bricolage Grotesque (titulares) + Instrument Sans (lectura) + IBM Plex Mono (datos).</td><td>Claude</td></tr><tr><td>Voz y tono</td><td>De tú, sin urgencia artificial ni absolutos («seguridad total»), cada mensaje refleja el estado real.</td><td>GPT</td></tr><tr><td>Honestidad</td><td>No se promete nada que no exista. Todo lo pendiente lleva su <b>estado</b> visible.</td><td>GPT + principio 5 de Claude</td></tr><tr><td>Accesibilidad</td><td>Contraste 4,5:1, etiquetas visibles, errores asociados al campo, foco claro, sin depender del color.</td><td>GPT + Claude</td></tr><tr><td>Formulario</td><td>Dos pasos, con resumen antes de enviar y aviso de prototipo.</td><td>GPT</td></tr><tr><td>Interacción</td><td>Configurador, parte del día animado, ola de calor, carrusel.</td><td>Claude</td></tr></tbody></table></div>
+<h2>Principios (en este orden)</h2>
+<ol><li><b>Calma antes que urgencia.</b> Menos color, más aire. El rojo solo para problemas reales.</li><li><b>Mostrar el estado, no prometerlo.</b> Si algo aún no existe, se dice: «En contratación», «En piloto», «Por validar».</li><li><b>Personas, no plataforma.</b> Nombre, barrio y hora: «Irene ha llegado · 18:04».</li><li><b>Experto sin ser clínico.</b> Datos concretos (especie, °C, cada cuántos días) en tono cálido.</li><li><b>Plantas y animales con el mismo peso.</b> Nada de huellas, huesos ni corazones como símbolo.</li><li><b>Barrio sin postal.</b> Balcón, baldosa, luz de tarde; nunca decorado turístico.</li></ol>
+<p><b>Ante la duda:</b> tranquilo &gt; llamativo · concreto &gt; genérico · menos opciones &gt; más · foto real &gt; icono · honesto &gt; persuasivo.</p>
+<h2>Color</h2>
+<h3>Lavanda (único color de marca)</h3>
+<div class="tbl"><table><thead><tr><th>Token</th><th>Valor</th><th>Uso</th></tr></thead><tbody><tr><td><code>--lavanda-50</code></td><td><code>#F6F6FE</code></td><td>Fondos muy suaves</td></tr><tr><td><code>--lavanda-100</code></td><td><code>#ECEDFF</code></td><td>Parte del día, avisos tranquilizadores, chips de animales</td></tr><tr><td><code>--lavanda-200</code></td><td><code>#DADAFF</code></td><td>Texto secundario sobre lavanda-800</td></tr><tr><td><code>--lavanda-300</code></td><td><code>#C1C0FF</code></td><td>Bordes seleccionados; texto lavanda en oscuro</td></tr><tr><td><code>--lavanda-400</code></td><td><code>#A39DFF</code></td><td>Acción principal en tema oscuro</td></tr><tr><td><code>--lavanda-600</code></td><td><code>#5646B0</code></td><td><b>Color central</b>: acción principal, enlaces, foco (7,2:1)</td></tr><tr><td><code>--lavanda-700</code></td><td><code>#44368E</code></td><td>Hover; texto lavanda sobre lavanda-100</td></tr><tr><td><code>--lavanda-800</code></td><td><code>#32296A</code></td><td>Superficies de marca oscuras (portada, lista de espera)</td></tr><tr><td><code>--lavanda-950</code></td><td><code>#141030</code></td><td>Texto sobre lavanda-400</td></tr></tbody></table></div>
+<h3>Neutros (claro / oscuro)</h3>
+<p>Cal <code>#F7F7FB</code>/<code>#131120</code> (fondo) · Blanco <code>#FFFFFF</code>/<code>#1C1A2B</code> (tarjetas) · Niebla <code>#EEEDF4</code>/<code>#252336</code> · Línea <code>#E2E2EA</code>/<code>#2E2B40</code> · Línea fuerte <code>#8E8C9C</code>/<code>#6F6C82</code> · Gris texto <code>#6B6979</code>/<code>#A9A6BC</code> · Tinta <code>#1B1A24</code>/<code>#EEEDF5</code>.</p>
+<h3>Apoyo (siempre con significado)</h3>
+<div class="tbl"><table><thead><tr><th>Nombre</th><th>Claro / oscuro</th><th>Solo para</th></tr></thead><tbody><tr><td>Savia</td><td><code>#1F4E45</code> / <code>#7CC4B0</code></td><td>Lo botánico</td></tr><tr><td>Savia suave</td><td><code>#DCEBE5</code> / <code>#173029</code></td><td>Fondo de chips de plantas</td></tr><tr><td>Azafrán</td><td><code>#E0A21A</code> / <code>#F0B53A</code></td><td>Calor y temporada alta (texto <code>#1B1A12</code> encima)</td></tr><tr><td>Azafrán suave</td><td><code>#FBEFCF</code> / <code>#3A2E12</code></td><td>Avisos de calor y <b>estados pendientes</b></td></tr><tr><td>Brote</td><td><code>#1D7A68</code> / <code>#5FD0B6</code></td><td>Éxito, con icono y palabra</td></tr><tr><td>Granada</td><td><code>#B42D3A</code> / <code>#F08A93</code></td><td>Errores reales, con icono y palabra</td></tr></tbody></table></div>
+<h2>Tipografía</h2>
+<div class="tbl"><table><thead><tr><th>Rol</th><th>Familia</th><th>Peso</th><th>Tamaño / interlineado</th></tr></thead><tbody><tr><td>Display</td><td>Bricolage Grotesque</td><td>700</td><td>48+ / 1.02, tracking −0,03 em</td></tr><tr><td>Título</td><td>Bricolage Grotesque</td><td>700</td><td>32 / 1.15</td></tr><tr><td>Subtítulo</td><td>Instrument Sans</td><td>600</td><td>20 / 1.3</td></tr><tr><td>Cuerpo</td><td>Instrument Sans</td><td>400</td><td>16 / 1.5</td></tr><tr><td>Pequeño</td><td>Instrument Sans</td><td>400</td><td>14 / 1.43</td></tr><tr><td>Dato</td><td>IBM Plex Mono</td><td>500</td><td>14 (horas, °C, precios)</td></tr><tr><td>Etiqueta</td><td>IBM Plex Mono</td><td>500</td><td>12, mayúsculas, tracking 0,06 em</td></tr></tbody></table></div>
+<p>Nunca por debajo de 12 px. Peso 700 solo en titulares.</p>
+<h2>Espacio y formas</h2>
+<p>Base 4 px (4-8-12-16-20-24-32-48-64). Ancho máximo 1200-1280 px; margen lateral 16 px en móvil. Radios: campos 8 · botones 12 · tarjetas y fotos 16-24 · chips y avatares píldora. Sin sombras salvo capas flotantes (<code>0 1px 2px rgba(27,26,36,.06), 0 8px 24px rgba(27,26,36,.10)</code>). Área táctil mínima 44-48 px.</p>
+<h2>Componentes clave</h2>
+<ul><li><b>Botón principal:</b> lavanda-600, texto blanco 16/500, alto 48-52 px, radio 12. Uno por bloque.</li><li><b>Botón secundario:</b> contorno 1,5 px tinta, fondo niebla al pasar.</li><li><b>Chip de especie:</b> animales en lavanda-100/700, plantas en savia suave/savia.</li><li><b>Insignia de estado (nuevo):</b> píldora en mono 12 px mayúsculas. <code>LISTO</code> en brote suave, <code>EN PILOTO</code> en lavanda-100, <code>EN CONTRATACIÓN</code> / <code>POR VALIDAR</code> en azafrán suave. Es obligatoria en todo lo que aún no existe (seguro, certificación, sustituto).</li><li><b>Parte del día:</b> lavanda-100, avatar, acción con nombre y hora en mono. Si es un ejemplo, etiqueta «Ejemplo».</li><li><b>Aviso de ola de calor:</b> único uso de azafrán en la interfaz.</li><li><b>Formulario (de GPT):</b> etiquetas visibles con «obligatorio / opcional», error bajo el campo con <code>aria-invalid</code>, dos pasos con resumen.</li><li><b>Precio:</b> siempre «orientativo» mientras no se valide en el piloto.</li></ul>
+<h2>Voz y tono</h2>
+<p>De tú, cercano, sin diminutivos constantes ni urgencia. Explica qué ocurre y qué puede hacer la persona.</p>
+<div class="tbl"><table><thead><tr><th>Situación</th><th>Sí</th><th>No</th></tr></thead><tbody><tr><td>Promesa</td><td>«Estamos contratando el seguro para el piloto.»</td><td>«Seguro incluido.»</td></tr><tr><td>Confirmación</td><td>«Te has apuntado a la lista. Aún no hay reservas.»</td><td>«¡Reserva confirmada!»</td></tr><tr><td>Sin resultados</td><td>«Aún no hay cuidadores en tu barrio. Te avisamos.»</td><td>«0 resultados»</td></tr><tr><td>Precio</td><td>«Desde 12 € · orientativo»</td><td>«Solo 12 €»</td></tr></tbody></table></div>
+<h2>Imagen</h2>
+<p>Fotografía cálida de pisos de ciudad, luz de tarde, manos cuidando, plantas y animales juntos. Las imágenes generadas con IA <b>se identifican siempre</b> («Imagen ilustrativa creada con IA») y nunca se presentan como perfiles reales. Iconos de trazo 1,5-1,8 px, esquinas redondeadas, 24 px.</p>
+<h2>No hacer</h2>
+<ul><li>Añadir colores fuera de la gama (incluido el antiguo magenta).</li><li>Degradados, sobre todo lavanda → azul.</li><li>Prometer seguro, verificación o garantías que no estén contratadas.</li><li>Poner texto sobre lavanda-400/500 en tema claro.</li><li>Usar el rojo para llamar la atención u ofertas.</li><li>Reintroducir el «círculo» de amigos o los créditos: no están en la estrategia.</li></ul>
+</main>
+</body></html>

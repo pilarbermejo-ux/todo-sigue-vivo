@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mesa Todo Sigue Vivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>:root{
+  --ground:#f3f5f0; --surface:#fcfdfa; --ink:#15201a; --ink-2:#4f5b54; --ink-3:#7a857e;
+  --line:#dce2da; --line-2:#e9ede6; --accent:#2d6a4c; --accent-ink:#ffffff; --accent-soft:#e1ede5;
+  --sup:#e8e4f3; --sup-ink:#4a3aa7; --warn:#9a6400; --warn-bg:#fbefd2;
+  --heat:45,106,76;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#111613; --surface:#181e1a; --ink:#edf2ee; --ink-2:#b0bab3; --ink-3:#86918a;
+    --line:#2b332e; --line-2:#222a25; --accent:#86c9a6; --accent-ink:#0f1a14; --accent-soft:#1f3329;
+    --sup:#2a2640; --sup-ink:#b3aaf0; --warn:#fab219; --warn-bg:#3a2f14;
+    --heat:134,201,166;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#111613; --surface:#181e1a; --ink:#edf2ee; --ink-2:#b0bab3; --ink-3:#86918a;
+  --line:#2b332e; --line-2:#222a25; --accent:#86c9a6; --accent-ink:#0f1a14; --accent-soft:#1f3329;
+  --sup:#2a2640; --sup-ink:#b3aaf0; --warn:#fab219; --warn-bg:#3a2f14;
+  --heat:134,201,166;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:15px/1.6 var(--body);margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:32px 64px}
+h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(32px,5vw,50px);line-height:1.03;font-weight:700}
+h2{font-size:clamp(25px,3vw,34px);line-height:1.1;font-weight:700}
+h3{font-size:20px;line-height:1.2;font-weight:700}
+h4{font-size:16px;line-height:1.25;font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+a:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.eyebrow{font:500 11.5px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+.lede{color:var(--ink-2);max-width:68ch;font-size:16px}
+.note,.cap{color:var(--ink-2);max-width:72ch}
+.cap{font-size:13px;color:var(--ink-3)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.top{display:grid;gap:12px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.toc a{text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px;display:inline-flex;gap:8px;align-items:baseline}
+.toc a:hover{border-color:var(--accent)}
+.toc .cnt{font:12px var(--mono);color:var(--ink-3)}
+.block{padding-block:44px 8px;display:grid;gap:18px}
+.block > h3{margin-top:14px}
+
+/* avatares */
+.av{flex:none;width:38px;height:38px;border-radius:50%;display:inline-grid;place-items:center;font:700 13px var(--display);letter-spacing:.02em}
+.av.dem{background:var(--accent-soft);color:var(--accent)}
+.av.sup{background:var(--sup);color:var(--sup-ink)}
+.av.mod{background:var(--accent);color:var(--accent-ink)}
+.av.xs{width:22px;height:22px;font-size:9.5px;margin-right:4px;vertical-align:middle}
+
+/* marco */
+.marco-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:32px}
+.marco-grid h3{margin-bottom:10px}
+.obj{margin:0;padding-left:20px;display:grid;gap:8px;color:var(--ink-2);max-width:62ch}
+.grp{font:500 11px/1 var(--mono);text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);margin:14px 0 8px}
+.grp:first-of-type{margin-top:0}
+.ppl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px 16px}
+.ppl li{display:flex;gap:10px;align-items:center}
+.ppl div{display:grid;line-height:1.3}
+.ppl strong{font-size:14.5px}
+.ppl span{font-size:13px;color:var(--ink-2)}
+.ppl em{font-style:normal;font:11.5px var(--mono);color:var(--ink-3)}
+.timeline{display:flex;flex-wrap:wrap;gap:3px;min-height:74px}
+.tl{min-width:96px;display:flex;flex-direction:column;justify-content:space-between;gap:6px;padding:8px 9px;background:var(--accent-soft);color:var(--ink);text-decoration:none;border-radius:6px}
+.tl.ses-b{background:var(--sup)}
+.tl:hover{outline:2px solid var(--accent)}
+.tl-t{font-size:12.5px;line-height:1.25;font-weight:600;overflow-wrap:anywhere}
+.tl-d{font:11px var(--mono);color:var(--ink-2)}
+.legend-tl{font-size:12.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px}
+.sw.a{background:var(--accent-soft);border:1px solid var(--accent)}
+.sw.b{background:var(--sup);border:1px solid var(--sup-ink);margin-left:10px}
+.tecs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tec{background:var(--surface);padding:14px 16px;display:grid;gap:4px;align-content:start}
+.tec h4{font-size:15px}
+.tec p{font-size:13.5px;color:var(--ink-2)}
+
+/* toolbar */
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ground);display:flex;flex-wrap:wrap;gap:10px 18px;align-items:end;padding-block:12px;border-bottom:1px solid var(--line)}
+.field{display:grid;gap:4px}
+.field label{font:500 11px/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3)}
+select{font:inherit;font-size:14px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 30px 7px 10px;max-width:100%;
+  appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink-2) 50%),linear-gradient(135deg,var(--ink-2) 50%,transparent 50%);
+  background-position:calc(100% - 15px) 52%,calc(100% - 10px) 52%;background-size:5px 5px;background-repeat:no-repeat}
+.check{display:flex;gap:7px;align-items:center;font-size:14px;color:var(--ink-2);padding-bottom:7px;cursor:pointer}
+.check input{accent-color:var(--accent);width:16px;height:16px}
+.count{margin-left:auto;font:12.5px var(--mono);color:var(--ink-3);padding-bottom:8px}
+
+/* transcripción */
+.blk{padding-block:28px 6px;border-bottom:1px solid var(--line);scroll-margin-top:90px}
+.blk-h{display:grid;gap:6px;margin-bottom:18px}
+.blk-h h3{font-size:24px}
+.blk-meta{color:var(--ink-2);font-size:14px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;max-width:80ch}
+.tec-pill{font:500 11.5px/1 var(--mono);background:var(--line-2);color:var(--ink-2);padding:5px 8px;border-radius:999px}
+.turns{display:grid;gap:12px;max-width:820px}
+.t-say{display:flex;gap:12px;align-items:flex-start}
+.bub{background:var(--surface);border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:10px 14px;display:grid;gap:4px;min-width:0}
+.t-say.mod .bub{background:var(--accent-soft);border-color:transparent}
+.who-l{display:flex;flex-wrap:wrap;gap:2px 8px;align-items:baseline}
+.who-l strong{font-size:14px}
+.who-l span{font-size:12px;color:var(--ink-3)}
+.bub p{font-size:15px}
+.t-note{margin-left:50px;border-left:2px dashed var(--line);padding:2px 0 2px 14px;display:grid;gap:2px}
+.t-note p{font-style:italic;color:var(--ink-2);font-size:14px}
+.lbl{font:500 10.5px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
+.t-ins{margin-left:50px;background:var(--surface);border:1px solid var(--accent);border-radius:12px;padding:12px 14px;display:grid;gap:6px}
+.t-ins.riesgo{border-color:var(--warn)}
+.ins-h{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tipo{font:600 11px/1 var(--mono);text-transform:uppercase;letter-spacing:.07em;color:var(--accent);display:inline-flex;align-items:center;gap:6px}
+.tipo::before{content:"";width:8px;height:8px;border-radius:2px;background:currentColor;transform:rotate(45deg)}
+.t-ins.riesgo .tipo{color:var(--warn)}
+.t-ins p{font-size:14.5px;font-weight:500}
+.t-act{margin-left:50px;background:var(--line-2);border-radius:12px;padding:12px 14px;display:grid;gap:8px}
+.t-act p{font-size:14px;color:var(--ink-2)}
+.claimlist{margin:0;padding-left:20px;display:grid;gap:4px;font-size:14.5px}
+.empty{color:var(--ink-3);padding-block:24px}
+
+/* síntesis */
+.clave{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.clave li{background:var(--surface);padding:16px 18px;display:grid;gap:6px;align-content:start}
+.clave p{font-size:14px;color:var(--ink-2)}
+.clave .impl{color:var(--ink);font-size:14px;border-top:1px solid var(--line-2);padding-top:8px;margin-top:2px}
+.clave .impl span{display:block;font:500 10.5px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:10px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:8px;align-content:start;min-width:0}
+.panel h3{font-size:18px}
+.tscroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line-2);text-align:left;white-space:nowrap}
+th{font:500 10.5px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3)}
+th.c,td.c{text-align:center}
+tbody tr:last-child td{border-bottom:0}
+.heat td.c{padding:3px}
+.hc{display:grid;place-items:center;height:30px;border-radius:5px;background:rgba(var(--heat),var(--a));min-width:44px}
+.hc b{font:500 13px var(--mono);color:var(--ink)}
+.hc b.inv{color:var(--surface)}
+.claims{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.claims p{font-size:14.5px;font-weight:500}
+.cbar{height:8px;background:var(--line-2);border-radius:4px;overflow:hidden;margin:6px 0 4px}
+.cfill{display:block;height:100%;background:var(--accent);border-radius:4px}
+.cwho{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-3)}
+.cwho .num{color:var(--ink-2);margin-right:4px}
+.matriz{background:var(--surface);border:1px solid var(--line);border-radius:14px;min-width:720px;border-collapse:separate;border-spacing:0}
+.matriz th,.matriz td{padding:9px 12px}
+.matriz th.c span{display:block;font-size:10.5px;margin-top:3px}
+.matriz td.c span{font-size:17px;line-height:1}
+.matriz .m2{color:var(--accent)}
+.matriz .m1{color:var(--accent);opacity:.75}
+.matriz .m0{color:var(--ink-3);opacity:.6}
+.matriz td.n{font:12.5px var(--mono);color:var(--ink-2)}
+.ideas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.icol h3{font-size:17px;padding-bottom:8px;border-bottom:2px solid var(--ink);margin-bottom:4px}
+.icol ul{list-style:none;margin:0;padding:0;display:grid}
+.icol li{padding-block:12px;border-bottom:1px solid var(--line);display:grid;gap:5px}
+.it-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.it-h strong{font-size:14.5px}
+.icol p{font-size:13.5px;color:var(--ink-2)}
+.prio{font:500 10.5px/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:4px 7px;border-radius:999px;flex:none}
+.prio.alta{background:var(--accent);color:var(--accent-ink)}
+.prio.media{background:var(--line-2);color:var(--ink-2)}
+.who{display:flex;align-items:center;gap:2px;font-size:12px;color:var(--ink-3)}
+.who span:last-child{margin-left:4px}
+.evitar{margin-top:12px;font-size:13px;color:var(--ink);background:var(--warn-bg);border-radius:10px;padding:10px 12px}
+footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3)}
+
+@media (max-width:900px){
+  .marco-grid,.two{grid-template-columns:1fr}
+  .tecs{grid-template-columns:1fr 1fr}
+  .ideas{grid-template-columns:1fr}
+  .timeline{flex-wrap:wrap}
+  .tl{flex:1 1 30% !important}
+}
+@media (max-width:560px){
+  .clave,.tecs{grid-template-columns:1fr}
+  .t-note,.t-ins,.t-act{margin-left:0}
+  .av:not(.xs){width:32px;height:32px;font-size:11.5px}
+  .count{margin-left:0;width:100%}
+}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto}}
+html{scroll-behavior:smooth}
+</style>
+</head><body>
+<div class="wrap">
+<header class="top">
+  <p class="eyebrow">Focus group simulado · conversación ficticia · 130 min en dos sesiones</p>
+  <h1>La mesa de todo lo que vive en casa</h1>
+  <p class="lede">Una moderadora experta reúne a los seis arquetipos de dueños y después a los tres de cuidadores. Hablan de temas generales y de lo específico de cada segmento para sacar necesidades cruzadas e ideas de oferta, funcionalidades y messaging. Las cifras citadas vienen del dataset sintético; la conversación es inventada.</p>
+  <nav class="toc" aria-label="Secciones"><a href="#marco">Marco</a><a href="#conversacion">Conversación <span class="cnt">97 intervenciones</span></a><a href="#sintesis">Síntesis <span class="cnt">25 insights</span></a></nav>
+</header>
+
+<section id="marco" class="block">
+  <h2>Marco de la conversación</h2>
+  <div class="marco-grid">
+    <div><h3>Objetivos</h3><ul class="obj"><li>Entender cómo resuelven hoy el cuidado cuando se van y qué les duele de verdad.</li><li>Encontrar necesidades cruzadas entre segmentos que den pie a un producto común.</li><li>Probar la hipótesis del servicio combinado (H1) y la disposición a pagar de cada segmento.</li><li>Recoger ideas de oferta, funcionalidades y mensajes, y contrastarlas con los cuidadores.</li></ul></div>
+    <div><h3>Participantes</h3>
+      <p class="grp">Sesión A · dueños</p><ul class="ppl"><li><span class="av dem " aria-hidden="true">L</span><div><strong>Laura</strong><span>La urbanita viajera · gata</span><em>20 % de los dueños</em></div></li><li><span class="av dem " aria-hidden="true">AN</span><div><strong>Ana Navarro</strong><span>La familia con perro · labrador</span><em>22 % de los dueños</em></div></li><li><span class="av dem " aria-hidden="true">M</span><div><strong>Marta</strong><span>La casa viva · gata y 12 plantas</span><em>18 % de los dueños</em></div></li><li><span class="av dem " aria-hidden="true">P</span><div><strong>Pablo</strong><span>Coleccionista de plantas · 27 plantas</span><em>16 % de los dueños</em></div></li><li><span class="av dem " aria-hidden="true">C</span><div><strong>Carmen</strong><span>Plantas sin complicaciones · balcón</span><em>12 % de los dueños</em></div></li><li><span class="av dem " aria-hidden="true">Á</span><div><strong>Álex</strong><span>Dueño de exóticos · pogona y tortuga</span><em>6,5 % de los dueños</em></div></li></ul>
+      <p class="grp">Sesión B · cuidadores</p><ul class="ppl"><li><span class="av sup " aria-hidden="true">I</span><div><strong>Irene</strong><span>Cuidadora estudiante</span><em>32 % de los cuidadores</em></div></li><li><span class="av sup " aria-hidden="true">J</span><div><strong>Javier</strong><span>Cuidador profesional</span><em>51 % de los cuidadores</em></div></li><li><span class="av sup " aria-hidden="true">E</span><div><strong>Elena</strong><span>Especialista en exóticos</span><em>17 % de los cuidadores</em></div></li></ul>
+      <p class="grp">Moderación</p><ul class="ppl"><li><span class="av mod " aria-hidden="true">IN</span><div><strong>Inés</strong><span>Moderadora</span><em>Moderación</em></div></li></ul>
+    </div>
+  </div>
+  <h3>Estructura</h3>
+  <div class="timeline" aria-label="Bloques de la conversación"><a class="tl " href="#b0" style="flex:5 1 0"><span class="tl-t">Calentamiento</span><span class="tl-d">5 min</span></a><a class="tl " href="#b1" style="flex:15 1 0"><span class="tl-t">Cómo lo resuelven hoy</span><span class="tl-d">15 min</span></a><a class="tl " href="#b2" style="flex:15 1 0"><span class="tl-t">Confianza y llaves</span><span class="tl-d">15 min</span></a><a class="tl " href="#b3" style="flex:20 1 0"><span class="tl-t">Animales y plantas a la vez</span><span class="tl-d">20 min</span></a><a class="tl " href="#b4" style="flex:15 1 0"><span class="tl-t">Agosto, puentes y olas de calor</span><span class="tl-d">15 min</span></a><a class="tl " href="#b5" style="flex:15 1 0"><span class="tl-t">Precio y valor</span><span class="tl-d">15 min</span></a><a class="tl " href="#b6" style="flex:15 1 0"><span class="tl-t">Conceptos y frases</span><span class="tl-d">15 min</span></a><a class="tl " href="#b7" style="flex:10 1 0"><span class="tl-t">Cierre</span><span class="tl-d">10 min</span></a><a class="tl ses-b" href="#b8" style="flex:20 1 0"><span class="tl-t">Sesión espejo con cuidadores</span><span class="tl-d">20 min</span></a></div>
+  <p class="legend-tl"><span class="sw a"></span>Sesión A · dueños · 110 min<span class="sw b"></span>Sesión B · cuidadores · 20 min (el calentamiento y la presentación se omiten)</p>
+  <h3>Técnicas de la moderadora</h3>
+  <div class="tecs"><div class='tec'><h4>Presentación proyectiva</h4><p>Presentar a sus animales o plantas como si fueran compañeros de piso. Rompe el hielo y revela el vínculo emocional.</p></div><div class='tec'><h4>Reconstrucción del último episodio</h4><p>Contar paso a paso la última vez que se fueron. Evita respuestas idealizadas y saca a la luz los problemas reales.</p></div><div class='tec'><h4>Escalera de porqués (laddering)</h4><p>Preguntar «¿y por qué es importante?» hasta pasar del atributo (reseñas) al valor de fondo (tranquilidad).</p></div><div class='tec'><h4>Confrontación entre segmentos</h4><p>Enfrentar puntos de vista opuestos (plantas «que sobreviven solas» frente a colecciones) para medir la intensidad de cada necesidad.</p></div><div class='tec'><h4>Ordenación de tarjetas</h4><p>Ordenar las tareas de una visita de imprescindible a prescindible. Descubre necesidades que nadie había mencionado.</p></div><div class='tec'><h4>Escenario de crisis</h4><p>Plantear una cancelación en agosto con 40 grados para ver qué esperan de la app en el peor momento.</p></div><div class='tec'><h4>Reparto de 100 puntos</h4><p>Obliga a elegir entre precio, experiencia, fotos o continuidad, en lugar de decir que todo importa.</p></div><div class='tec'><h4>Test de conceptos y frases</h4><p>Reacción en una palabra a tres conceptos y elección de una frase de marca.</p></div><div class='tec'><h4>Sesión espejo</h4><p>Leer a los cuidadores lo que pidieron los dueños para comprobar si la oferta puede cubrirlo.</p></div></div>
+</section>
+
+<section id="conversacion" class="block">
+  <h2>Conversación</h2>
+  <div class="toolbar" role="group" aria-label="Filtros de la conversación">
+    <div class="field"><label for="f-bloque">Bloque</label><select id="f-bloque"></select></div>
+    <div class="field"><label for="f-persona">Persona</label><select id="f-persona"></select></div>
+    <label class="check"><input type="checkbox" id="f-ins"> Solo insights</label>
+    <label class="check"><input type="checkbox" id="f-notas" checked> Notas de la moderadora</label>
+    <span class="count" id="f-count" aria-live="polite"></span>
+  </div>
+  <div id="transcript"></div>
+</section>
+
+<section id="sintesis" class="block">
+  <h2>Síntesis</h2>
+  <p class="note">Lo que el equipo se lleva de la mesa, ordenado de lo general a lo accionable.</p>
+  <h3>Ocho insights clave</h3>
+  <ul class="clave"><li><h4>La confianza entra por tres puertas distintas</h4><p>La recomendación de gente cercana (familia con perro, hogar mixto), ver el servicio mientras ocurre (viajera) y la prueba de que el cuidador sabe (plantas y exóticos). Una sola ficha de cuidador no convence a todos.</p><p class='impl'><span>Implicación</span>Mostrar en cada perfil lo que más pesa para quien busca: vecinos que lo recomiendan, historial de fotos o insignias de competencia.</p></li><li><h4>La fidelidad existe, pero choca con la disponibilidad</h4><p>Laura solo repite cuidador en el 14 % de las reservas porque su cuidadora no estaba libre, no porque no quiera. Mientras tanto, los cuidadores nuevos no consiguen clientes.</p><p class='impl'><span>Implicación</span>Plan Escapadas con prioridad en puentes, y a la vez una parte del tráfico reservada para cuidadores nuevos.</p></li><li><h4>El servicio combinado es un producto de nicho, no un extra para todos</h4><p>Marta acepta un 30-35 % más. Laura, con plantas fáciles, no pagaría nada extra. El valor está en ahorrarse la coordinación, no en el riego en sí.</p><p class='impl'><span>Implicación</span>Ofrecerlo solo a hogares mixtos con plantas exigentes y venderlo como «una persona, unas llaves».</p></li><li><h4>Que la casa parezca habitada une a segmentos que parecían distintos</h4><p>Persianas, correo y luces interesan a Carmen, Laura y la familia Navarro. Nadie lo había mencionado antes de ordenar las tarjetas.</p><p class='impl'><span>Implicación</span>Complemento barato de «casa habitada» y puerta de entrada para los hogares con plantas fáciles.</p></li><li><h4>En agosto la app se juega su reputación</h4><p>Cancelaciones a 40 grados, residencias llenas y cuidadores que se van al pueblo. El dueño espera que la app resuelva, no que le deje solo buscando.</p><p class='impl'><span>Implicación</span>Sustitución automática, alertas de ola de calor, campaña de reserva anticipada y tarifa de temporada alta para los cuidadores.</p></li><li><h4>Los exóticos no necesitan precio: necesitan que alguien sepa</h4><p>Álex no da ningún punto al precio y 50 a la experiencia. Elena tiene lista de espera y siente que su tarifa parece cara en la app.</p><p class='impl'><span>Implicación</span>Programa de Cuidadores Expertos con certificación y formación impartida por especialistas.</p></li><li><h4>Cuidar plantas da vergüenza y la marca puede quitarla</h4><p>«Parece una tontería por unas plantas». La frase «en casa todo sigue vivo» hace sonreír y convierte la necesidad en algo legítimo.</p><p class='impl'><span>Implicación</span>Usar «todo sigue vivo» como frase paraguas y evitar hablar solo de «mascotas».</p></li><li><h4>Las plantas son la puerta de entrada de la oferta</h4><p>Para los cuidadores nuevos, regar es fácil de aprender, tiene poco riesgo y mucha demanda. Irene se formaría mañana mismo.</p><p class='impl'><span>Implicación</span>Formación corta en plantas con insignia como primer paso de todo cuidador nuevo.</p></li></ul>
+
+  <div class="two">
+    <div class="panel">
+      <h3>Reparto de 100 puntos</h3>
+      <p class="cap">Qué pesa más al elegir cuidador. Cuanto más oscura la celda, más puntos.</p>
+      <div class="tscroll"><table class="heat" id="t-puntos"></table></div>
+    </div>
+    <div class="panel">
+      <h3>Frase elegida para descargar la app</h3>
+      <p class="cap">Primera opción de cada dueño. Álex no eligió ninguna y pidió una frase para especialistas.</p>
+      <ul class="claims" id="claims"></ul>
+    </div>
+  </div>
+
+  <h3>Matriz de necesidades cruzadas</h3>
+  <p class="cap">● muy relevante · ◐ algo relevante · ○ no relevante. Arriba, las necesidades que comparten más segmentos.</p>
+  <div class="tscroll"><table class="matriz"><thead><tr><th>Necesidad</th><th class='c'><span class="av dem xs" aria-hidden="true">L</span><span>Laura</span></th><th class='c'><span class="av dem xs" aria-hidden="true">AN</span><span>Ana</span></th><th class='c'><span class="av dem xs" aria-hidden="true">M</span><span>Marta</span></th><th class='c'><span class="av dem xs" aria-hidden="true">P</span><span>Pablo</span></th><th class='c'><span class="av dem xs" aria-hidden="true">C</span><span>Carmen</span></th><th class='c'><span class="av dem xs" aria-hidden="true">Á</span><span>Álex</span></th><th class='c'>Segmentos</th></tr></thead><tbody><tr><td>Mismo cuidador y prioridad en fechas clave</td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m1' title='Algo relevante'><span aria-label='Algo relevante'>◐</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c n'>5 de 6</td></tr><tr><td>Sustituto inmediato si el cuidador cancela</td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m1' title='Algo relevante'><span aria-label='Algo relevante'>◐</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c n'>5 de 6</td></tr><tr><td>Ficha de cuidados que no haya que volver a explicar</td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m1' title='Algo relevante'><span aria-label='Algo relevante'>◐</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c n'>4 de 6</td></tr><tr><td>Que la casa parezca habitada</td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m1' title='Algo relevante'><span aria-label='Algo relevante'>◐</span></td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c n'>3 de 6</td></tr><tr><td>Parte del día con foto</td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m1' title='Algo relevante'><span aria-label='Algo relevante'>◐</span></td><td class='c m1' title='Algo relevante'><span aria-label='Algo relevante'>◐</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c m1' title='Algo relevante'><span aria-label='Algo relevante'>◐</span></td><td class='c n'>2 de 6</td></tr><tr><td>Competencia demostrada del cuidador</td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c m1' title='Algo relevante'><span aria-label='Algo relevante'>◐</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c n'>2 de 6</td></tr><tr><td>Aviso y visita extra en olas de calor</td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m1' title='Algo relevante'><span aria-label='Algo relevante'>◐</span></td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c n'>2 de 6</td></tr><tr><td>Precio bajo y pago por uso</td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c n'>2 de 6</td></tr><tr><td>Animales y plantas con una sola persona</td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c m1' title='Algo relevante'><span aria-label='Algo relevante'>◐</span></td><td class='c m2' title='Muy relevante'><span aria-label='Muy relevante'>●</span></td><td class='c m1' title='Algo relevante'><span aria-label='Algo relevante'>◐</span></td><td class='c m0' title='No relevante'><span aria-label='No relevante'>○</span></td><td class='c m1' title='Algo relevante'><span aria-label='Algo relevante'>◐</span></td><td class='c n'>1 de 6</td></tr></tbody></table></div>
+
+  <h3>Ideas para la oferta, las funcionalidades y el messaging</h3>
+  <div class="ideas"><div class='icol'><h3>Oferta</h3><ul><li><div class='it-h'><strong>Todo lo que vive en tu casa</strong><span class='prio alta'>Alta</span></div><p>Un solo cuidador para animales y plantas, con un 30 % más de precio.</p><div class='who'><span class="av dem xs" aria-hidden="true">M</span><span class="av dem xs" aria-hidden="true">P</span><span>Marta, Pablo</span></div></li><li><div class='it-h'><strong>Plan Escapadas</strong><span class='prio alta'>Alta</span></div><p>Suscripción con tu cuidador de confianza y prioridad en puentes y verano.</p><div class='who'><span class="av dem xs" aria-hidden="true">L</span><span class="av dem xs" aria-hidden="true">AN</span><span>Laura, Ana</span></div></li><li><div class='it-h'><strong>Cuidadores Expertos</strong><span class='prio alta'>Alta</span></div><p>Perfiles certificados en exóticos y plantas delicadas, con tarifa superior.</p><div class='who'><span class="av dem xs" aria-hidden="true">Á</span><span class="av dem xs" aria-hidden="true">P</span><span class="av sup xs" aria-hidden="true">E</span><span>Álex, Pablo, Elena</span></div></li><li><div class='it-h'><strong>Bono de paseos</strong><span class='prio media'>Media</span></div><p>Diez paseos a precio cerrado y recargo mínimo por perro adicional.</p><div class='who'><span class="av dem xs" aria-hidden="true">AN</span><span>Ana</span></div></li><li><div class='it-h'><strong>Casa habitada</strong><span class='prio media'>Media</span></div><p>Persianas, correo y luces como complemento de cualquier visita.</p><div class='who'><span class="av dem xs" aria-hidden="true">C</span><span class="av dem xs" aria-hidden="true">L</span><span class="av dem xs" aria-hidden="true">AN</span><span>Carmen, Laura, Ana</span></div></li><li><div class='it-h'><strong>Riego de vecino</strong><span class='prio media'>Media</span></div><p>Visita de riego a 8-10 € con cuidadores del mismo edificio o calle.</p><div class='who'><span class="av dem xs" aria-hidden="true">C</span><span class="av sup xs" aria-hidden="true">I</span><span>Carmen, Irene</span></div></li></ul></div><div class='icol'><h3>Funcionalidades</h3><ul><li><div class='it-h'><strong>Sustitución automática</strong><span class='prio alta'>Alta</span></div><p>Si un cuidador cancela, candidatos ya confirmados; cuidador de reserva para exóticos.</p><div class='who'><span class="av dem xs" aria-hidden="true">P</span><span class="av dem xs" aria-hidden="true">Á</span><span class="av dem xs" aria-hidden="true">L</span><span>Pablo, Álex, Laura</span></div></li><li><div class='it-h'><strong>Ficha de cuidados</strong><span class='prio alta'>Alta</span></div><p>Instrucciones por animal o planta que se reutilizan en cada reserva.</p><div class='who'><span class="av dem xs" aria-hidden="true">L</span><span class="av dem xs" aria-hidden="true">P</span><span class="av dem xs" aria-hidden="true">Á</span><span class="av dem xs" aria-hidden="true">M</span><span>Laura, Pablo, Álex, Marta</span></div></li><li><div class='it-h'><strong>Parte del día con foto</strong><span class='prio alta'>Alta</span></div><p>Foto y resumen a una hora pactada, incluido de serie en el servicio.</p><div class='who'><span class="av dem xs" aria-hidden="true">L</span><span class="av dem xs" aria-hidden="true">P</span><span>Laura, Pablo</span></div></li><li><div class='it-h'><strong>Alerta de ola de calor</strong><span class='prio media'>Media</span></div><p>Aviso de calor extremo con visita extra de riego en un toque.</p><div class='who'><span class="av dem xs" aria-hidden="true">P</span><span class="av dem xs" aria-hidden="true">M</span><span>Pablo, Marta</span></div></li><li><div class='it-h'><strong>Recordatorio de verano</strong><span class='prio media'>Media</span></div><p>Aviso en abril para reservar agosto con tu cuidador.</p><div class='who'><span class="av dem xs" aria-hidden="true">AN</span><span class="av dem xs" aria-hidden="true">L</span><span>Ana, Laura</span></div></li><li><div class='it-h'><strong>Verificación con premio</strong><span class='prio alta'>Alta</span></div><p>Sello visible y más visibilidad en las búsquedas al verificarse.</p><div class='who'><span class="av sup xs" aria-hidden="true">J</span><span class="av sup xs" aria-hidden="true">I</span><span>Javier, Irene</span></div></li></ul></div><div class='icol'><h3>Messaging</h3><ul><li><div class='it-h'><strong>Paraguas</strong><span class='prio alta'>Alta</span></div><p>«Vete tranquilo, en casa todo sigue vivo.»</p><div class='who'><span class="av dem xs" aria-hidden="true">P</span><span class="av dem xs" aria-hidden="true">C</span><span class="av dem xs" aria-hidden="true">AN</span><span>Pablo, Carmen, Ana</span></div></li><li><div class='it-h'><strong>Hogar mixto</strong><span class='prio alta'>Alta</span></div><p>«Una sola persona para todo lo que vive en tu casa.»</p><div class='who'><span class="av dem xs" aria-hidden="true">M</span><span>Marta</span></div></li><li><div class='it-h'><strong>Viajero urbano</strong><span class='prio media'>Media</span></div><p>«Tu cuidador de confianza, también en los puentes.»</p><div class='who'><span class="av dem xs" aria-hidden="true">L</span><span>Laura</span></div></li><li><div class='it-h'><strong>Familia con perro</strong><span class='prio media'>Media</span></div><p>«Tu agosto, resuelto en mayo.»</p><div class='who'><span class="av dem xs" aria-hidden="true">AN</span><span>Ana</span></div></li><li><div class='it-h'><strong>Plantas</strong><span class='prio media'>Media</span></div><p>«Tus plantas también merecen que alguien pase por casa.»</p><div class='who'><span class="av dem xs" aria-hidden="true">C</span><span class="av dem xs" aria-hidden="true">P</span><span>Carmen, Pablo</span></div></li><li><div class='it-h'><strong>Exóticos</strong><span class='prio media'>Media</span></div><p>«Expertos en exóticos, certificados.»</p><div class='who'><span class="av dem xs" aria-hidden="true">Á</span><span>Álex</span></div></li></ul><p class='evitar'>Evitar «cuidado profesional para mascotas»: es genérica, no diferencia y deja fuera a los hogares con plantas.</p></div></div>
+
+  <h3>Próximos pasos</h3>
+  <ul class="obj"><li>Llevar este guion al focus group real y comprobar tres cifras: la prima del servicio combinado, el precio máximo de una visita de riego y el interés en una suscripción de escapadas.</li><li>Añadir al dataset sintético un escenario de «Plan Escapadas» (más repetición de cuidador para viajeros) y medir su efecto en ingresos.</li><li>Diseñar la prueba de competencia para exóticos y plantas junto con cuidadores especialistas.</li></ul>
+</section>
+<footer>Conversación ficticia construida a partir de los arquetipos y del dataset sintético. Sirve para preparar el focus group real, no para sustituirlo.</footer>
+</div>
+<script>const DATA = {"P": {"mod": {"n": "Inés", "r": "Moderadora", "k": "mod", "seg": "Moderación"}, "laura": {"n": "Laura", "r": "La urbanita viajera · gata", "k": "dem", "seg": "20 % de los dueños"}, "ana": {"n": "Ana Navarro", "r": "La familia con perro · labrador", "k": "dem", "seg": "22 % de los dueños"}, "marta": {"n": "Marta", "r": "La casa viva · gata y 12 plantas", "k": "dem", "seg": "18 % de los dueños"}, "pablo": {"n": "Pablo", "r": "Coleccionista de plantas · 27 plantas", "k": "dem", "seg": "16 % de los dueños"}, "carmen": {"n": "Carmen", "r": "Plantas sin complicaciones · balcón", "k": "dem", "seg": "12 % de los dueños"}, "alex": {"n": "Álex", "r": "Dueño de exóticos · pogona y tortuga", "k": "dem", "seg": "6,5 % de los dueños"}, "irene": {"n": "Irene", "r": "Cuidadora estudiante", "k": "sup", "seg": "32 % de los cuidadores"}, "javier": {"n": "Javier", "r": "Cuidador profesional", "k": "sup", "seg": "51 % de los cuidadores"}, "elena": {"n": "Elena", "r": "Especialista en exóticos", "k": "sup", "seg": "17 % de los cuidadores"}}, "B": [{"id": "b0", "ses": "A", "t": "Calentamiento", "dur": "5 min", "tec": "Presentación proyectiva", "obj": "Romper el hielo y ver qué lugar ocupan los animales y las plantas en cada casa.", "turns": [["mod", "Bienvenidos. Aquí no hay respuestas correctas y las críticas nos sirven más que los elogios. Para empezar, presentad a quien vive con vosotros, animales o plantas, como si fuera vuestro compañero de piso. ¿Cómo es y qué necesita?"], ["laura", "Mi compañera de piso se llama Mora. Es una gata de seis años y no soporta que le toquen sus cosas. Si la saco de casa, se pasa tres días escondida debajo de la cama."], ["ana", "En casa somos cuatro, más Toby, un labrador de 30 kilos. Es el compañero que siempre quiere salir. Si no sale, se come el sofá."], ["marta", "Yo tengo a Lola, una gata, y unas doce plantas. Las plantas son las compañeras sensibles: la calathea se ofende si la miras mal."], ["pablo", "Yo tengo 27 compañeras. Ninguna habla, pero todas se quejan en agosto."], ["carmen", "Lo mío es más modesto: un potus, unos geranios en el balcón y una monstera que me regalaron. Son tranquilas, pero si me voy dos semanas, me las encuentro secas."], ["alex", "Yo tengo a Kiwi, una pogona, y una tortuga. Son muy exigentes con la temperatura. Si falla la lámpara del terrario, en dos días tienes un problema serio."], ["note", "Aparecen dos ejes que atraviesan los segmentos: cuánto depende de ti lo que cuidas (Toby y Kiwi frente a plantas fáciles) y el miedo a un daño que no tiene vuelta atrás."], ["ins", "necesidad", "Casi todos describen a sus animales y plantas por lo que pasa cuando ellos no están. El momento clave del producto es la ausencia, salvo para la familia con perro, que habla de rutina diaria.", ["laura", "pablo", "carmen", "alex"]]]}, {"id": "b1", "ses": "A", "t": "Cómo lo resuelven hoy", "dur": "15 min", "tec": "Reconstrucción del último episodio", "obj": "Conocer las soluciones actuales, sus costes ocultos y dónde fallan.", "turns": [["mod", "Pensad en la última vez que os fuisteis más de una noche. Contadme paso a paso qué hicisteis."], ["laura", "Fue el puente de diciembre. El martes le escribí a mi vecina, el jueves me dijo que sí y el sábado me escribió que el domingo no podía. Acabé buscando a alguien en una app a las once de la noche."], ["mod", "¿Y encontraste a alguien?"], ["laura", "Sí, pero no era la chica de la otra vez, porque ella no estaba libre. Así que otra vez a explicarlo todo: dónde está la comida, que no abra la ventana del baño…"], ["note", "Esto matiza el dato del dataset: Laura solo repite cuidador en el 14 % de las reservas. No es falta de fidelidad, es que su cuidadora de confianza no estaba disponible."], ["ins", "funcion", "La baja repetición de Laura se debe a la disponibilidad, no a que no quiera repetir. Necesita poder reservar con su cuidadora habitual antes que nadie.", ["laura"]], ["ana", "Nosotros el día a día lo tenemos más resuelto: un chico viene tres tardes por semana a pasear a Toby. Las vacaciones son otra historia. Residencia canina, que en agosto está llena y cuesta un dineral."], ["pablo", "El agosto pasado lo dejé todo preparado: riego por goteo, conos de agua… Hubo una ola de calor y, al volver, había perdido el helecho y dos calatheas. Dejarlo preparado no funciona a 40 grados."], ["carmen", "Yo se lo dejo a mi madre, pero tiene 72 años y vive en otro barrio. Me sabe mal pedírselo por tres geranios."], ["mod", "¿Por qué te sabe mal?"], ["carmen", "Porque parece una tontería. Por un perro se entiende, pero ¿por unas plantas?"], ["ins", "mensaje", "Pedir ayuda para las plantas da vergüenza («parece una tontería»). El mensaje tiene que dejar claro que es una necesidad legítima, no un capricho.", ["carmen", "pablo"]], ["alex", "Lo mío es lo peor: la última vez no me fui. Tenía una boda en Sevilla y fui y volví en el día, porque no encontré a nadie que supiera manejar un terrario."], ["note", "Encaja con el dataset: el 23 % de las solicitudes de dueños de exóticos se queda sin cuidador, el porcentaje más alto."], ["ins", "oferta", "Para los exóticos, la competencia no es otra app: es quedarse en casa. Hay demanda oculta que ni siquiera llega a convertirse en búsqueda.", ["alex"]], ["marta", "Yo lo divido: una amiga para la gata y mi vecino para regar. Pero así tengo que coordinar a dos personas, dar dos juegos de llaves y llevar dos botellas de vino para dar las gracias."], ["ins", "oferta", "Para el hogar mixto, el coste oculto no es el dinero sino la coordinación: dos personas, dos llaves y dos favores.", ["marta"]]]}, {"id": "b2", "ses": "A", "t": "Confianza y llaves", "dur": "15 min", "tec": "Escalera de porqués", "obj": "Averiguar qué necesita cada segmento para dejar entrar a un desconocido en casa.", "turns": [["mod", "Imaginad que la app os propone a alguien que no conocéis. ¿Qué necesitáis ver para darle las llaves?"], ["ana", "Reseñas. Muchas. Y que lo conozcan otros padres del barrio."], ["mod", "¿Por qué es importante que lo conozcan en el barrio?"], ["ana", "Porque a veces entra en casa cuando están mis hijos. No es solo el perro, es mi casa."], ["mod", "¿Y eso qué te aporta?"], ["ana", "Tranquilidad. Poder irme a trabajar sin estar pendiente del móvil."], ["note", "La escalera completa va de las reseñas a «que lo conozcan en el barrio», de ahí a «es mi casa, no solo el perro» y termina en la tranquilidad. Lo que pide es reseñas; lo que busca de fondo es poder desconectar."], ["laura", "A mí las reseñas me dan igual si no recibo fotos durante el servicio. Quiero una foto de Mora comiendo. Si a las ocho de la tarde no la tengo, ya estoy nerviosa."], ["pablo", "Para mí es al revés que con los animales: me da igual que sea simpático. Quiero saber que sabe lo que hace, que distinga una calathea sin tener que buscarlo en el móvil."], ["alex", "Exacto. Yo le haría un examen, en serio. Tres preguntas: a qué temperatura va la zona caliente, qué come una pogona y qué haces si deja de comer."], ["carmen", "Uf, yo no necesito tanto. Si es del barrio y tiene el DNI verificado, me vale."], ["marta", "Yo me fío más de lo que me recomiende una amiga que de cualquier puntuación con estrellas."], ["ins", "funcion", "Cada segmento se fía por una vía distinta. A la familia con perro y a Marta les da confianza la recomendación de gente cercana. Laura necesita ver cómo va el servicio mientras ocurre. Pablo y Álex quieren una prueba de que el cuidador sabe. A Carmen le basta la verificación básica.", ["ana", "marta", "laura", "pablo", "alex", "carmen"]], ["ins", "funcion", "Que el parte del día con foto, a una hora pactada, sea parte estándar del servicio y no un extra que dependa del cuidador.", ["laura", "pablo"]], ["ins", "oferta", "Una prueba de competencia por especie (exóticos, plantas delicadas) que se muestre como insignia en el perfil del cuidador.", ["alex", "pablo"]]]}, {"id": "b3", "ses": "A", "t": "Animales y plantas a la vez", "dur": "20 min", "tec": "Confrontación entre segmentos y ordenación de tarjetas", "obj": "Poner a prueba el servicio combinado (H1) y buscar tareas que interesen a varios segmentos.", "turns": [["mod", "Voy a provocar un poco. Laura, ¿pagarías más por que tu cuidadora regara tus plantas?"], ["laura", "Tengo dos sansevierias y un cactus. Sinceramente, sobreviven sin mí. No pagaría más."], ["pablo", "Eso lo dices porque tus plantas no necesitan nada. Con una colección es otra historia."], ["marta", "A mí me pasa justo lo contrario que a Laura. Quien cuida a la gata no sabe de plantas, y quien sabe de plantas no quiere animales. Si hubiera alguien que hiciera las dos cosas, pagaría más. Seguro."], ["mod", "¿Cuánto más?"], ["marta", "Si hoy pago 15 euros por la visita de la gata… Por 20 lo haría sin pensarlo. Por 25 ya me lo pensaría."], ["note", "Marta acepta una prima de alrededor del 33 %, en línea con lo que supone el modelo (30 %). Su límite está hacia el 65 %."], ["ins", "precio", "La prima del servicio combinado es aceptable hasta un 30-35 % para el hogar mixto y nula para quien tiene plantas que «sobreviven solas». No es un extra para todos, es un producto pensado para Marta.", ["marta", "laura"]], ["mod", "Os paso unas tarjetas con tareas. Ordenadlas de imprescindible a prescindible en una visita: dar de comer, limpiar el arenero, pasear, regar, girar las plantas hacia la luz, abrir persianas, recoger el correo, mandar fotos y comprobar el terrario."], ["ana", "Para nosotros pasear es lo primero. Lo de las persianas y el correo… en verano sí, que no parezca que la casa está vacía."], ["carmen", "¡Anda! No había pensado en lo de la casa vacía. Eso sí que me interesa, casi más que las plantas."], ["laura", "Yo también pondría arriba el correo y las persianas. Vivo en un bajo."], ["ins", "oferta", "Ha salido una necesidad cruzada que nadie esperaba: que la casa parezca habitada (persianas, correo, luces). La comparten Carmen, Laura y la familia Navarro, y es una forma barata de atraer a los hogares con plantas.", ["carmen", "laura", "ana"]], ["pablo", "Yo añadiría «mirar la tierra antes de regar». Regar por calendario mata más plantas que no regar."], ["alex", "Y en mi caso, «apuntar la temperatura con una foto del termómetro». Si no lo veo, no me lo creo."], ["ins", "funcion", "Una ficha de cuidados de cada animal o planta que el dueño rellena una vez y el cuidador sigue siempre. Así nadie tiene que volver a explicarlo todo, que es justo lo que le pasó a Laura.", ["pablo", "alex", "laura", "marta"]]]}, {"id": "b4", "ses": "A", "t": "Agosto, puentes y olas de calor", "dur": "15 min", "tec": "Escenario de crisis", "obj": "Ver qué esperan de la app cuando falla la oferta en temporada alta (H2 y H3).", "turns": [["mod", "Os planteo un escenario: 10 de agosto, 40 grados, estáis en la playa. Vuestro cuidador os escribe que mañana no puede ir. ¿Qué se os pasa por la cabeza y qué esperáis de la app?"], ["pablo", "Pánico: mañana es el día en que se me mueren. Esperaría que la app me dijera «tu cuidador ha cancelado y estas dos personas ya han aceptado sustituirle». No tener que buscar yo desde la toalla."], ["alex", "Lo mío es peor, porque no hay sustituto posible. Por eso querría dejar pactado un plan B antes de irme: alguien de reserva que ya conozca a Kiwi."], ["ana", "Nosotros en agosto directamente no encontramos. O reservo en mayo o nada. ¿Por qué no me avisa la app en abril: «reserva ya tu agosto»?"], ["laura", "Si me cancelan, quiero que me devuelvan el dinero en el momento y me den un descuento. Que me duela menos."], ["marta", "Y con las olas de calor… Si la app sabe que viene una, podría avisar: «¿quieres una visita extra de riego?». Lo pagaría."], ["pablo", "Eso lo pagaría hoy mismo. Es justo lo que me falta."], ["note", "Encaja con el dataset: el 24 % de las solicitudes de coleccionistas y el 17 % de las de hogares mixtos llegan durante olas de calor."], ["ins", "funcion", "Sustitución automática: cuando un cuidador cancela, la app propone candidatos que ya han aceptado. Para exóticos, un cuidador de reserva pactado antes del viaje.", ["pablo", "alex", "laura"]], ["ins", "funcion", "Alerta de ola de calor con visita extra de riego en un toque. Es un producto de temporada con buen margen para coleccionistas y hogares mixtos.", ["pablo", "marta"]], ["ins", "mensaje", "Campaña de reserva anticipada en abril y mayo dirigida a familias con perro: «Tu agosto, resuelto en mayo».", ["ana"]]]}, {"id": "b5", "ses": "A", "t": "Precio y valor", "dur": "15 min", "tec": "Reparto de 100 puntos", "obj": "Ver qué pesa más en la elección de cada segmento y qué modelo de precio encaja con cada uno (H4 y H5).", "turns": [["mod", "Tenéis 100 puntos para repartir entre lo que más valoráis de un servicio: precio, experiencia del cuidador, cercanía, fotos durante el servicio, que venga siempre la misma persona y un seguro por si pasa algo."], ["points"], ["carmen", "Yo le doy 40 al precio sin dudarlo. No voy a pagar 15 euros por regar tres geranios. Diez como mucho, y si es alguien del edificio, ocho."], ["ana", "El precio pesa, pero lo que me mata es que el segundo perro se cobre como otro servicio entero. Si ya están en casa, ya están en casa."], ["alex", "Yo le doy cero al precio. Pero ojo: pago si sé que sabe. Pagar 30 euros a alguien que no sabe, eso sí que me parece caro."], ["laura", "¿Y una tarifa plana? Algo como cuatro escapadas al año con mi cuidadora, pagando cada mes. Lo pagaría igual que pago Netflix."], ["ana", "Nosotros preferiríamos un bono de paseos: diez paseos a precio cerrado."], ["note", "Los puntos cuadran con la sensibilidad al precio del dataset: Carmen (0,58) y la familia Navarro (0,53) dan más peso al precio, y Álex (0,28) no le da ninguno."], ["ins", "precio", "Tres modelos de precio para tres tipos de relación: pago por uso barato con vecinos para Carmen (8-10 € por riego), bono de paseos para las familias con perro y suscripción de escapadas para Laura.", ["carmen", "ana", "laura"]], ["ins", "precio", "El recargo por animal adicional tiene que ser pequeño en las visitas a domicilio, porque el cuidador ya está en la casa.", ["ana"]]]}, {"id": "b6", "ses": "A", "t": "Conceptos y frases", "dur": "15 min", "tec": "Test de conceptos y frases", "obj": "Medir la reacción a tres propuestas de producto y a cuatro frases de marca.", "turns": [["mod", "Os enseño tres ideas de producto. Decidme con una palabra qué os provoca cada una. La primera, «Todo lo que vive en tu casa»: un solo cuidador para animales y plantas."], ["marta", "Yo. Esto es para mí."], ["pablo", "Me gusta, si el cuidador sabe de plantas de verdad. Si no, es puro marketing."], ["laura", "Correcto, pero no es para mí."], ["mod", "La segunda, «Plan Escapadas»: una suscripción con tu cuidador de confianza y prioridad en los puentes."], ["laura", "Por fin. Lo de la prioridad es lo que me importa."], ["ana", "Si incluye paseos entre semana, me interesa."], ["carmen", "Demasiado compromiso para mí."], ["mod", "La tercera, «Cuidadores Expertos»: perfiles certificados en exóticos y en plantas delicadas."], ["alex", "Tranquilidad. Pagaría el doble."], ["pablo", "Sí, con una insignia de experto en plantas."], ["ana", "Me da igual, Toby es un labrador."], ["mod", "Ahora cuatro frases. ¿Cuál os haría descargar la app?"], ["claims"], ["pablo", "«Todo sigue vivo» me hace gracia y además es verdad. Con plantas funciona."], ["carmen", "Esa me hace sonreír. Me quita la vergüenza de pedir ayuda por unas plantas."], ["marta", "La segunda. Describe literalmente mi problema."], ["laura", "La tercera, por lo de «conoce tu casa»."], ["alex", "La cuarta es la que dicen todas y no me dice nada. Si pusiera «expertos en exóticos», me tendríais."], ["ins", "mensaje", "«Vete tranquilo, en casa todo sigue vivo» funciona como frase paraguas: une animales y plantas y quita la vergüenza de pedir ayuda por plantas. «Cuidado profesional para mascotas» es genérica y no diferencia.", ["pablo", "carmen", "ana", "alex"]], ["ins", "oferta", "Cada concepto tiene su público claro: el combinado para Marta y Pablo, el Plan Escapadas para Laura y la familia Navarro, y los Cuidadores Expertos para Álex y Pablo. Ninguno sirve para todos, así que la app debe presentarse según el segmento.", ["marta", "laura", "alex"]]]}, {"id": "b7", "ses": "A", "t": "Cierre", "dur": "10 min", "tec": "Personificación y motivos de abandono", "obj": "Definir la personalidad de la marca y lo que no se puede fallar.", "turns": [["mod", "Si esta app fuera una persona, ¿quién sería?"], ["carmen", "Una vecina maja que te hace el favor, pero a la que puedes pagar sin que resulte raro."], ["laura", "Una amiga organizada que te dice «tranquila, ya está»."], ["alex", "Un veterinario de guardia."], ["pablo", "Un jardinero de confianza, no un paseador de perros."], ["mod", "¿Y qué os haría borrarla mañana?"], ["ana", "Tener un problema con Toby y que nadie se hiciera cargo."], ["laura", "Que no me mandaran las fotos."], ["alex", "Que me mandaran a alguien sin experiencia y a Kiwi le pasara algo."], ["marta", "Que el precio cambiara cada vez sin explicación."], ["ins", "riesgo", "Los motivos para abandonar la app son una incidencia sin respuesta, la falta de comunicación y un cuidador sin preparación. Un seguro y un protocolo de incidencias visible son imprescindibles, sobre todo para exóticos, que tienen incidencias en el 13,6 % de los servicios del dataset.", ["ana", "laura", "alex"]], ["ins", "mensaje", "El tono de marca: «la vecina de confianza a la que puedes pagar sin que resulte raro». Cercano y nada clínico, pero con una capa experta visible para exóticos y plantas.", ["carmen", "laura", "pablo"]]]}, {"id": "b8", "ses": "B", "t": "Sesión espejo con cuidadores", "dur": "20 min", "tec": "Sesión espejo", "obj": "Contrastar lo que piden los dueños con lo que la oferta puede y quiere dar.", "turns": [["mod", "Os leo lo que pidieron los dueños. Lo primero: quieren repetir con la misma persona y tener prioridad en los puentes."], ["javier", "Me encanta, porque de los clientes fijos es de lo que vivo. Pero si alguien me reserva el puente en exclusiva, que pague esa exclusividad."], ["irene", "A mí me da miedo. Si cada uno tiene «su cuidador», los que empezamos no vamos a tener ni un cliente. Ya me pasa ahora: me registré en enero y he hecho dos servicios."], ["note", "Encaja con el dataset: el 49 % de los cuidadores estudiantes no completó ningún servicio en todo el año."], ["ins", "riesgo", "Fidelizar a los dueños choca con activar a los cuidadores nuevos. Hay que reservarles una parte del tráfico: un primer servicio con garantía de la plataforma y servicios sencillos, como el riego, para empezar.", ["irene", "javier"]], ["mod", "Lo segundo: piden gente que sepa de plantas y avisos en las olas de calor."], ["irene", "¿En serio? Eso lo puedo aprender. Si la app me da una formación corta y una insignia, lo hago mañana. Y es más fácil empezar con plantas que con un perro de 40 kilos."], ["javier", "Yo ya riego cuando voy a ver a los gatos, y no lo cobro. Si puedo cobrarlo, perfecto."], ["ins", "oferta", "Las plantas son la puerta de entrada ideal para los cuidadores nuevos: exigen poco, tienen poco riesgo (0,5 % de incidencias) y mucha demanda en verano.", ["irene", "javier"]], ["mod", "Lo tercero, los exóticos. Los dueños dicen que no encuentran a nadie y que pagarían el doble."], ["elena", "Lo sé. En verano tengo lista de espera. Pero en la app salgo mezclada con todos, y al lado de un paseador mi tarifa parece cara."], ["mod", "¿Qué necesitarías?"], ["elena", "Una categoría aparte, con una certificación de verdad, y poder formar a otros cuidadores. Aunque hubiera cinco como yo en mi ciudad, seguiríamos sin dar abasto."], ["ins", "oferta", "Un programa de Cuidadores Expertos, con certificación y formación impartida por especialistas como Elena. Crea oferta en el nicho más escaso y a ella le da un ingreso extra.", ["elena", "alex"]], ["mod", "Lo cuarto: en agosto no hay nadie."], ["irene", "Es que en agosto yo me voy al pueblo."], ["javier", "Y yo subo precios. Si la app me dejara poner una tarifa de temporada alta, trabajaría más días."], ["ins", "precio", "Que el cuidador pueda fijar una tarifa de temporada alta, con un límite, para que haya más oferta en agosto. Y dar incentivos a los estudiantes que se quedan en la ciudad.", ["javier", "irene"]], ["mod", "Por último, la verificación de identidad. Javier, un tercio de los cuidadores profesionales no la tiene hecha. ¿Por qué?"], ["javier", "Porque es un rollo: foto del DNI, selfi, esperar dos días… Y no veía que me trajera más clientes."], ["ins", "funcion", "Verificarse tiene que dar visibilidad al momento: salir primero en las búsquedas y con un sello visible. Si no trae clientes, el cuidador no se molesta en hacerlo.", ["javier"]]]}], "PUNTOS_CRIT": ["Precio", "Experiencia", "Cercanía", "Fotos", "Misma persona", "Seguro"], "PUNTOS": {"laura": [10, 15, 10, 30, 25, 10], "ana": [30, 15, 20, 5, 20, 10], "marta": [10, 30, 10, 10, 30, 10], "pablo": [5, 45, 5, 25, 15, 5], "carmen": [40, 5, 25, 5, 20, 5], "alex": [0, 50, 5, 10, 15, 20]}, "CLAIMS": [["Vete tranquilo, en casa todo sigue vivo.", ["pablo", "carmen", "ana"]], ["Una sola persona para todo lo que vive en tu casa.", ["marta"]], ["El cuidador que conoce tu casa, siempre disponible para ti.", ["laura"]], ["Cuidado profesional para mascotas.", []]]};</script>
+<script>(function(){
+const P = DATA.P, B = DATA.B;
+const TIPO = {necesidad:"Necesidad", oferta:"Oferta", funcion:"Funcionalidad", mensaje:"Messaging", precio:"Precio", riesgo:"Riesgo"};
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const ini = id => id === "mod" ? "IN" : P[id].n.split(" ").slice(0,2).map(w=>w[0]).join("").toUpperCase();
+const av = (id, cls="") => `<span class="av ${P[id].k} ${cls}" aria-hidden="true">${ini(id)}</span>`;
+const first = id => P[id].n.split(" ")[0];
+
+const state = {bloque:"all", persona:"all", ins:false, notas:true};
+try { const s = JSON.parse(localStorage.getItem("mesa-filtros")||"null"); if (s) Object.assign(state, s); } catch(e){}
+
+const selB = document.getElementById("f-bloque"), selP = document.getElementById("f-persona");
+selB.innerHTML = `<option value="all">Todos los bloques</option>` + B.map((b,i)=>`<option value="${b.id}">${i+1}. ${esc(b.t)}</option>`).join("");
+selP.innerHTML = `<option value="all">Todas las personas</option>` + Object.keys(P).filter(k=>k!=="mod").map(k=>`<option value="${k}">${esc(P[k].n)} · ${esc(P[k].r.split(" · ")[0])}</option>`).join("");
+const cI = document.getElementById("f-ins"), cN = document.getElementById("f-notas");
+function sync(){ selB.value = state.bloque; selP.value = state.persona; cI.checked = state.ins; cN.checked = state.notas; }
+sync();
+function save(){ try { localStorage.setItem("mesa-filtros", JSON.stringify(state)); } catch(e){} }
+selB.onchange = () => { state.bloque = selB.value; save(); render(); };
+selP.onchange = () => { state.persona = selP.value; save(); render(); };
+cI.onchange = () => { state.ins = cI.checked; save(); render(); };
+cN.onchange = () => { state.notas = cN.checked; save(); render(); };
+
+function pointsTable(){
+  const ids = Object.keys(DATA.PUNTOS);
+  let h = `<thead><tr><th>Persona</th>${DATA.PUNTOS_CRIT.map(c=>`<th class="c">${esc(c)}</th>`).join("")}</tr></thead><tbody>`;
+  ids.forEach(id=>{
+    h += `<tr><td>${av(id,"xs")}${esc(first(id))}</td>` + DATA.PUNTOS[id].map(v=>`<td class="c"><span class="hc" style="--a:${(v/50).toFixed(2)}"><b class="${v>=30?"inv":""}">${v}</b></span></td>`).join("") + `</tr>`;
+  });
+  return h + "</tbody>";
+}
+function claims(){
+  const max = 3;
+  return DATA.CLAIMS.map(([c, who])=>`<li><p>«${esc(c)}»</p><div class="cbar"><span class="cfill" style="width:${who.length/max*100}%"></span></div><div class="cwho"><span class="num">${who.length} ${who.length===1?"voto":"votos"}</span>${who.map(w=>av(w,"xs")).join("")}<span>${who.map(first).join(", ") || "nadie"}</span></div></li>`).join("");
+}
+
+function turnHTML(t, b){
+  const k = t[0];
+  if (k === "note") return `<div class="t-note"><span class="lbl">Nota de la moderadora</span><p>${esc(t[1])}</p></div>`;
+  if (k === "ins") return `<div class="t-ins ${t[1]}"><div class="ins-h"><span class="tipo">${TIPO[t[1]]}</span><span class="who">${t[3].map(w=>av(w,"xs")).join("")}</span></div><p>${esc(t[2])}</p></div>`;
+  if (k === "points") return `<div class="t-act"><span class="lbl">Actividad en sala</span><p>Cada dueño reparte sus 100 puntos. El resultado completo está en la síntesis.</p><div class="tscroll"><table class="heat">${pointsTable()}</table></div></div>`;
+  if (k === "claims") return `<div class="t-act"><span class="lbl">Frases que se enseñan</span><ol class="claimlist">${DATA.CLAIMS.map(c=>`<li>«${esc(c[0])}»</li>`).join("")}</ol></div>`;
+  const p = P[k];
+  return `<div class="t-say ${k==="mod"?"mod":""}">${av(k)}<div class="bub"><div class="who-l"><strong>${esc(p.n)}</strong><span>${esc(p.r)}</span></div><p>${esc(t[1])}</p></div></div>`;
+}
+
+function keep(t){
+  const k = t[0];
+  if (state.ins) {
+    if (k !== "ins") return false;
+    return state.persona === "all" || t[3].includes(state.persona);
+  }
+  if (k === "note") return state.notas && state.persona === "all";
+  if (k === "points" || k === "claims") return state.persona === "all";
+  if (state.persona === "all") return true;
+  if (k === "ins") return t[3].includes(state.persona);
+  return k === state.persona || k === "mod";
+}
+
+function render(){
+  const out = [];
+  let shown = 0, insN = 0;
+  B.forEach((b, i) => {
+    if (state.bloque !== "all" && state.bloque !== b.id) return;
+    let turns = b.turns.filter(keep);
+    // con filtro de persona, quitar preguntas de la moderadora que no preceden a una intervención visible
+    if (state.persona !== "all" && !state.ins) {
+      turns = turns.filter((t, j) => t[0] !== "mod" || (turns[j+1] && turns[j+1][0] !== "mod" && turns[j+1][0] !== "ins"));
+    }
+    if (!turns.length) return;
+    shown += turns.filter(t=>P[t[0]]).length; insN += turns.filter(t=>t[0]==="ins").length;
+    const ses = b.ses === "A" ? "Sesión A · dueños" : "Sesión B · cuidadores";
+    out.push(`<section class="blk" id="${b.id}"><header class="blk-h"><p class="eyebrow">${ses} · bloque ${i+1} · ${esc(b.dur)}</p><h3>${esc(b.t)}</h3><p class="blk-meta"><span class="tec-pill">${esc(b.tec)}</span>${esc(b.obj)}</p></header><div class="turns">${turns.map(t=>turnHTML(t,b)).join("")}</div></section>`);
+  });
+  document.getElementById("transcript").innerHTML = out.join("") || `<p class="empty">No hay intervenciones con estos filtros. Prueba con «Todos los bloques» o con otra persona.</p>`;
+  document.getElementById("f-count").textContent = `${shown} intervenciones · ${insN} insights`;
+}
+
+document.getElementById("t-puntos").innerHTML = pointsTable();
+document.getElementById("claims").innerHTML = claims();
+render();
+})();
+</script>
+
+<a href="../../index.html#investigacion" style="position:fixed;left:16px;bottom:16px;z-index:9999;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 16px;border-radius:9999px;background:#32296A;color:#fff;font:500 14px/1 'Instrument Sans',system-ui,sans-serif;text-decoration:none;box-shadow:0 1px 2px rgba(27,26,36,.06),0 8px 24px rgba(27,26,36,.18)">← Portfolio</a>
+</body></html>

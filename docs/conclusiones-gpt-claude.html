@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GPT frente a Claude · Todo Sigue Vivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--lavanda-100:#ECEDFF;--lavanda-600:#5646B0;--lavanda-700:#44368E;--lavanda-800:#32296A;--white:#FFFFFF;--canvas:#F7F7FB;--muted:#EEEDF4;--line:#E2E2EA;--ink-muted:#6B6979;--ink:#1B1A24;--primary-soft:var(--lavanda-100);--primary-text:var(--lavanda-700);color-scheme:light}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--white:#1C1A2B;--canvas:#131120;--muted:#252336;--line:#2E2B40;--ink-muted:#A9A6BC;--ink:#EEEDF5;--primary-soft:#2A2548;--primary-text:#C1C0FF}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);font:400 16px/1.6 "Instrument Sans",system-ui,sans-serif}
+.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--canvas) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top div{max-width:860px;margin:0 auto;padding:12px 20px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.top a{color:var(--primary-text);font-weight:600;text-decoration:none;font-size:14px}
+.top span{font:500 12px/1 "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
+main{max-width:860px;margin:0 auto;padding:48px 20px 96px}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.03em;line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(34px,5vw,52px);margin:0 0 16px}
+h2{font-size:28px;margin:56px 0 12px;padding-top:24px;border-top:1px solid var(--line)}
+h3{font-size:20px;margin:32px 0 8px}
+p,li{max-width:68ch}
+a{color:var(--primary-text)}
+blockquote{margin:24px 0;padding:20px 24px;border-radius:16px;background:var(--primary-soft);color:var(--primary-text);font:700 22px/1.3 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em}
+code{font:500 .88em "IBM Plex Mono",monospace;background:var(--muted);padding:2px 6px;border-radius:6px}
+.tbl{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:16px;background:var(--white)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 12px/1.3 "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-muted);background:var(--muted)}
+tr:last-child td{border-bottom:0}
+ul,ol{padding-left:22px}
+li{margin:6px 0}
+</style></head><body>
+<header class="top"><div><a href="../index.html#gpt-claude">← Volver al portfolio</a><span>Comparativa</span></div></header>
+<main>
+<h1>Conclusiones: entregables GPT vs. Claude</h1>
+<p><em>Revisión de la carpeta «Claude-Curso Nave Nodriza» · 28 de septiembre de 2026</em></p>
+<p>Revisión completa de las dos carpetas: documentos, datasets, webs (renderizadas) e imágenes. Las cifras clave de la estrategia se han cruzado con los CSV.</p>
+<h2>La diferencia de fondo</h2>
+<p><b>GPT trabaja como un investigador prudente y Claude como un estratega que toma decisiones.</b></p>
+<ul><li><b>GPT</b> insiste en todo momento en que nada está demostrado. Entrega un análisis riguroso, un guion de focus group muy bueno y una landing honesta. Lo que no hace es elegir: no hay segmento, ciudad ni modelo de negocio.</li><li><b>Claude</b> convierte la investigación en un plan de negocio: nicho (plantas y exóticos), ciudad (4-5 barrios de Madrid), precios, 15 % de comisión, 40 cuidadores, 5 fases en 18 meses y métricas que deciden si se sigue o no. Es mucho más útil para avanzar, aunque también asume más riesgos.</li></ul>
+<h2>Comparativa por entregable</h2>
+<div class="tbl"><table><thead><tr><th></th><th>GPT</th><th>Claude</th></tr></thead><tbody><tr><td><b>Datos</b></td><td>1.900 perfiles planos con una única pregunta: si aceptan un precio</td><td>Base de datos de un marketplace simulado: 780 dueños, 220 cuidadores, 1.953 solicitudes, 1.621 reservas y reseñas</td></tr><tr><td><b>Personas</b></td><td>5 clientes y 5 cuidadores, cada uno sacado de una fila del CSV</td><td>6 arquetipos de dueño y 3 de cuidador, construidos como segmentos con peso y gasto</td></tr><tr><td><b>Focus group</b></td><td>El mejor guion de moderación de los dos: evita inducir respuestas y es reutilizable con personas reales</td><td>Más creativo (reparto de 100 puntos, escenario de crisis, sesión espejo) y más orientado a producto</td></tr><tr><td><b>Conclusión</b></td><td>«Hay una propuesta que merece probarse, pero el éxito no está demostrado»</td><td>«Primero los mejores en plantas y exóticos en unos pocos barrios, y solo después la app»</td></tr><tr><td><b>Marca y web</b></td><td>«Nodriza». Landing sobria que no promete nada que no exista</td><td>«Todo Sigue Vivo». Web mucho más potente y diferencial (parte del día, ola de calor, calculadora)</td></tr></tbody></table></div>
+<p>Las cifras de la estrategia de Claude cuadran con sus CSV: 39 % de reservas en julio y agosto, 44 % de cobertura con 0-2 cuidadores y 93 % con 6 o más, y comisión del 15 %.</p>
+<h2>Lo que ninguno demuestra, aunque lo parezca</h2>
+<ol><li><b>Los datos de Claude son circulares.</b> El propio panel Radar dice que el sobreprecio del servicio combinado es un parámetro del generador (<code>prima_combinado</code>). Cuando dice que la H1 «se cumple», solo significa que los datos devuelven el supuesto que se metió al generarlos.</li><li><b>Los datos de GPT apenas contienen información.</b> Las barreras, los canales y los requisitos de confianza salen repartidos casi a partes iguales (entre 258 y 341 casos cada opción), lo que indica que se generaron al azar. Los rankings por región o por generación que salen de ellos no son fiables, y GPT lo reconoce.</li><li><b>El claim salió de un focus group simulado.</b> «Vete tranquilo, en casa todo sigue vivo» es buena frase, pero la eligieron personajes inventados. Hay que probarla con personas reales.</li></ol>
+<h2>Tensiones que conviene resolver</h2>
+<ul><li><b>Precio.</b> En el estudio de GPT solo el 5,7 % de los clientes y el 14,3 % de los cuidadores aceptan el escenario de precio con un 15 % de comisión, y la mediana del mínimo que pide un cuidador es de 14 € netos. El «riego desde 12 €» de Claude le deja al cuidador unos 10 €. Es la primera hipótesis económica que habría que contrastar.</li><li><b>Promesas en la web.</b> La web de Claude anuncia seguro incluido, sustituto garantizado y verificación con DNI, pero la propia estrategia dice que el seguro está por contratar en la fase 0. En una lista de espera pública eso es arriesgado. La landing de GPT lo resuelve bien.</li><li><b>El «círculo» diluye la estrategia.</b> La web añade un nivel para amigos y familiares por invitación y un sistema de créditos que no aparecen en la estrategia y que chocan con el modelo de comisión y con el posicionamiento de especialistas.</li><li><b>Economía del nicho.</b> La propia estrategia lo admite: los tres públicos iniciales dejan unos 38 € al año por usuario. Con unos 150.000 € de costes supuestos hacen falta unos 4.000 usuarios activos. El nicho sirve para aprender, pero no sostiene la empresa.</li><li><b>Hay dos marcas en paralelo.</b> Nodriza y Todo Sigue Vivo comparten el color #5646B0, el claim y los retratos. Hay que elegir una.</li></ul>
+<h2>Recomendación</h2>
+<p>Usar <b>la estrategia de Claude como columna vertebral</b>, con dos aportaciones de GPT:</p>
+<ul><li>el <b>guion de moderación de GPT</b> para el focus group real de la fase 0;</li><li>el <b>criterio de GPT de no prometer lo que aún no existe</b> en la web, manteniendo el diseño de Claude.</li></ul>
+<p>Antes de invertir más en diseño, validar tres cosas con personas reales:</p>
+<ol><li>El precio mínimo que acepta un cuidador por riego.</li><li>Si los hogares mixtos pagan de verdad el 30 % extra.</li><li>Cuánto cuesta captar a cada usuario a través de viveros.</li></ol>
+</main>
+</body></html>
