@@ -188,8 +188,7 @@ function vEntrar(){
   <div class="login-art"><img src="img/hero.jpg" alt=""><span class="ai-note">Imagen creada con IA</span>
     <h1>Vete tranquilo. En casa, todo sigue vivo.</h1><p>Entra para publicar un anuncio, o para encontrar casas que cuidar en tu barrio.</p></div>
   <div class="login-form"><form id="f-login" novalidate>
-    <a class="wordmark" href="../web/index.html">${I.logo}Todo Sigue Vivo</a>
-    <h2>Entrar</h2>
+    <div class="login-head"><a class="login-iso" href="../web/index.html" aria-label="Todo Sigue Vivo · volver a la web">${I.logo}</a><h2>Entrar</h2></div>
     <div id="login-err"></div>
     <div class="field"><label for="l-mail">Correo <small>· obligatorio</small></label><input class="input" id="l-mail" type="email" autocomplete="username"></div>
     <div class="field"><label for="l-pass">Contraseña <small>· obligatorio</small></label><input class="input" id="l-pass" type="password" autocomplete="current-password"></div>
@@ -203,8 +202,7 @@ function vRegistro(){
   return `<div class="login">
   <div class="login-art"><img src="img/hero.jpg" alt=""><span class="ai-note">Imagen creada con IA</span><h1>Cuidadores de barrio que saben de plantas y animales.</h1></div>
   <div class="login-form"><form id="f-reg" novalidate>
-    <a class="wordmark" href="../web/index.html">${I.logo}Todo Sigue Vivo</a>
-    <h2>Crear una cuenta</h2>
+    <div class="login-head"><a class="login-iso" href="../web/index.html" aria-label="Todo Sigue Vivo · volver a la web">${I.logo}</a><h2>Crear una cuenta</h2></div>
     <div id="reg-err"></div>
     <fieldset class="field" style="border:0;padding:0;margin:0"><legend class="flabel" style="margin-bottom:6px">¿Qué quieres hacer? <small>· obligatorio</small></legend>
       <div class="seg" style="grid-template-columns:1fr 1fr"><label><input type="radio" name="rol" value="dueno" checked><span>Me voy de viaje</span></label><label><input type="radio" name="rol" value="cuidador"><span>Quiero cuidar</span></label></div></fieldset>
