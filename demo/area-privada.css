@@ -474,3 +474,9 @@ select.input{appearance:auto}
 
 /* contraste: etiqueta sobre fondo savia suave */
 .netbox .lbl{color:var(--savia)}
+/* isotipo: brote verde */
+.iso-hoja{stroke:var(--iso-g)}.iso-relleno{fill:var(--iso-gs)}.iso-nervio{stroke:var(--iso-g)}
+:root{--iso-g:#1D7A68;--iso-gs:#D6EEE4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--iso-g:#5FD0B6;--iso-gs:#173029}}
+:root[data-theme="dark"]{--iso-g:#5FD0B6;--iso-gs:#173029}
+.av.dk,.tsv-pf{--iso-g:#5FD0B6;--iso-gs:#173029}

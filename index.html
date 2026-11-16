@@ -2,8 +2,8 @@
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Cómo construir un producto digital con IA · Todo Sigue Vivo</title>
 <meta name="description" content="Proyecto final del curso «Cómo construir un producto digital con IA», impartido por La Nave Nodriza de la mano de Cloud District. Portfolio de Pilar Bermejo. Caso práctico: Todo Sigue Vivo.">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="favicon.svg?v=2" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap">
@@ -309,8 +309,10 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
   .toc a{min-height:38px;padding:4px 10px}
   .side-foot{padding-top:10px}
   .side.open{transform:none;opacity:1;pointer-events:auto}
-  .toc-btn{display:inline-flex;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:41;height:52px;padding:0 18px 0 14px;border-radius:9999px;border:0;background:var(--lavanda-800);color:#fff;font:500 15px/1 var(--font-sans);align-items:center;gap:10px;box-shadow:var(--shadow-float);cursor:pointer}
-  .toc-btn .cur{font:500 12px/1 var(--font-mono);color:var(--lavanda-300)}
+  .toc-btn{display:inline-flex;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:41;height:52px;padding:0 18px 0 14px;border-radius:9999px;border:0;background:var(--primary);color:var(--on-primary);font:500 15px/1 var(--font-sans);align-items:center;gap:10px;box-shadow:0 0 0 2px var(--canvas),var(--shadow-float);cursor:pointer}
+  .toc-btn:hover{background:var(--primary-hover)}
+  .toc-btn .cur{font:500 12px/1 var(--font-mono);color:inherit}
+  .sec.hero{padding-top:0}
   main{margin-left:0;padding:16px 16px 0}
   .sec{padding:72px 0}
   .hero-in{grid-template-columns:1fr;min-height:0}
@@ -330,6 +332,10 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .rv{opacity:1;transform:none}
 }
+.iso-hoja{stroke:var(--iso-g)}.iso-relleno{fill:var(--iso-gs)}.iso-nervio{stroke:var(--iso-g)}
+:root{--iso-g:#1D7A68;--iso-gs:#D6EEE4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--iso-g:#5FD0B6;--iso-gs:#173029}}
+:root[data-theme="dark"]{--iso-g:#5FD0B6;--iso-gs:#173029}
 </style>
 </head><body>
 <a href="#main" class="skip">Saltar al contenido</a>
@@ -337,7 +343,7 @@ a.person:hover{border-color:var(--primary);transform:translateY(-2px)}
 <!-- MENÚ LATERAL FLOTANTE -->
 <aside class="side" id="side" aria-label="Índice del proyecto">
   <a class="side-brand" href="#inicio">
-    <span class="logo" aria-hidden="true"><svg viewBox="200 140 1080 800" fill="none" stroke="currentColor" stroke-width="56" stroke-linecap="round" stroke-linejoin="round"><path d="M548 897C548 820 530 720 510 640C470 520 380 440 242 398C236 520 300 650 460 728C520 760 545 810 548 897"/><path d="M510 590C515 470 610 360 785 357C760 480 680 550 510 590"/><path d="M548 897H1130"/><path d="M615 880C610 760 680 610 790 530C860 485 950 470 965 420V380C965 330 985 305 1003 292L1010 240L1045 180L1090 240L1168 185C1172 205 1172 230 1168 255C1195 280 1205 310 1225 330C1250 345 1245 355 1232 372C1220 392 1185 398 1150 405C1125 412 1128 450 1140 480C1158 525 1150 575 1125 630C1105 680 1098 720 1098 790V850C1135 852 1138 875 1130 897"/><path d="M1005 650C1025 720 1030 780 1030 850C1032 870 1040 885 1052 897"/><path d="M940 897C985 860 975 760 905 735C880 727 860 732 845 738"/></svg></span>
+    <span class="logo" aria-hidden="true"><svg viewBox="200 140 1080 800" fill="none" stroke="currentColor" stroke-width="56" stroke-linecap="round" stroke-linejoin="round"><path class="iso-hoja" d="M548 897C548 820 530 720 510 640C470 520 380 440 242 398C236 520 300 650 460 728C520 760 545 810 548 897"/><path class="iso-hoja" d="M510 590C515 470 610 360 785 357C760 480 680 550 510 590"/><path d="M548 897H1130"/><path d="M615 880C610 760 680 610 790 530C860 485 950 470 965 420V380C965 330 985 305 1003 292L1010 240L1045 180L1090 240L1168 185C1172 205 1172 230 1168 255C1195 280 1205 310 1225 330C1250 345 1245 355 1232 372C1220 392 1185 398 1150 405C1125 412 1128 450 1140 480C1158 525 1150 575 1125 630C1105 680 1098 720 1098 790V850C1135 852 1138 875 1130 897"/><path d="M1005 650C1025 720 1030 780 1030 850C1032 870 1040 885 1052 897"/><path d="M940 897C985 860 975 760 905 735C880 727 860 732 845 738"/></svg></span>
     <b>Todo Sigue Vivo</b>
   </a>
   <nav>
